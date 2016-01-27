@@ -1,8 +1,15 @@
 package org.byters.vkmarketplace.ui.activities;
 
+import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
+import android.view.View;
 
 import org.byters.vkmarketplace.R;
+import org.byters.vkmarketplace.ui.adapters.ItemsAdapter;
 
 public class ActivityMain extends ActivityBase {
 
@@ -10,5 +17,49 @@ public class ActivityMain extends ActivityBase {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ItemsAdapter adapter = new ItemsAdapter(getApplicationContext());
+
+        //todo implement swipe refresh layout
+
+        RecyclerView rv = (RecyclerView) findViewById(R.id.rvItems);
+        int columns = getResources().getInteger(R.integer.items_list_columns); //preparing to more columns in landscape mode
+        rv.setLayoutManager(new GridLayoutManager(this, columns));
+        rv.addItemDecoration(new ItemDecoration(this)); //YAGNI
+        rv.setAdapter(adapter);
     }
+
+    //region itemDecorator
+    private class ItemDecoration extends RecyclerView.ItemDecoration {
+
+        private int margin;
+
+        public ItemDecoration(Context context) {
+            margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP
+                    , context.getResources().getDimension(R.dimen.view_item_list_margin)
+                    , context.getResources().getDisplayMetrics());
+
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+
+            int position = parent.getChildLayoutPosition(view);
+
+            outRect.top = 2 * margin;
+            if (position % 2 == 1) {
+                outRect.right = 2 * margin;
+                outRect.left = margin;
+            } else {
+                outRect.right = margin;
+                outRect.left = 2 * margin;
+
+                //margins sum = const
+            }
+
+        }
+    }
+    //endregion
+
 }
