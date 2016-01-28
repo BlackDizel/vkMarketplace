@@ -1,6 +1,7 @@
 package org.byters.vkmarketplace.ui.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,6 +10,7 @@ import android.util.TypedValue;
 import android.view.View;
 
 import org.byters.vkmarketplace.R;
+import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.ui.adapters.ItemsAdapter;
 
 public class ActivityMain extends ActivityBase {
@@ -18,14 +20,21 @@ public class ActivityMain extends ActivityBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (!((ControllerMain) getApplicationContext()).isAuth())
+            startActivity(new Intent(this, ActivityLogin.class));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         ItemsAdapter adapter = new ItemsAdapter(getApplicationContext());
 
         //todo implement swipe refresh layout
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.rvItems);
-        int columns = getResources().getInteger(R.integer.items_list_columns); //preparing to more columns in landscape mode
+        int columns = getResources().getInteger(R.integer.items_list_columns);
         rv.setLayoutManager(new GridLayoutManager(this, columns));
-        rv.addItemDecoration(new ItemDecoration(this)); //YAGNI
+        rv.addItemDecoration(new ItemDecoration(this));
         rv.setAdapter(adapter);
     }
 
