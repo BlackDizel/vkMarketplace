@@ -1,7 +1,8 @@
 package org.byters.vkmarketplace.model.dataclasses;
 
-public class Price {
-    private float amount;
-    private Currency currency;
+import java.io.Serializable;
+
+public class Price implements Serializable {
+    private int amount;
     private String text;
 }
