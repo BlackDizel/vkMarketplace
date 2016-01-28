@@ -8,6 +8,8 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
+import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
+
 import java.lang.reflect.Type;
 import java.util.concurrent.TimeUnit;
 
@@ -30,8 +32,16 @@ public class VkService {
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(1, TimeUnit.MINUTES)
                 .readTimeout(1, TimeUnit.MINUTES)
+                /*.addInterceptor(new okhttp3.Interceptor() {
+                    @Override
+                    public okhttp3.Response intercept(Chain chain) throws IOException {
+                        //s will closed request so Gson will not parse response
+                        String s = new String(chain.proceed(chain.request()).body().bytes());
+                        android.util.Log.v("some",""+s);
+                        return  chain.proceed(chain.request());
+                    }
+                })*/
                 .build();
-        //todo need some magic here to add client_id
 
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(double.class, new JsonDeserializer<Double>() {
@@ -44,15 +54,27 @@ public class VkService {
                         }
                     }
                 })
+                .registerTypeAdapter(MarketplaceItem.class, new JsonDeserializer<MarketplaceItem>() {
+                    @Override
+                    public MarketplaceItem deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                        try {
+                            //todo check. may generate overhead
+                            return new GsonBuilder().create().fromJson(json, MarketplaceItem.class);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    }
+                })
+
                 .setFieldNamingStrategy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
 
-        Retrofit r = new Retrofit.Builder()
+        return new Retrofit.Builder()
                 .baseUrl(VkApi.BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        return r.create(VkApi.class);
+                .build()
+                .create(VkApi.class);
     }
 }
