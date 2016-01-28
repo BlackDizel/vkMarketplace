@@ -1,6 +1,6 @@
 package org.byters.vkmarketplace.ui.adapters;
 
-import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
+import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 
@@ -19,11 +19,11 @@ import java.util.ArrayList;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> implements ItemsUpdateListener {
 
-    ControllerItems controllerItems;
+    private ControllerMain controllerMain;
 
-    public ItemsAdapter(Context context) {
-        controllerItems = new ControllerItems(context);
-        controllerItems.addListener(this);
+    public ItemsAdapter(@NonNull ControllerMain controllerMain) {
+        this.controllerMain = controllerMain;
+        controllerMain.getControllerItems().addListener(this); //todo need to remove listeners
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return controllerItems.getModel().getSize();
+        return controllerMain.getControllerItems().getModel().getSize();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         }
 
         public void setData(int position) {
-            MarketplaceItem item = controllerItems.getModel().get(position);
+            MarketplaceItem item = controllerMain.getControllerItems().getModel().get(position);
             if (item == null) return;
             tvTitle.setText(item.getTitle());
             ImageLoader.getInstance().displayImage(item.getThumb_photo(), ivItem);

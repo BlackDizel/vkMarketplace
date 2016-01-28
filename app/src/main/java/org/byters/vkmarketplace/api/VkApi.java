@@ -1,6 +1,6 @@
 package org.byters.vkmarketplace.api;
 
-import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
+import org.byters.vkmarketplace.model.MarketplaceBlob;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -10,10 +10,8 @@ public interface VkApi {
 
     String BASE_URL = "https://api.vk.com/method/";
 
-    //todo implement some authorization methods
-
-    @GET("getMarket")
-    Call<MarketplaceItem> getMarketItems(@Query("owner_id") int owner_id, @Query("offset") int offset);
+    @GET("market.get")
+    Call<MarketplaceBlob> getMarketItems(@Query("owner_id") int owner_id, @Query("offset") int offset, @Query("access_token") String token);
 
     /*
     @GET("users/{username}")

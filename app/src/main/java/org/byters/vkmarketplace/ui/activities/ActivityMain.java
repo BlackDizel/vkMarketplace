@@ -27,7 +27,7 @@ public class ActivityMain extends ActivityBase {
     @Override
     protected void onResume() {
         super.onResume();
-        ItemsAdapter adapter = new ItemsAdapter(getApplicationContext());
+        ItemsAdapter adapter = new ItemsAdapter((ControllerMain)getApplicationContext());
 
         //todo implement swipe refresh layout
 
