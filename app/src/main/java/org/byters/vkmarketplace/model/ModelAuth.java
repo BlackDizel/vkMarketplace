@@ -1,6 +1,7 @@
 package org.byters.vkmarketplace.model;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.byters.vkmarketplace.controllers.controllers.ControllerStorage;
@@ -16,6 +17,11 @@ public class ModelAuth {
 
     public boolean isAuth() {
         return !TextUtils.isEmpty(data);
+    }
+
+    @Nullable
+    public String getData() {
+        return data;
     }
 
     public void setData(Context context, String data) {
