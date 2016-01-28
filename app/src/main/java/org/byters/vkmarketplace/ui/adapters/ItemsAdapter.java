@@ -49,11 +49,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView ivItem;
-        TextView tvTitle;
+        TextView tvTitle, tvPrice;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            tvPrice = (TextView) itemView.findViewById(R.id.tvPrice);
             ivItem = (ImageView) itemView.findViewById(R.id.ivItem);
         }
 
@@ -61,6 +62,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             MarketplaceItem item = controllerMain.getControllerItems().getModel().get(position);
             if (item == null) return;
             tvTitle.setText(item.getTitle());
+            if (item.getPrice() != null)
+                tvPrice.setText(item.getPrice().getText());
             ImageLoader.getInstance().displayImage(item.getThumb_photo(), ivItem);
         }
     }
