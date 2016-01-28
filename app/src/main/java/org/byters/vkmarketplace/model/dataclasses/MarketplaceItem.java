@@ -26,4 +26,8 @@ public class MarketplaceItem implements Serializable {
     public String getDescription() {
         return description;
     }
+
+    public Price getPrice() {
+        return price;
+    }
 }
