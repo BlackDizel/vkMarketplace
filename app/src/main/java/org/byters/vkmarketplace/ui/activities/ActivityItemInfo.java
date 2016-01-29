@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
@@ -45,6 +48,7 @@ public class ActivityItemInfo extends ActivityBase implements ItemsUpdateListene
         MarketplaceItem item = ((ControllerMain) getApplicationContext()).getControllerItems().getModel().getItemById(id);
         if (item == null) return;
         ((TextView) findViewById(R.id.tvDebug)).setText(item.getTitle());
+        ImageLoader.getInstance().displayImage("http://lorempixel.com/400/300", (ImageView) findViewById(R.id.ivItem));
     }
 
     //region listener
