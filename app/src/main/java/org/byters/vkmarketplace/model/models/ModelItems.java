@@ -1,6 +1,7 @@
 package org.byters.vkmarketplace.model.models;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import org.byters.vkmarketplace.controllers.controllers.ControllerStorage;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
@@ -43,6 +44,14 @@ public class ModelItems {
     public MarketplaceItem get(int position) {
         if (position >= 0 && position < getSize())
             return data.get(position);
+        return null;
+    }
+
+    @Nullable
+    public MarketplaceItem getItemById(int id) {
+        if (data == null) return null;
+        for (MarketplaceItem item : data)
+            if (item.getId() == id) return item;
         return null;
     }
 }
