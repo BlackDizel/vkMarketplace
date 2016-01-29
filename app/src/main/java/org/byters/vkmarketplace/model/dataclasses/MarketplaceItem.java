@@ -9,12 +9,6 @@ public class MarketplaceItem implements Serializable {
     private String thumb_photo;
     private Price price;
 
-    //fixme
-    public MarketplaceItem(String title) {
-        this.title = title;
-        this.thumb_photo = "http://lorempixel.com/200/200";
-    }
-
     public String getTitle() {
         return title;
     }
@@ -29,5 +23,9 @@ public class MarketplaceItem implements Serializable {
 
     public Price getPrice() {
         return price;
+    }
+
+    public int getId() {
+        return id;
     }
 }
