@@ -12,18 +12,14 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 
-import java.util.ArrayList;
-
-public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> implements ItemsUpdateListener {
+public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
 
     private ControllerMain controllerMain;
 
     public ItemsAdapter(@NonNull ControllerMain controllerMain) {
         this.controllerMain = controllerMain;
-        controllerMain.getControllerItems().addListener(this); //todo need to remove listeners
     }
 
     @Override
@@ -42,8 +38,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         return controllerMain.getControllerItems().getModel().getSize();
     }
 
-    @Override
-    public void onUpdated(ArrayList<MarketplaceItem> data) {
+    public void updateData() {
         notifyDataSetChanged();
     }
 
