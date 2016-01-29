@@ -1,4 +1,4 @@
-package org.byters.vkmarketplace.model;
+package org.byters.vkmarketplace.model.dataclasses;
 
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 

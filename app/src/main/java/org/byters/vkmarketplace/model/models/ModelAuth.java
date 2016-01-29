@@ -1,4 +1,4 @@
-package org.byters.vkmarketplace.model;
+package org.byters.vkmarketplace.model.models;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

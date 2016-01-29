@@ -1,6 +1,6 @@
 package org.byters.vkmarketplace.api;
 
-import org.byters.vkmarketplace.model.MarketplaceBlob;
+import org.byters.vkmarketplace.model.dataclasses.MarketplaceBlob;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

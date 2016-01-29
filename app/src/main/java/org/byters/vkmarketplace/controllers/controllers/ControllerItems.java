@@ -9,7 +9,7 @@ import android.text.TextUtils;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
 import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
-import org.byters.vkmarketplace.model.MarketplaceBlob;
+import org.byters.vkmarketplace.model.dataclasses.MarketplaceBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.model.models.ModelItems;
 

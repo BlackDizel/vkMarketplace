@@ -3,7 +3,7 @@ package org.byters.vkmarketplace.controllers.controllers;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
-import org.byters.vkmarketplace.model.ModelAuth;
+import org.byters.vkmarketplace.model.models.ModelAuth;
 
 public class ControllerAuth {
 
