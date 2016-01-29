@@ -36,4 +36,9 @@ public class ControllerMain extends Application {
         controllerAuth.setToken(this, key);
         controllerItems.updateData(this, key);
     }
+
+
+    public void updateMarketList() {
+        controllerItems.updateData(this, controllerAuth.getToken());
+    }
 }
