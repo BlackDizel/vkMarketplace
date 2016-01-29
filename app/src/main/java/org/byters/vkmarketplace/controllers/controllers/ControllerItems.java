@@ -32,22 +32,32 @@ public class ControllerItems {
         }
     }
 
-    public void updateData(@NonNull Context context, @NonNull String token) {
+    public void updateData(@NonNull Context context, @Nullable String token) {
         getData(context.getResources().getInteger(R.integer.market), token);
     }
 
+    //region listeners
     public void addListener(ItemsUpdateListener listener) {
         if (listener == null) return;
         if (listeners == null) listeners = new ArrayList<>();
         listeners.add(listener);
     }
 
+    public void removeListener(ItemsUpdateListener listener) {
+        if (listeners == null || listener == null) return;
+        listeners.remove(listener);
+    }
+    //endregion
+
     public ModelItems getModel() {
         return model;
     }
 
-    public void getData(final int market, final String token) {
-        if (isLoading) return;
+    public void getData(final int market, @Nullable final String token) {
+        if (isLoading || TextUtils.isEmpty(token)) {
+            updateListeners(null);
+            return;
+        }
         isLoading = true;
         new AsyncTask<Void, Void, ArrayList<MarketplaceItem>>() {
             @Override
@@ -68,13 +78,17 @@ public class ControllerItems {
             protected void onPostExecute(ArrayList<MarketplaceItem> result) {
                 super.onPostExecute(result);
                 ControllerItems.this.writeData(result);
-                if (listeners != null)
-                    for (ItemsUpdateListener listener : listeners)
-                        if (listener != null) listener.onUpdated(result);
+                updateListeners(result);
+                isLoading = false;
             }
         }.execute();
     }
 
+    private void updateListeners(ArrayList<MarketplaceItem> data) {
+        if (listeners != null)
+            for (ItemsUpdateListener listener : listeners)
+                if (listener != null) listener.onUpdated(data);
+    }
 
     private void writeData(ArrayList<MarketplaceItem> result) {
         if (result != null) {
