@@ -12,7 +12,7 @@ import android.webkit.WebViewClient;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 
-public class ActivityLogin extends AppCompatActivity {
+public class ActivityLogin extends ActivityBase {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
