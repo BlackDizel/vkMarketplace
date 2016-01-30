@@ -1,6 +1,7 @@
 package org.byters.vkmarketplace.model.models;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.byters.vkmarketplace.controllers.controllers.ControllerStorage;
@@ -20,6 +21,13 @@ public class ModelItems {
         return data == null;
     }
 
+    public void setItem(@NonNull Context context, @NonNull MarketplaceItem newItem) {
+        MarketplaceItem item = getItemById(newItem.getId());
+        if (item == null) return;
+        int index = data.indexOf(item);
+        data.set(index, newItem);
+        ControllerStorage.writeObjectToFile(context, data, ControllerStorage.ITEMS_INFO);
+    }
 
     public void setData(Context context, ArrayList<MarketplaceItem> data) {
         if (data == null || data.size() == 0) {
