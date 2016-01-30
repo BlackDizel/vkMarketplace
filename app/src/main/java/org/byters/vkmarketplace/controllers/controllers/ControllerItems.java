@@ -63,7 +63,6 @@ public class ControllerItems {
             @Override
             protected ArrayList<MarketplaceItem> doInBackground(Void... params) {
                 try {
-                    //fixme remove debug
                     MarketplaceBlob result = VkService.getApi().getMarketItems(market, 0, token).execute().body();
                     if (result == null) return null;
                     ArrayList<MarketplaceItem> list = result.getItems();
@@ -79,7 +78,7 @@ public class ControllerItems {
                 super.onPostExecute(result);
                 ControllerItems.this.writeData(result);
                 updateListeners(result);
-                isLoading = false;
+                isLoading = false; //todo check situation no onpostexecute called
             }
         }.execute();
     }
