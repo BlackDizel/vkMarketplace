@@ -35,7 +35,7 @@ public class VkService {
                 /*.addInterceptor(new okhttp3.Interceptor() {
                     @Override
                     public okhttp3.Response intercept(Chain chain) throws IOException {
-                        //s will closed request so Gson will not parse response
+                        //this will closed request so Gson will not parse response
                         String s = new String(chain.proceed(chain.request()).body().bytes());
                         android.util.Log.v("some",""+s);
                         return  chain.proceed(chain.request());
