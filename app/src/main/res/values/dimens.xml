@@ -1,4 +1,7 @@
 <resources>
     <dimen name="view_list_item_text_padding">8dp</dimen>
     <dimen name="view_item_list_margin">4dp</dimen>
+    <dimen name="item_info_fab_margin">16dp</dimen>
+    <dimen name="item_info_text_padding">16dp</dimen>
+    <dimen name="item_info_text_margin">16dp</dimen>
 </resources>
