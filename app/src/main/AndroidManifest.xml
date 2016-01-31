@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activities.ActivityLogin" />
-        <activity android:name=".ui.activities.ActivityItemInfo"/>
+        <activity android:name=".ui.activities.ActivityItemInfo" />
+        <activity android:name=".ui.activities.ActivityCart"/>
     </application>
 
 </manifest>
