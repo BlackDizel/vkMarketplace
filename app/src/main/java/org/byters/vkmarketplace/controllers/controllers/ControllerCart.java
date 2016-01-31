@@ -4,9 +4,11 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 
 import org.byters.vkmarketplace.model.dataclasses.Cart;
+import org.byters.vkmarketplace.model.dataclasses.CartEntry;
 
 public class ControllerCart {
 
+    @Nullable
     private Cart cart;
 
     public ControllerCart(Context context) {
@@ -41,5 +43,14 @@ public class ControllerCart {
     public String getComment() {
         if (cart == null) return null;
         return cart.getComment();
+    }
+
+    public int getCartItemsSize() {
+        return cart == null ? 0 : cart.getItemsSize();
+    }
+
+    @Nullable
+    public CartEntry getCartItem(int position) {
+        return cart == null ? null : cart.getItem(position);
     }
 }

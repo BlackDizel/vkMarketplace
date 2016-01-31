@@ -1,5 +1,7 @@
 package org.byters.vkmarketplace.model.dataclasses;
 
+import android.support.annotation.Nullable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -33,5 +35,15 @@ public class Cart implements Serializable {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public int getItemsSize() {
+        return items == null ? 0 : items.size();
+    }
+
+    @Nullable
+    public CartEntry getItem(int position) {
+        if (items == null || position < 0 || position >= items.size()) return null;
+        return items.get(position);
     }
 }
