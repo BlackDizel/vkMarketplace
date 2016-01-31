@@ -123,7 +123,7 @@ public class ActivityItemInfo extends ActivityBase
                     .setAction(R.string.action_open_cart, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //todo navigate to cart activity
+                            ActivityCart.display(ActivityItemInfo.this);
                         }
                     })
                     .show();

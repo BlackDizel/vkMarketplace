@@ -56,9 +56,7 @@ public class ActivityMain extends ActivityBase implements ItemsUpdateListener, S
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_cart) {
-            //todo navigate to cart activity
-        }
+        if (item.getItemId() == R.id.action_cart) ActivityCart.display(this);
         return super.onOptionsItemSelected(item);
     }
     //endregion
