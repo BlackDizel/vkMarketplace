@@ -118,7 +118,7 @@ public class ActivityItemInfo extends ActivityBase
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.fabCart && id != NO_VALUE) {
-            ((ControllerMain) getApplicationContext()).getControllerCart().addItem(id);
+            ((ControllerMain) getApplicationContext()).getControllerCart().addItem(ActivityItemInfo.this, id);
             Snackbar.make(findViewById(R.id.rootView), R.string.item_added_to_cart, Snackbar.LENGTH_LONG)
                     .setAction(R.string.action_open_cart, new View.OnClickListener() {
                         @Override

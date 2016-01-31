@@ -1,6 +1,7 @@
 package org.byters.vkmarketplace.controllers.controllers;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import org.byters.vkmarketplace.model.dataclasses.Cart;
 
@@ -9,25 +10,36 @@ public class ControllerCart {
     private Cart cart;
 
     public ControllerCart(Context context) {
-        //todo try to load cart from cache
+        cart = (Cart) ControllerStorage.readObjectFromFile(context, ControllerStorage.CART_CACHE);
     }
 
-    public void addItem(int itemId) {
+    public void addItem(Context context, int itemId) {
         if (cart == null) cart = new Cart();
         cart.addItem(itemId);
-        //todo save cache
+        ControllerStorage.writeObjectToFile(context, cart, ControllerStorage.CART_CACHE);
     }
 
     public void trySendBuyRequest() {
         //todo implement
+
+        //todo clear cache on success
+
+        //todo to send buy request we have 3 ways:
+        //todo 1: send buy request by email app
+        //todo 2: send buy request via vk api message (need additional api permission)
+        //todo 3: navigate user to webPage with online form (need browser vk.com authorization)
+
     }
 
     public void setComment(Context context, String comment) {
-        //todo implement
+        if (cart == null) cart = new Cart();
+        cart.setComment(comment);
+        ControllerStorage.writeObjectToFile(context, cart, ControllerStorage.CART_CACHE);
     }
 
+    @Nullable
     public String getComment() {
-        //todo implement
-        return null;
+        if (cart == null) return null;
+        return cart.getComment();
     }
 }
