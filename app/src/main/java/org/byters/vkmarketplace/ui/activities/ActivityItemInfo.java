@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +23,8 @@ import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 
 import java.util.ArrayList;
 
-public class ActivityItemInfo extends ActivityBase implements ItemsUpdateListener, OnItemUpdateListener {
+public class ActivityItemInfo extends ActivityBase
+        implements ItemsUpdateListener, OnItemUpdateListener, View.OnClickListener {
 
     public final static String INTENT_EXTRA_ITEM_ID = "item_id";
     private final static int NO_VALUE = -1;
@@ -43,23 +47,31 @@ public class ActivityItemInfo extends ActivityBase implements ItemsUpdateListene
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         id = getIntent().getIntExtra(INTENT_EXTRA_ITEM_ID, NO_VALUE);
+
+        findViewById(R.id.fabCart).setOnClickListener(this);
+
         setData();
     }
 
+    /**
+     * called twice. on page start and on data downloaded
+     */
     private void setData() {
         //todo add viewpager with photos
-
 
         if (id == NO_VALUE) return;
         MarketplaceItem item = ((ControllerMain) getApplicationContext()).getControllerItems().getModel().getItemById(id);
         if (item == null) return;
-        ((TextView) findViewById(R.id.tvDebug)).setText(item.getTitle());
 
+
+        ((TextView) findViewById(R.id.tvDescription)).setText(Html.fromHtml(item.getDescription()));
 
         if (item.getPhotos() != null
                 && item.getPhotos().size() > 0 &&
                 !TextUtils.isEmpty(item.getPhotos().get(0).getSrc_big()))
             ImageLoader.getInstance().displayImage(item.getPhotos().get(0).getSrc_big(), (ImageView) findViewById(R.id.ivItem));
+        else if (!TextUtils.isEmpty(item.getThumb_photo()))
+            ImageLoader.getInstance().displayImage(item.getThumb_photo(), (ImageView) findViewById(R.id.ivItem));
     }
 
     //region listener
@@ -70,6 +82,7 @@ public class ActivityItemInfo extends ActivityBase implements ItemsUpdateListene
         ((ControllerMain) getApplicationContext()).getControllerItemInfo().addItemInfoUpdatedListener(this);
 
         ((ControllerMain) getApplicationContext()).updateDetailedItemInfo(id);
+        //todo state updating
     }
 
     @Override
@@ -95,7 +108,25 @@ public class ActivityItemInfo extends ActivityBase implements ItemsUpdateListene
 
     @Override
     public void onItemLoaded(@NonNull MarketplaceItem item) {
+        //todo add check error state
         if (item.getId() != id) return;
+
+        //todo state idle
         setData();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.fabCart && id != NO_VALUE) {
+            ((ControllerMain) getApplicationContext()).getControllerCart().addItem(id);
+            Snackbar.make(findViewById(R.id.rootView), R.string.item_added_to_cart, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.action_open_cart, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //todo navigate to cart activity
+                        }
+                    })
+                    .show();
+        }
     }
 }

@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">VkMarketplace</string>
+    <string name="app_name">Лавка Катринии</string>
     <string name="vk_auth_url"><![CDATA[https://oauth.vk.com/authorize?client_id=5246723&scope=market,offline&redirect_uri=https://oauth.vk.com/blank.html&display=touch&v=5.44&response_type=token]]></string>
     <string name="access_token_key">access_token</string>
+    <string name="item_added_to_cart">позиция успешно добавлена в корзину</string>
+    <string name="action_open_cart">посмотреть</string>
 </resources>
