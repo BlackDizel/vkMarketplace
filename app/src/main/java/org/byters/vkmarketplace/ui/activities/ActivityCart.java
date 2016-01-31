@@ -4,12 +4,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,15 +20,44 @@ import android.widget.EditText;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.ControllerCart;
+import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
+import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
+import org.byters.vkmarketplace.ui.adapters.CartAdapter;
 
-public class ActivityCart extends ActivityBase implements AlertDialog.OnClickListener {
+import java.util.ArrayList;
+
+public class ActivityCart extends ActivityBase
+        implements AlertDialog.OnClickListener, ItemsUpdateListener {
 
     @Nullable
     EditText etComment;
 
+    @Nullable
+    CartAdapter adapter;
+
     public static void display(Context context) {
         context.startActivity(new Intent(context, ActivityCart.class));
     }
+
+    //region listeners
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ((ControllerMain) getApplicationContext()).getControllerItems().removeListener(this);
+    }
+
+    @Override
+    public void onUpdated(ArrayList<MarketplaceItem> data) {
+        if (adapter != null)
+            adapter.updateData();
+    }
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +70,11 @@ public class ActivityCart extends ActivityBase implements AlertDialog.OnClickLis
 
         RecyclerView rvItems = (RecyclerView) findViewById(R.id.rvItems);
         rvItems.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new CartAdapter((ControllerMain) getApplicationContext());
+        rvItems.setAdapter(adapter);
+        rvItems.addItemDecoration(new ItemDecoration(this));
+
+        //todo implement swipe refresh layout
 
     }
 
@@ -85,4 +121,26 @@ public class ActivityCart extends ActivityBase implements AlertDialog.OnClickLis
 
         controllerCart.trySendBuyRequest();
     }
+
+    //region itemDecorator
+    private class ItemDecoration extends RecyclerView.ItemDecoration {
+
+        private int margin;
+
+        public ItemDecoration(Context context) {
+            margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP
+                    , context.getResources().getDimension(R.dimen.view_item_cart_list_margin)
+                    , context.getResources().getDisplayMetrics());
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+
+            outRect.left = margin;
+            outRect.top = margin;
+            outRect.right = margin;
+        }
+    }
+    //endregion
 }
