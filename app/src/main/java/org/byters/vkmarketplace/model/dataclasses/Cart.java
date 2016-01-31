@@ -26,4 +26,12 @@ public class Cart implements Serializable {
             items.set(index, entry);
         }
     }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 }
