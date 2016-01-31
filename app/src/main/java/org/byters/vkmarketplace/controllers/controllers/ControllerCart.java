@@ -18,5 +18,16 @@ public class ControllerCart {
         //todo save cache
     }
 
+    public void trySendBuyRequest() {
+        //todo implement
+    }
 
+    public void setComment(Context context, String comment) {
+        //todo implement
+    }
+
+    public String getComment() {
+        //todo implement
+        return null;
+    }
 }
