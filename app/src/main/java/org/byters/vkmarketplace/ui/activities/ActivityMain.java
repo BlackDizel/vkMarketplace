@@ -9,6 +9,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import org.byters.vkmarketplace.R;
@@ -45,6 +47,22 @@ public class ActivityMain extends ActivityBase implements ItemsUpdateListener, S
         rv.setAdapter(adapter);
     }
 
+    //region menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_cart) {
+            //todo navigate to cart activity
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    //endregion
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -67,7 +85,7 @@ public class ActivityMain extends ActivityBase implements ItemsUpdateListener, S
 
     @Override
     public void onRefresh() {
-        ((ControllerMain)getApplicationContext()).updateMarketList();
+        ((ControllerMain) getApplicationContext()).updateMarketList();
     }
     //endregion
 

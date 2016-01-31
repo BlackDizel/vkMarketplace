@@ -4,4 +4,5 @@
     <string name="access_token_key">access_token</string>
     <string name="item_added_to_cart">позиция успешно добавлена в корзину</string>
     <string name="action_open_cart">посмотреть</string>
+    <string name="cart_title">корзина</string>
 </resources>
