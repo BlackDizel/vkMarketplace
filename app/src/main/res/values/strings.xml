@@ -5,4 +5,8 @@
     <string name="item_added_to_cart">позиция успешно добавлена в корзину</string>
     <string name="action_open_cart">посмотреть</string>
     <string name="cart_title">корзина</string>
+    <string name="action_buy">купить</string>
+    <string name="alert_buy_title">оформление заказа</string>
+    <string name="alert_buy_positive_button">оформить заказ</string>
+    <string name="alert_buy_comment_hint">Укажите комментарий к заказу</string>
 </resources>
