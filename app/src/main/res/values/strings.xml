@@ -14,4 +14,7 @@
     <string name="request_buy_email">example@mail.com</string>
     <string name="request_buy_email_title">Заказ</string>
     <string name="requset_buy_error_no_products">нет добавленных позиций</string>
+    <string name="action_view_market">перейти на сайт</string>
+    <string name="market_address">http://vk.com/katriniya_group</string>
+    <string name="action_view_browser_error">не найден браузер</string>
 </resources>

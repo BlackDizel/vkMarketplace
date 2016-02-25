@@ -3,7 +3,9 @@ package org.byters.vkmarketplace.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,7 +58,21 @@ public class ActivityMain extends ActivityBase implements ItemsUpdateListener, S
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_cart) ActivityCart.display(this);
+        switch (item.getItemId()) {
+            case R.id.action_cart:
+                ActivityCart.display(this);
+                break;
+            case R.id.action_view_market: {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(getString(R.string.market_address)));
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                    Snackbar.make(findViewById(R.id.rootView), R.string.action_view_browser_error, Snackbar.LENGTH_SHORT).show();
+                }
+                break;
+            }
+        }
         return super.onOptionsItemSelected(item);
     }
     //endregion

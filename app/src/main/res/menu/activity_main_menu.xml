@@ -7,5 +7,9 @@
         android:icon="@drawable/ic_shopping_basket_white_24dp"
         android:title="@string/cart_title"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_view_market"
+        android:title="@string/action_view_market"
+        app:showAsAction="never" />
 
 </menu>
