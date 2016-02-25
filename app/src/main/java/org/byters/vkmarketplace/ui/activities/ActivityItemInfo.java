@@ -66,6 +66,7 @@ public class ActivityItemInfo extends ActivityBase
         setTitle(item.getTitle());
 
         ((TextView) findViewById(R.id.tvDescription)).setText(Html.fromHtml(item.getDescription()));
+        ((TextView) findViewById(R.id.tvPrice)).setText(item.getPrice().getText());
 
         if (item.getPhotos() != null
                 && item.getPhotos().size() > 0 &&
