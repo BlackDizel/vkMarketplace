@@ -2,11 +2,14 @@ package org.byters.vkmarketplace.model.dataclasses;
 
 import android.support.annotation.Nullable;
 
+import org.byters.vkmarketplace.model.models.ModelItems;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Cart implements Serializable {
     private ArrayList<CartEntry> items;
+    @Nullable
     private String comment;
 
     public void addItem(int itemId) {
@@ -29,6 +32,7 @@ public class Cart implements Serializable {
         }
     }
 
+    @Nullable
     public String getComment() {
         return comment;
     }
@@ -45,5 +49,21 @@ public class Cart implements Serializable {
     public CartEntry getItem(int position) {
         if (items == null || position < 0 || position >= items.size()) return null;
         return items.get(position);
+    }
+
+    @Nullable
+    public String getItemsText(ModelItems model) {
+        if (getItemsSize() == 0) return null;
+        String result = null;
+        for (CartEntry item : items) {
+            if (result == null) result = "";
+            MarketplaceItem marketInfo = model.getItemById(item.getItemId());
+            String marketInfoText;
+            if (marketInfo == null) marketInfoText = "";
+            else marketInfoText = marketInfo.getTitle();
+            result = String.format("%s\n%d: %s, %d"
+                    , result, item.getItemId(), marketInfoText, item.getQuantity());
+        }
+        return result;
     }
 }
