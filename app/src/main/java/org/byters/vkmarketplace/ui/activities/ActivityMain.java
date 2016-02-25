@@ -33,9 +33,6 @@ public class ActivityMain extends ActivityBase implements ItemsUpdateListener, S
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (!((ControllerMain) getApplicationContext()).isAuth())
-            startActivity(new Intent(this, ActivityLogin.class));
-
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.srlItems);
         refreshLayout.setOnRefreshListener(this);
@@ -80,6 +77,9 @@ public class ActivityMain extends ActivityBase implements ItemsUpdateListener, S
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (!((ControllerMain) getApplicationContext()).isAuth())
+            startActivity(new Intent(this, ActivityLogin.class));
 
         ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
     }
