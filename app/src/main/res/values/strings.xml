@@ -10,4 +10,8 @@
     <string name="alert_buy_positive_button">оформить заказ</string>
     <string name="alert_buy_comment_hint">Укажите комментарий к заказу</string>
     <string name="item_cart_error_value">no data</string>
+    <string name="request_buy_error_no_app_found">не найдено приложение для отправки писем</string>
+    <string name="request_buy_email">example@mail.com</string>
+    <string name="request_buy_email_title">Заказ</string>
+    <string name="requset_buy_error_no_products">нет добавленных позиций</string>
 </resources>

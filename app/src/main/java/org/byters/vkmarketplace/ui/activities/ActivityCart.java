@@ -43,6 +43,7 @@ public class ActivityCart extends ActivityBase
     @Override
     protected void onResume() {
         super.onResume();
+        adapter.notifyDataSetChanged();
         ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
     }
 
@@ -119,7 +120,7 @@ public class ActivityCart extends ActivityBase
         if (etComment != null)
             controllerCart.setComment(this, etComment.getText().toString());
 
-        controllerCart.trySendBuyRequest();
+        controllerCart.trySendBuyRequest(this, findViewById(R.id.rootView));
     }
 
     //region itemDecorator
