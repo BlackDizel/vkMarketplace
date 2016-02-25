@@ -32,9 +32,9 @@ public class ActivityCart extends ActivityBase
 
     @Nullable
     EditText etComment;
-
     @Nullable
     CartAdapter adapter;
+    @Nullable
     SwipeRefreshLayout refreshLayout;
 
     public static void display(Context context) {
