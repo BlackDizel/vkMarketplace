@@ -59,7 +59,7 @@ public class ActivityMain extends ActivityBase implements ItemsUpdateListener, S
             case R.id.action_cart:
                 ActivityCart.display(this);
                 break;
-            case R.id.action_view_market: {
+            case R.id.action_view_market:
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(getString(R.string.market_address)));
                 if (intent.resolveActivity(getPackageManager()) != null) {
@@ -68,7 +68,10 @@ public class ActivityMain extends ActivityBase implements ItemsUpdateListener, S
                     Snackbar.make(findViewById(R.id.rootView), R.string.action_view_browser_error, Snackbar.LENGTH_SHORT).show();
                 }
                 break;
-            }
+            case R.id.action_favorites_show:
+                //todo navigate to fav page
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }

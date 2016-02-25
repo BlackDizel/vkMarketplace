@@ -18,4 +18,5 @@
     <string name="market_address">http://vk.com/katriniya_group</string>
     <string name="action_view_browser_error">не найден браузер</string>
     <string name="action_favorite">избранное</string>
+    <string name="action_favorites">избранные товары</string>
 </resources>

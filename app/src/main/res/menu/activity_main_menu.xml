@@ -11,5 +11,9 @@
         android:id="@+id/action_view_market"
         android:title="@string/action_view_market"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_favorites_show"
+        android:title="@string/action_favorites"
+        app:showAsAction="never" />
 
 </menu>
