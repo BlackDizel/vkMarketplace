@@ -63,6 +63,7 @@ public class ActivityItemInfo extends ActivityBase
         MarketplaceItem item = ((ControllerMain) getApplicationContext()).getControllerItems().getModel().getItemById(id);
         if (item == null) return;
 
+        setTitle(item.getTitle());
 
         ((TextView) findViewById(R.id.tvDescription)).setText(Html.fromHtml(item.getDescription()));
 
