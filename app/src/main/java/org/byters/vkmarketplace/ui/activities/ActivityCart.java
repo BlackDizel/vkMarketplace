@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -27,23 +28,23 @@ import org.byters.vkmarketplace.ui.adapters.CartAdapter;
 import java.util.ArrayList;
 
 public class ActivityCart extends ActivityBase
-        implements AlertDialog.OnClickListener, ItemsUpdateListener {
+        implements AlertDialog.OnClickListener, ItemsUpdateListener, SwipeRefreshLayout.OnRefreshListener {
 
     @Nullable
     EditText etComment;
 
     @Nullable
     CartAdapter adapter;
+    SwipeRefreshLayout refreshLayout;
 
     public static void display(Context context) {
         context.startActivity(new Intent(context, ActivityCart.class));
     }
 
-    //region listeners
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.notifyDataSetChanged();
+        adapter.updateData();
         ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
     }
 
@@ -57,8 +58,9 @@ public class ActivityCart extends ActivityBase
     public void onUpdated(ArrayList<MarketplaceItem> data) {
         if (adapter != null)
             adapter.updateData();
+        if (refreshLayout != null)
+            refreshLayout.setRefreshing(false);
     }
-    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +77,8 @@ public class ActivityCart extends ActivityBase
         rvItems.setAdapter(adapter);
         rvItems.addItemDecoration(new ItemDecoration(this));
 
-        //todo implement swipe refresh layout
-
+        refreshLayout = ((SwipeRefreshLayout) findViewById(R.id.srlItems));
+        refreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -121,6 +123,11 @@ public class ActivityCart extends ActivityBase
             controllerCart.setComment(this, etComment.getText().toString());
 
         controllerCart.trySendBuyRequest(this, findViewById(R.id.rootView));
+    }
+
+    @Override
+    public void onRefresh() {
+        ((ControllerMain) getApplicationContext()).updateMarketList();
     }
 
     //region itemDecorator
