@@ -8,6 +8,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import org.byters.vkmarketplace.controllers.controllers.ControllerAuth;
 import org.byters.vkmarketplace.controllers.controllers.ControllerCart;
+import org.byters.vkmarketplace.controllers.controllers.ControllerFavorites;
 import org.byters.vkmarketplace.controllers.controllers.ControllerItemInfo;
 import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
 import org.byters.vkmarketplace.controllers.controllers.utils.OnItemUpdateListener;
@@ -19,6 +20,7 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
     private ControllerItems controllerItems;
     private ControllerItemInfo controllerItemInfo;
     private ControllerCart controllerCart;
+    private ControllerFavorites controllerFavorites;
 
     public ControllerItems getControllerItems() {
         return controllerItems;
@@ -32,6 +34,10 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
         return controllerCart;
     }
 
+    public ControllerFavorites getControllerFavorites() {
+        return controllerFavorites;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -43,6 +49,7 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
         controllerItemInfo = new ControllerItemInfo();
         controllerItemInfo.addItemInfoUpdatedListener(this);
         controllerCart = new ControllerCart(this);
+        controllerFavorites = new ControllerFavorites(this);
     }
 
     public boolean isAuth() {
