@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -95,12 +96,37 @@ public class ActivityItemInfo extends ActivityBase
     }
     //endregion
 
+
+    //region menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_item_info_menu, menu);
+
+        checkFav(menu.findItem(R.id.action_favorite));
+        //todo check if favorited
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void checkFav(MenuItem item) {
+        boolean isFav = ((ControllerMain) getApplicationContext()).getControllerFavorites().isFavorite(id);
+        item.setIcon(getResources().getDrawable(isFav ? R.drawable.ic_star_white_24dp : R.drawable.ic_star_border_white_24dp));
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home)
-            onBackPressed();
+        switch (item.getItemId()) {
+            case R.id.action_favorite:
+                ((ControllerMain) getApplicationContext()).getControllerFavorites().toggleFavorite(this, id);
+
+                checkFav(item);
+                break;
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
+    //endregion
 
     @Override
     public void onUpdated(ArrayList<MarketplaceItem> data) {
