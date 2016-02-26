@@ -69,7 +69,7 @@ public class ActivityMain extends ActivityBase implements ItemsUpdateListener, S
                 }
                 break;
             case R.id.action_favorites_show:
-                //todo navigate to fav page
+                ActivityFavorites.display(this);
                 break;
 
         }
