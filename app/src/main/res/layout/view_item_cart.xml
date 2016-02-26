@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <ImageView
@@ -13,17 +12,23 @@
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/item_cart_text_margin"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="@dimen/item_cart_text_margin" />
 
     <TextView
         android:id="@+id/tvQuantity"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/item_cart_text_margin" />
+        android:layout_height="match_parent"
+        android:padding="@dimen/item_cart_text_margin"
+        android:text="0" />
 
-    <!--todo add remove button -->
-    <!--todo add edit quantitiy ability-->
-
+    <ImageView
+        android:id="@+id/ivRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/item_cart_text_margin"
+        android:paddingStart="@dimen/item_cart_text_margin"
+        android:scaleType="fitStart"
+        android:src="@drawable/ic_delete_black_24dp" />
 </LinearLayout>
