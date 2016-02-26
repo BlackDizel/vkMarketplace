@@ -25,6 +25,15 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
+
+    <TextView
+        android:id="@+id/tvNoItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/cart_no_items"
+        android:visibility="gone" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srlItems"
         android:layout_width="match_parent"

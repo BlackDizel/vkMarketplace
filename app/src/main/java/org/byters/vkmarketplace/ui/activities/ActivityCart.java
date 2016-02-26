@@ -41,10 +41,23 @@ public class ActivityCart extends ActivityBase
         context.startActivity(new Intent(context, ActivityCart.class));
     }
 
+    public void checkState() {
+        int size = ((ControllerMain) getApplicationContext()).getControllerCart().getCartItemsSize();
+        if (size == 0) {
+            findViewById(R.id.tvNoItems).setVisibility(View.VISIBLE);
+            refreshLayout.setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.tvNoItems).setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.VISIBLE);
+        }
+        adapter.updateData();
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.updateData();
+        checkState();
         ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
     }
 
@@ -56,10 +69,9 @@ public class ActivityCart extends ActivityBase
 
     @Override
     public void onUpdated(ArrayList<MarketplaceItem> data) {
-        if (adapter != null)
-            adapter.updateData();
         if (refreshLayout != null)
             refreshLayout.setRefreshing(false);
+        checkState();
     }
 
     @Override

@@ -20,4 +20,5 @@
     <string name="action_favorite">избранное</string>
     <string name="action_favorites">избранные товары</string>
     <string name="button_save">Cохранить</string>
+    <string name="cart_no_items">no items found on cart</string>
 </resources>
