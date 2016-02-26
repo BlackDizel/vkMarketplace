@@ -86,4 +86,18 @@ public class ControllerCart {
     public CartEntry getCartItem(int position) {
         return cart == null ? null : cart.getItem(position);
     }
+
+    @Nullable
+    public CartEntry getCartItemById(int id) {
+        return cart == null ? null : cart.getItemById(id);
+    }
+
+    public int getCartItemPosition(int id) {
+        return cart == null ? Cart.NO_VALUE : cart.getItemPosition(id);
+    }
+
+    public void removeItem(int pos) {
+        if (cart == null) return;
+        cart.removeItem(pos);
+    }
 }

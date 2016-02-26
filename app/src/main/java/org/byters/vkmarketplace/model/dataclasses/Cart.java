@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Cart implements Serializable {
+    public static final int NO_VALUE = -1;
     private ArrayList<CartEntry> items;
     @Nullable
     private String comment;
@@ -65,5 +66,27 @@ public class Cart implements Serializable {
                     , result, item.getItemId(), marketInfoText, item.getQuantity());
         }
         return result;
+    }
+
+    @Nullable
+    public CartEntry getItemById(int id) {
+        if (items == null) return null;
+        for (CartEntry item : items)
+            if (item.getItemId() == id)
+                return item;
+        return null;
+    }
+
+    public int getItemPosition(int id) {
+        if (items == null) return NO_VALUE;
+        for (CartEntry item : items)
+            if (item.getItemId() == id)
+                return items.indexOf(item);
+        return NO_VALUE;
+    }
+
+    public void removeItem(int position) {
+        if (items == null || position < 0 || position >= items.size()) return;
+        items.remove(position);
     }
 }
