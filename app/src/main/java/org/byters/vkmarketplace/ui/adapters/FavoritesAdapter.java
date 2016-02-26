@@ -13,6 +13,7 @@ import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.ControllerFavorites;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
+import org.byters.vkmarketplace.ui.activities.ActivityFavorites;
 import org.byters.vkmarketplace.ui.activities.ActivityItemInfo;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.ViewHolder> {
@@ -80,6 +81,8 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
                 if (pos == ControllerFavorites.NO_VALUE) return;
                 controllerMain.getControllerFavorites().removeItem(pos);
                 notifyItemRemoved(pos);
+                if (itemView.getContext() instanceof ActivityFavorites)
+                    ((ActivityFavorites) itemView.getContext()).checkState();
             }
             if (v == itemView) {
                 ActivityItemInfo.display(itemView.getContext(), id);

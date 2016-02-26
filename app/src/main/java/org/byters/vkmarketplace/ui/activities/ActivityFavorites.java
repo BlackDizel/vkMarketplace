@@ -24,11 +24,23 @@ public class ActivityFavorites extends ActivityBase {
         context.startActivity(intent);
     }
 
+    public void checkState() {
+        int size = ((ControllerMain) getApplicationContext()).getControllerFavorites().getSize();
+        if (size == 0) {
+            findViewById(R.id.tvNoItems).setVisibility(View.VISIBLE);
+            findViewById(R.id.rvItems).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.tvNoItems).setVisibility(View.GONE);
+            findViewById(R.id.rvItems).setVisibility(View.VISIBLE);
+        }
+        adapter.updateData();
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,7 +63,7 @@ public class ActivityFavorites extends ActivityBase {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.updateData();
+        checkState();
     }
     //endregion
 
