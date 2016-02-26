@@ -19,6 +19,7 @@ import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.model.dataclasses.Cart;
 import org.byters.vkmarketplace.model.dataclasses.CartEntry;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
+import org.byters.vkmarketplace.ui.activities.ActivityItemInfo;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
@@ -66,6 +67,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
             tvQuantity.setOnClickListener(this);
             itemView.findViewById(R.id.ivRemove).setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         public void setData(int position) {
@@ -116,6 +118,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     controllerMain.getControllerCart().removeItem(pos);
                     notifyItemRemoved(pos);
                     break;
+            }
+            if (v == itemView) {
+                ActivityItemInfo.display(itemView.getContext(), id);
             }
         }
 
