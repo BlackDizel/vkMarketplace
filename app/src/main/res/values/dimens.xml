@@ -8,4 +8,5 @@
     <dimen name="item_cart_image_size">80dp</dimen>
     <dimen name="item_cart_text_margin">16dp</dimen>
     <dimen name="view_item_cart_list_margin">8dp</dimen>
+    <dimen name="view_item_fav_list_margin">8dp</dimen>
 </resources>

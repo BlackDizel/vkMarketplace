@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/ivItem"
+        android:layout_width="@dimen/item_cart_image_size"
+        android:layout_height="@dimen/item_cart_image_size" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="@dimen/item_cart_text_margin" />
+
+    <ImageView
+        android:id="@+id/ivRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/item_cart_text_margin"
+        android:paddingStart="@dimen/item_cart_text_margin"
+        android:scaleType="fitStart"
+        android:src="@drawable/ic_delete_black_24dp" />
+</LinearLayout>
