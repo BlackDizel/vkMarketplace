@@ -19,4 +19,5 @@
     <string name="action_view_browser_error">не найден браузер</string>
     <string name="action_favorite">избранное</string>
     <string name="action_favorites">избранные товары</string>
+    <string name="button_save">Cохранить</string>
 </resources>
