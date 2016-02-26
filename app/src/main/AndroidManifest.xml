@@ -20,7 +20,8 @@
         </activity>
         <activity android:name=".ui.activities.ActivityLogin" />
         <activity android:name=".ui.activities.ActivityItemInfo" />
-        <activity android:name=".ui.activities.ActivityCart"/>
+        <activity android:name=".ui.activities.ActivityCart" />
+        <activity android:name=".ui.activities.ActivityFavorites" />
     </application>
 
 </manifest>
