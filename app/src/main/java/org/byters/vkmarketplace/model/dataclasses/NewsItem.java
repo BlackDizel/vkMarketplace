@@ -9,6 +9,11 @@ import java.util.ArrayList;
 public class NewsItem implements Serializable {
     ArrayList<NewsAttachment> attachments;
     private String text;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
 
     public String getText() {
         return text;
