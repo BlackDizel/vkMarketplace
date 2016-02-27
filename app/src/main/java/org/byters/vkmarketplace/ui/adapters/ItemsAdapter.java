@@ -1,8 +1,11 @@
 package org.byters.vkmarketplace.ui.adapters;
 
 import android.app.Activity;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,9 @@ import org.byters.vkmarketplace.ui.activities.ActivityItemInfo;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
 
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_ITEM = 1;
+
     private ControllerMain controllerMain;
 
     public ItemsAdapter(@NonNull ControllerMain controllerMain) {
@@ -26,8 +32,16 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.view_list_items, parent, false));
+        if (viewType == TYPE_ITEM)
+            return new ViewHolderItem(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.view_list_items, parent, false));
+        else return new ViewHolderHeader(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.view_list_items_header, parent, false));
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position == 0 ? TYPE_HEADER : TYPE_ITEM;
     }
 
     @Override
@@ -44,12 +58,64 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        public void setData(int position) {
+        }
+    }
+
+    public class ViewHolderHeader extends ViewHolder {
+
+        RecyclerView rvHeader;
+        NewsAdapter adapter;
+
+        public ViewHolderHeader(View itemView) {
+            super(itemView);
+            rvHeader = (RecyclerView) itemView.findViewById(R.id.rvHeader);
+            rvHeader.setLayoutManager(new LinearLayoutManager(controllerMain, LinearLayoutManager.HORIZONTAL, false));
+            adapter = new NewsAdapter(controllerMain);
+            rvHeader.setAdapter(adapter);
+            rvHeader.addItemDecoration(new ItemDecoration());
+        }
+
+        @Override
+        public void setData(int position) {
+            adapter.notifyDataSetChanged();
+        }
+
+        //region itemDecorator
+        private class ItemDecoration extends RecyclerView.ItemDecoration {
+
+            private int margin;
+
+            public ItemDecoration() {
+                margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP
+                        , controllerMain.getResources().getDimension(R.dimen.view_item_news_margin)
+                        , controllerMain.getResources().getDisplayMetrics());
+            }
+
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+
+                int position = parent.getChildLayoutPosition(view);
+                if (position != 0)
+                    outRect.left = margin;
+            }
+        }
+        //endregion
+    }
+
+    public class ViewHolderItem extends ViewHolder implements View.OnClickListener {
         ImageView ivItem;
         TextView tvTitle, tvPrice;
         private int id;
 
-        public ViewHolder(View itemView) {
+        public ViewHolderItem(View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvPrice = (TextView) itemView.findViewById(R.id.tvPrice);
@@ -57,8 +123,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             itemView.setOnClickListener(this);
         }
 
+        @Override
         public void setData(int position) {
-            MarketplaceItem item = controllerMain.getControllerItems().getModel().get(position);
+            MarketplaceItem item = controllerMain.getControllerItems().getModel().get(position - 1);
             if (item == null) return; //maybe need to throw error here, hm?
             tvTitle.setText(item.getTitle());
             if (item.getPrice() != null)

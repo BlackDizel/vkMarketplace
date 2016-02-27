@@ -18,12 +18,13 @@ import android.view.View;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
-import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
+import org.byters.vkmarketplace.controllers.controllers.utils.NewsUpdateListener;
 import org.byters.vkmarketplace.ui.adapters.ItemsAdapter;
 
 import java.util.ArrayList;
 
-public class ActivityMain extends ActivityBase implements ItemsUpdateListener, SwipeRefreshLayout.OnRefreshListener {
+public class ActivityMain extends ActivityBase
+        implements ItemsUpdateListener, NewsUpdateListener, SwipeRefreshLayout.OnRefreshListener {
 
     private SwipeRefreshLayout refreshLayout;
     private ItemsAdapter adapter;
@@ -41,7 +42,9 @@ public class ActivityMain extends ActivityBase implements ItemsUpdateListener, S
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.rvItems);
         int columns = getResources().getInteger(R.integer.items_list_columns);
-        rv.setLayoutManager(new GridLayoutManager(this, columns));
+        GridLayoutManager manager = new GridLayoutManager(this, columns);
+        manager.setSpanSizeLookup(new SpanSizeLookupWithHeader());
+        rv.setLayoutManager(manager);
         rv.addItemDecoration(new ItemDecoration(this));
         rv.setAdapter(adapter);
     }
@@ -75,7 +78,6 @@ public class ActivityMain extends ActivityBase implements ItemsUpdateListener, S
         }
         return super.onOptionsItemSelected(item);
     }
-    //endregion
 
     @Override
     protected void onResume() {
@@ -85,17 +87,20 @@ public class ActivityMain extends ActivityBase implements ItemsUpdateListener, S
             startActivity(new Intent(this, ActivityLogin.class));
 
         ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
+        ((ControllerMain) getApplicationContext()).getControllerNews().addListener(this);
     }
+    //endregion
 
     @Override
     protected void onPause() {
         super.onPause();
         ((ControllerMain) getApplicationContext()).getControllerItems().removeListener(this);
+        ((ControllerMain) getApplicationContext()).getControllerNews().removeListener(this);
     }
 
     //region update data
     @Override
-    public void onUpdated(ArrayList<MarketplaceItem> data) {
+    public void onUpdated(ArrayList data) {
         if (refreshLayout != null) refreshLayout.setRefreshing(false);
         if (adapter != null && data != null) adapter.updateData();
     }
@@ -103,6 +108,15 @@ public class ActivityMain extends ActivityBase implements ItemsUpdateListener, S
     @Override
     public void onRefresh() {
         ((ControllerMain) getApplicationContext()).updateMarketList();
+        ((ControllerMain) getApplicationContext()).updateNews();
+    }
+
+    private class SpanSizeLookupWithHeader extends GridLayoutManager.SpanSizeLookup {
+
+        @Override
+        public int getSpanSize(int position) {
+            return position == 0 ? 2 : 1;
+        }
     }
     //endregion
 
@@ -125,7 +139,11 @@ public class ActivityMain extends ActivityBase implements ItemsUpdateListener, S
             int position = parent.getChildLayoutPosition(view);
 
             outRect.top = 2 * margin;
-            if (position % 2 == 1) {
+
+            if (position == 0) {
+                outRect.right = 2 * margin;
+                outRect.left = 2 * margin;
+            } else if (position % 2 == 0) {
                 outRect.right = 2 * margin;
                 outRect.left = margin;
             } else {
