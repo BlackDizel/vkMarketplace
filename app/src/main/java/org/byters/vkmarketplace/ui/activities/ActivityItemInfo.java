@@ -2,12 +2,16 @@ package org.byters.vkmarketplace.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +25,7 @@ import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
 import org.byters.vkmarketplace.controllers.controllers.utils.OnItemUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
+import org.byters.vkmarketplace.ui.adapters.PhotosAdapter;
 
 import java.util.ArrayList;
 
@@ -31,6 +36,7 @@ public class ActivityItemInfo extends ActivityBase
     private final static int NO_VALUE = -1;
 
     private int id;
+    private PhotosAdapter photosAdapter;
 
     public static void display(Context context, int id) {
         Intent intent = new Intent(context, ActivityItemInfo.class);
@@ -50,6 +56,12 @@ public class ActivityItemInfo extends ActivityBase
         id = getIntent().getIntExtra(INTENT_EXTRA_ITEM_ID, NO_VALUE);
 
         findViewById(R.id.fabCart).setOnClickListener(this);
+
+        RecyclerView rvPhotos = (RecyclerView) findViewById(R.id.rvPhotos);
+        rvPhotos.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.photos_columns)));
+        rvPhotos.addItemDecoration(new ItemDecoration(this));
+        photosAdapter = new PhotosAdapter();
+        rvPhotos.setAdapter(photosAdapter);
 
         setData();
     }
@@ -75,6 +87,9 @@ public class ActivityItemInfo extends ActivityBase
             ImageLoader.getInstance().displayImage(item.getPhotos().get(0).getSrc_big(), (ImageView) findViewById(R.id.ivItem));
         else if (!TextUtils.isEmpty(item.getThumb_photo()))
             ImageLoader.getInstance().displayImage(item.getThumb_photo(), (ImageView) findViewById(R.id.ivItem));
+
+        if (item.getPhotosSize() > 1)
+            photosAdapter.updateData(item);
     }
 
     //region listener
@@ -157,4 +172,35 @@ public class ActivityItemInfo extends ActivityBase
                     .show();
         }
     }
+
+    //region itemDecorator
+    private class ItemDecoration extends RecyclerView.ItemDecoration {
+
+        private int margin;
+
+        public ItemDecoration(Context context) {
+            margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP
+                    , context.getResources().getDimension(R.dimen.view_photos_list_margin)
+                    , context.getResources().getDisplayMetrics());
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+
+            int position = parent.getChildLayoutPosition(view);
+
+            outRect.top = 2 * margin;
+            if (position % 2 == 1) {
+                outRect.right = 2 * margin;
+                outRect.left = margin;
+            } else {
+                outRect.right = margin;
+                outRect.left = 2 * margin;
+
+                //margins sum = const
+            }
+        }
+    }
+    //endregion
 }

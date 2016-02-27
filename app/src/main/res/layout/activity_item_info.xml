@@ -76,6 +76,11 @@
                 android:paddingEnd="@dimen/item_info_text_padding"
                 android:paddingStart="@dimen/item_info_text_padding" />
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvPhotos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>
