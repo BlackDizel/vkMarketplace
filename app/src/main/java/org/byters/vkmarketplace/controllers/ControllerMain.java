@@ -21,6 +21,7 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
     private ControllerItemInfo controllerItemInfo;
     private ControllerCart controllerCart;
     private ControllerFavorites controllerFavorites;
+    private ControllerNews controllerNews;
 
     public ControllerItems getControllerItems() {
         return controllerItems;
@@ -38,6 +39,10 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
         return controllerFavorites;
     }
 
+    public ControllerNews getControllerNews() {
+        return controllerNews;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -50,6 +55,7 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
         controllerItemInfo.addItemInfoUpdatedListener(this);
         controllerCart = new ControllerCart(this);
         controllerFavorites = new ControllerFavorites(this);
+        controllerNews = new ControllerNews(this);
     }
 
     public boolean isAuth() {
@@ -59,12 +65,17 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
     public void setToken(@NonNull String key) {
         controllerAuth.setToken(this, key);
         controllerItems.updateData(this, key);
+        controllerNews.updateData(this);
 
         //todo update detailed item info
     }
 
     public void updateMarketList() {
         controllerItems.updateData(this, controllerAuth.getToken());
+    }
+
+    public void updateNews() {
+        controllerNews.updateData(this);
     }
 
     public void updateDetailedItemInfo(int itemId) {
