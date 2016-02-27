@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/view_news_item_width"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/black_dark_transparent"
+        android:ellipsize="end"
+        android:lines="3"
+        android:padding="@dimen/view_news_list_padding"
+        android:textColor="@color/white" />
+</FrameLayout>
