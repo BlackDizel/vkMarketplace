@@ -1,5 +1,7 @@
 package org.byters.vkmarketplace.model.dataclasses;
 
+import android.support.annotation.Nullable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -33,5 +35,16 @@ public class MarketplaceItem implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public int getPhotosSize() {
+        return photos == null ? 0 : photos.size();
+    }
+
+    @Nullable
+    public String getPhotoByPosition(int position) {
+        if (photos == null) return null;
+        if (position < 0 || position >= photos.size()) return null;
+        return photos.get(position).getSrc_big();
     }
 }
