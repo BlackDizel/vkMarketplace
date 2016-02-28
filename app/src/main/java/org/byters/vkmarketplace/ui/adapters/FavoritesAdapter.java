@@ -12,9 +12,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.ControllerFavorites;
+import org.byters.vkmarketplace.model.dataclasses.FavoriteItem;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.activities.ActivityFavorites;
 import org.byters.vkmarketplace.ui.activities.ActivityItemInfo;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.ViewHolder> {
     private ControllerMain controllerMain;
@@ -47,13 +51,15 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        private TextView tvTitle;
+        private static final int NO_VALUE = -1;
+        private TextView tvTitle, tvDate;
         private ImageView ivItem;
         private int id;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            tvDate = (TextView) itemView.findViewById(R.id.tvDate);
             ivItem = (ImageView) itemView.findViewById(R.id.ivItem);
 
             itemView.findViewById(R.id.ivRemove).setOnClickListener(this);
@@ -61,21 +67,33 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         }
 
         public void setData(int position) {
-            id = controllerMain.getControllerFavorites().getItem(position);
+            FavoriteItem favItem = controllerMain.getControllerFavorites().getItem(position);
+            if (favItem == null) {
+                tvTitle.setText(R.string.item_cart_error_value);
+                tvDate.setText(R.string.item_cart_error_value);
+                ivItem.setImageDrawable(null);
+                id = NO_VALUE;
+                return;
+            }
+
+            id = favItem.getId();
             MarketplaceItem item = controllerMain.getControllerItems().getModel().getItemById(id);
 
             if (item == null) {
                 tvTitle.setText(R.string.item_cart_error_value);
+                tvDate.setText(R.string.item_cart_error_value);
                 ivItem.setImageDrawable(null);
                 return;
             }
 
             tvTitle.setText(item.getTitle());
+            tvDate.setText(new SimpleDateFormat(controllerMain.getString(R.string.fav_date_format)).format(new Date(favItem.getTime_added())));
             ImageLoader.getInstance().displayImage(item.getThumb_photo(), ivItem);
         }
 
         @Override
         public void onClick(View v) {
+            if (id == NO_VALUE) return;
             if (v.getId() == R.id.ivRemove) {
                 int pos = controllerMain.getControllerFavorites().getItemPosition(id);
                 if (pos == ControllerFavorites.NO_VALUE) return;

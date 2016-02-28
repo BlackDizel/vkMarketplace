@@ -10,12 +10,29 @@
         android:layout_width="@dimen/item_cart_image_size"
         android:layout_height="@dimen/item_cart_image_size" />
 
-    <TextView
-        android:id="@+id/tvTitle"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="@dimen/item_cart_text_margin" />
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/item_cart_text_margin"
+        android:paddingStart="@dimen/item_cart_text_margin">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="2"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/ivRemove"
