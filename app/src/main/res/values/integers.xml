@@ -4,4 +4,5 @@
     <integer name="market">-94800461</integer>
     <integer name="photos_columns">2</integer>
     <integer name="max_lines_market_list">3</integer>
+    <integer name="splash_time">1000</integer>
 </resources>

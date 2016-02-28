@@ -29,6 +29,10 @@ public class ActivityMain extends ActivityBase
     private SwipeRefreshLayout refreshLayout;
     private ItemsAdapter adapter;
 
+    public static void display(Context context) {
+        context.startActivity(new Intent(context, ActivityMain.class));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
