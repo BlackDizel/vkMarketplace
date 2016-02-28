@@ -2,6 +2,7 @@ package org.byters.vkmarketplace.model.dataclasses;
 
 import android.support.annotation.Nullable;
 
+import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
 import org.byters.vkmarketplace.model.models.ModelItems;
 
 import java.io.Serializable;
@@ -88,5 +89,17 @@ public class Cart implements Serializable {
     public void removeItem(int position) {
         if (items == null || position < 0 || position >= items.size()) return;
         items.remove(position);
+    }
+
+    public int getCost(ControllerItems controllerItems) {
+        if (items == null) return 0;
+        int sum = 0;
+        for (CartEntry item : items) {
+            MarketplaceItem mItem = controllerItems.getModel().getItemById(item.getItemId());
+            if (mItem == null) continue;
+            int cost = mItem.getPrice().getAmount() / 100;
+            sum += item.getQuantity() * cost;
+        }
+        return sum;
     }
 }

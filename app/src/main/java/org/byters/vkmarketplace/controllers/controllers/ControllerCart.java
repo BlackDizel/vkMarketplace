@@ -100,4 +100,9 @@ public class ControllerCart {
         if (cart == null) return;
         cart.removeItem(pos);
     }
+
+    public int getCost(ControllerItems controllerItems) {
+        if (cart == null) return 0;
+        return cart.getCost(controllerItems);
+    }
 }
