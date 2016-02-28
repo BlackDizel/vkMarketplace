@@ -144,6 +144,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             int pos = controllerMain.getControllerCart().getCartItemPosition(id);
             if (pos == Cart.NO_VALUE) return;
             notifyItemChanged(pos);
+
+            if (tvTitle.getContext() instanceof ActivityCart)
+                ((ActivityCart) tvTitle.getContext()).checkState();
         }
     }
 }

@@ -14,4 +14,6 @@
     <dimen name="view_news_item_width">320dp</dimen>
     <dimen name="view_item_news_margin">8dp</dimen>
     <dimen name="view_photos_list_margin">4dp</dimen>
+    <dimen name="cart_cost_text_padding_vertical">8dp</dimen>
+    <dimen name="cart_cost_text_padding_horizontal">16dp</dimen>
 </resources>

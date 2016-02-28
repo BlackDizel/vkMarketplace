@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
@@ -36,6 +37,9 @@ public class ActivityCart extends ActivityBase
     CartAdapter adapter;
     @Nullable
     SwipeRefreshLayout refreshLayout;
+    @Nullable
+    View contentView;
+    TextView tvCost;
 
     public static void display(Context context) {
         context.startActivity(new Intent(context, ActivityCart.class));
@@ -45,10 +49,13 @@ public class ActivityCart extends ActivityBase
         int size = ((ControllerMain) getApplicationContext()).getControllerCart().getCartItemsSize();
         if (size == 0) {
             findViewById(R.id.tvNoItems).setVisibility(View.VISIBLE);
-            refreshLayout.setVisibility(View.GONE);
+            contentView.setVisibility(View.GONE);
         } else {
+            ControllerMain controllerMain = ((ControllerMain) getApplicationContext());
+            int cost = controllerMain.getControllerCart().getCost(controllerMain.getControllerItems());
+            tvCost.setText(String.format(getString(R.string.cart_general_cost_format), cost));
             findViewById(R.id.tvNoItems).setVisibility(View.GONE);
-            refreshLayout.setVisibility(View.VISIBLE);
+            contentView.setVisibility(View.VISIBLE);
         }
         adapter.updateData();
     }
@@ -82,6 +89,9 @@ public class ActivityCart extends ActivityBase
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        contentView = findViewById(R.id.contentView);
+        tvCost = (TextView) findViewById(R.id.tvCost);
 
         RecyclerView rvItems = (RecyclerView) findViewById(R.id.rvItems);
         rvItems.setLayoutManager(new LinearLayoutManager(this));
