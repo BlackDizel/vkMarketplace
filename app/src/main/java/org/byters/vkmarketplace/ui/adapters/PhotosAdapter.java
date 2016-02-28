@@ -15,6 +15,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
+import org.byters.vkmarketplace.ui.dialogs.DialogImage;
 
 public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder> {
     private static final int TYPE_HEADER = 0;
@@ -53,13 +54,15 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
-    private class ViewHolderItem extends ViewHolder {
+    private class ViewHolderItem extends ViewHolder implements View.OnClickListener {
         private ImageView imageView;
+        @Nullable
+        private String uri;
 
         public ViewHolderItem(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.ivItem);
-
+            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -68,10 +71,16 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
                 imageView.setImageDrawable(null);
                 return;
             }
-            String uri = data.getPhotoByPosition(position-1);
+            uri = data.getPhotoByPosition(position - 1);
             if (TextUtils.isEmpty(uri))
                 imageView.setImageDrawable(null);
             else ImageLoader.getInstance().displayImage(uri, imageView);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (uri == null) return;
+            new DialogImage(v.getContext(), uri).show();
         }
     }
 
