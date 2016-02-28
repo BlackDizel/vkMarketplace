@@ -51,7 +51,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return controllerMain.getControllerItems().getModel().getSize();
+        return controllerMain.getControllerItems().getModel().getSize() + 1;
     }
 
     public void updateData() {
