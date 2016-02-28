@@ -22,4 +22,6 @@
     <string name="button_save">Cохранить</string>
     <string name="cart_no_items">В корзине ничего нет</string>
     <string name="no_fav_items_found">Нет избранных позиций</string>
+    <string name="activity_cart_title">Корзина</string>
+    <string name="activity_fav_title">Избранное</string>
 </resources>
