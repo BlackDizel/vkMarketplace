@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
@@ -74,7 +74,8 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
             uri = data.getPhotoByPosition(position - 1);
             if (TextUtils.isEmpty(uri))
                 imageView.setImageDrawable(null);
-            else ImageLoader.getInstance().displayImage(uri, imageView);
+            else
+                Picasso.with(imageView.getContext()).load(uri).into(imageView);
         }
 
         @Override

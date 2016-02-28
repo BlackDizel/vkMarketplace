@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
@@ -80,9 +80,9 @@ public class ActivityItemInfo extends ActivityBase
         if (item.getPhotos() != null
                 && item.getPhotos().size() > 0 &&
                 !TextUtils.isEmpty(item.getPhotos().get(0).getSrc_big()))
-            ImageLoader.getInstance().displayImage(item.getPhotos().get(0).getSrc_big(), (ImageView) findViewById(R.id.ivItem));
+            Picasso.with(this).load(item.getPhotos().get(0).getSrc_big()).into((ImageView) findViewById(R.id.ivItem));
         else if (!TextUtils.isEmpty(item.getThumb_photo()))
-            ImageLoader.getInstance().displayImage(item.getThumb_photo(), (ImageView) findViewById(R.id.ivItem));
+            Picasso.with(this).load(item.getThumb_photo()).into((ImageView) findViewById(R.id.ivItem));
 
         if (item.getPhotosSize() > 1)
             photosAdapter.updateData(item);

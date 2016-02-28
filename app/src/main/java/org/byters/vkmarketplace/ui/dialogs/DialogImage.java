@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 
@@ -24,7 +24,7 @@ public class DialogImage {
                 .create();
 
         ImageView imgView = (ImageView) view.findViewById(R.id.ivPhoto);
-        ImageLoader.getInstance().displayImage(uri, imgView);
+        Picasso.with(context).load(uri).into(imgView);
     }
 
     public void show() {

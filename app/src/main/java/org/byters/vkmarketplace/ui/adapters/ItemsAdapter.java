@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
@@ -138,7 +138,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 if (item.getPrice() != null && !TextUtils.isEmpty(item.getPrice().getText()))
                     tvPrice.setText(item.getPrice().getText().toUpperCase().replace(".", ""));
                 else tvPrice.setText("");
-                ImageLoader.getInstance().displayImage(item.getThumb_photo(), ivItem);
+                Picasso.with(controllerMain).load(item.getThumb_photo()).into(ivItem);
                 id = item.getId();
             }
         }

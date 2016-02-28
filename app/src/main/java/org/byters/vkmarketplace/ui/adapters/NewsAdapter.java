@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
@@ -70,7 +70,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 textView.setText(item.getText());
                 String url = item.getPhotoUri();
                 if (!TextUtils.isEmpty(url))
-                    ImageLoader.getInstance().displayImage(url, ivItem);
+                    Picasso.with(controllerMain).load(url).into(ivItem);
             }
         }
 

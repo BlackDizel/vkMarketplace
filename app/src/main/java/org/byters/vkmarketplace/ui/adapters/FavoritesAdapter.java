@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
@@ -88,7 +88,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
             tvTitle.setText(item.getTitle());
             tvDate.setText(new SimpleDateFormat(controllerMain.getString(R.string.fav_date_format)).format(new Date(favItem.getTime_added())));
-            ImageLoader.getInstance().displayImage(item.getThumb_photo(), ivItem);
+            Picasso.with(controllerMain).load(item.getThumb_photo()).into(ivItem);
         }
 
         @Override

@@ -3,9 +3,6 @@ package org.byters.vkmarketplace.controllers;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
 import org.byters.vkmarketplace.controllers.controllers.ControllerAuth;
 import org.byters.vkmarketplace.controllers.controllers.ControllerCart;
 import org.byters.vkmarketplace.controllers.controllers.ControllerFavorites;
@@ -48,7 +45,6 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
         super.onCreate();
 
         //todo set imageloader config
-        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
         controllerAuth = new ControllerAuth(this);
         controllerItems = new ControllerItems(this, controllerAuth.getToken());
         controllerItemInfo = new ControllerItemInfo();

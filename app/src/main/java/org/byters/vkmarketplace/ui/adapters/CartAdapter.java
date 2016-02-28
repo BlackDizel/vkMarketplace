@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
@@ -95,7 +95,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     , item.getPrice().getAmount() * cartItem.getQuantity() / 100));
             tvTitle.setText(item.getTitle());
             tvQuantity.setText(String.valueOf(cartItem.getQuantity()));
-            ImageLoader.getInstance().displayImage(item.getThumb_photo(), ivItem);
+            Picasso.with(controllerMain).load(item.getThumb_photo()).into(ivItem);
         }
 
         @Override
