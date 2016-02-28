@@ -30,4 +30,8 @@
     <string name="cart_cost_format" formatted="false">за %d %s %d рублей</string>
     <string name="fav_date_format">\'добавлено\' dd MMMM yyyy \'в\' HH:mm</string>
     <string name="cart_general_cost_format">Общая сумма %d рублей</string>
+    <string name="cart_clear">Очистить корзину</string>
+    <string name="cart_clear_dialog_text">Убрать все позиции из корзины?</string>
+    <string name="cart_clear_dialog_positive">Очистить</string>
+    <string name="cart_clear_dialog_cancel">Отмена</string>
 </resources>

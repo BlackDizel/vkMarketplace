@@ -29,7 +29,10 @@ import org.byters.vkmarketplace.ui.adapters.CartAdapter;
 import java.util.ArrayList;
 
 public class ActivityCart extends ActivityBase
-        implements AlertDialog.OnClickListener, ItemsUpdateListener, SwipeRefreshLayout.OnRefreshListener {
+        implements AlertDialog.OnClickListener
+        , ItemsUpdateListener
+        , SwipeRefreshLayout.OnRefreshListener
+        , View.OnClickListener {
 
     @Nullable
     EditText etComment;
@@ -101,6 +104,8 @@ public class ActivityCart extends ActivityBase
 
         refreshLayout = ((SwipeRefreshLayout) findViewById(R.id.srlItems));
         refreshLayout.setOnRefreshListener(this);
+
+        findViewById(R.id.tvClear).setOnClickListener(this);
     }
 
     @Override
@@ -150,6 +155,24 @@ public class ActivityCart extends ActivityBase
     @Override
     public void onRefresh() {
         ((ControllerMain) getApplicationContext()).updateMarketList();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.tvClear) {
+            new AlertDialog.Builder(this)
+                    .setMessage(R.string.cart_clear_dialog_text)
+                    .setPositiveButton(R.string.cart_clear_dialog_positive, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ((ControllerMain) getApplicationContext()).getControllerCart()
+                                    .clearCart(ActivityCart.this);
+                            checkState();
+                        }
+                    })
+                    .setNegativeButton(R.string.cart_clear_dialog_cancel, null)
+                    .create().show();
+        }
     }
 
     //region itemDecorator
