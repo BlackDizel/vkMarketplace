@@ -38,7 +38,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:padding="@dimen/view_list_item_text_padding"
-            android:textColor="@color/white" />
+            android:textColor="@color/colorAccent" />
 
     </LinearLayout>
 

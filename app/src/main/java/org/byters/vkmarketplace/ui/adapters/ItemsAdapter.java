@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,6 +112,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     }
 
     public class ViewHolderItem extends ViewHolder implements View.OnClickListener {
+        private static final int NO_VALUE = -1;
         ImageView ivItem;
         TextView tvTitle, tvPrice;
         private int id;
@@ -126,17 +128,24 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         @Override
         public void setData(int position) {
             MarketplaceItem item = controllerMain.getControllerItems().getModel().get(position - 1);
-            if (item == null) return; //maybe need to throw error here, hm?
-            tvTitle.setText(item.getTitle());
-            if (item.getPrice() != null)
-                tvPrice.setText(item.getPrice().getText());
-            ImageLoader.getInstance().displayImage(item.getThumb_photo(), ivItem);
-            id = item.getId();
+            if (item == null) {
+                tvTitle.setText("");
+                tvPrice.setText("");
+                id = NO_VALUE;
+                ivItem.setImageDrawable(null);
+            } else {
+                tvTitle.setText(item.getTitle());
+                if (item.getPrice() != null && !TextUtils.isEmpty(item.getPrice().getText()))
+                    tvPrice.setText(item.getPrice().getText().toUpperCase().replace(".", ""));
+                else tvPrice.setText("");
+                ImageLoader.getInstance().displayImage(item.getThumb_photo(), ivItem);
+                id = item.getId();
+            }
         }
 
         @Override
         public void onClick(View v) {
-            if (v.getContext() instanceof Activity)
+            if (v.getContext() instanceof Activity && id != NO_VALUE)
                 ActivityItemInfo.display(v.getContext(), id);
         }
     }
