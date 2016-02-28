@@ -12,4 +12,8 @@ public class Price implements Serializable {
     public String getText() {
         return text;
     }
+
+    public int getAmount() {
+        return amount;
+    }
 }
