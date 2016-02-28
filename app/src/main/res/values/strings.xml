@@ -24,4 +24,8 @@
     <string name="no_fav_items_found">Нет избранных позиций</string>
     <string name="activity_cart_title">Корзина</string>
     <string name="activity_fav_title">Избранное</string>
+    <string name="plural_one_item">позицию</string>
+    <string name="plural_several_item">позиции</string>
+    <string name="plural_many_item">позиций</string>
+    <string name="cart_cost_format">за %d %s %d рублей</string>
 </resources>

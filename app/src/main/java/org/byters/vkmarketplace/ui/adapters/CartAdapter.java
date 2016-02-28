@@ -21,6 +21,7 @@ import org.byters.vkmarketplace.model.dataclasses.CartEntry;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.activities.ActivityCart;
 import org.byters.vkmarketplace.ui.activities.ActivityItemInfo;
+import org.byters.vkmarketplace.ui.utils.PluralName;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
@@ -53,7 +54,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, DialogInterface.OnClickListener {
 
-        private TextView tvTitle;
+        private TextView tvTitle, tvCost;
         private TextView tvQuantity;
         private ImageView ivItem;
         @Nullable
@@ -65,6 +66,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvQuantity = (TextView) itemView.findViewById(R.id.tvQuantity);
             ivItem = (ImageView) itemView.findViewById(R.id.ivItem);
+            tvCost = (TextView) itemView.findViewById(R.id.tvCost);
 
             tvQuantity.setOnClickListener(this);
             itemView.findViewById(R.id.ivRemove).setOnClickListener(this);
@@ -82,10 +84,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             if (cartItem == null || item == null) {
                 tvTitle.setText(R.string.item_cart_error_value);
                 tvQuantity.setText(R.string.item_cart_error_value);
+                tvCost.setText(R.string.item_cart_error_value);
                 ivItem.setImageDrawable(null);
                 return;
             }
 
+            tvCost.setText(String.format(controllerMain.getString(R.string.cart_cost_format)
+                    , cartItem.getQuantity()
+                    , PluralName.ITEM.toString(controllerMain, cartItem.getQuantity())
+                    , item.getPrice().getAmount() * cartItem.getQuantity() / 100));
             tvTitle.setText(item.getTitle());
             tvQuantity.setText(String.valueOf(cartItem.getQuantity()));
             ImageLoader.getInstance().displayImage(item.getThumb_photo(), ivItem);
