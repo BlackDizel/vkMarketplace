@@ -4,13 +4,15 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light">
+    <style name="AppTheme.AppBarOverlay" parent="AppTheme">
         <item name="titleTextColor">@color/white</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlayCollapsed" parent="ThemeOverlay.AppCompat.Light">
+    <style name="AppTheme.AppBarOverlayCollapsed" parent="AppTheme.AppBarOverlay">
         <item name="android:textColorPrimary">@color/white</item>
     </style>
 

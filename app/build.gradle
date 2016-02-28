@@ -1,6 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    defaultConfig {
+        generatedDensities = []
+    }
+
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
+    }
+
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
