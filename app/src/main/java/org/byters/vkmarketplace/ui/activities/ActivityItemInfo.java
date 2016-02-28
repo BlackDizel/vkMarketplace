@@ -9,14 +9,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -58,7 +56,9 @@ public class ActivityItemInfo extends ActivityBase
         findViewById(R.id.fabCart).setOnClickListener(this);
 
         RecyclerView rvPhotos = (RecyclerView) findViewById(R.id.rvPhotos);
-        rvPhotos.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.photos_columns)));
+        GridLayoutManager glm = new GridLayoutManager(this, getResources().getInteger(R.integer.photos_columns));
+        glm.setSpanSizeLookup(new DataSpanSizeLookup());
+        rvPhotos.setLayoutManager(glm);
         rvPhotos.addItemDecoration(new ItemDecoration(this));
         photosAdapter = new PhotosAdapter();
         rvPhotos.setAdapter(photosAdapter);
@@ -70,16 +70,12 @@ public class ActivityItemInfo extends ActivityBase
      * called twice. on page start and on data downloaded
      */
     private void setData() {
-        //todo add viewpager with photos
 
         if (id == NO_VALUE) return;
         MarketplaceItem item = ((ControllerMain) getApplicationContext()).getControllerItems().getModel().getItemById(id);
         if (item == null) return;
 
         setTitle(item.getTitle());
-
-        ((TextView) findViewById(R.id.tvDescription)).setText(Html.fromHtml(item.getDescription()));
-        ((TextView) findViewById(R.id.tvPrice)).setText(item.getPrice().getText());
 
         if (item.getPhotos() != null
                 && item.getPhotos().size() > 0 &&
@@ -118,7 +114,6 @@ public class ActivityItemInfo extends ActivityBase
         getMenuInflater().inflate(R.menu.activity_item_info_menu, menu);
 
         checkFav(menu.findItem(R.id.action_favorite));
-        //todo check if favorited
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -173,6 +168,15 @@ public class ActivityItemInfo extends ActivityBase
         }
     }
 
+    private class DataSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
+
+        @Override
+        public int getSpanSize(int position) {
+            return position == 0 ? 2 : 1;
+        }
+    }
+
+
     //region itemDecorator
     private class ItemDecoration extends RecyclerView.ItemDecoration {
 
@@ -191,7 +195,11 @@ public class ActivityItemInfo extends ActivityBase
             int position = parent.getChildLayoutPosition(view);
 
             outRect.top = 2 * margin;
-            if (position % 2 == 1) {
+            if (position == 0) {
+                outRect.top = 4 * margin;
+                outRect.right = 2 * margin;
+                outRect.left = 2 * margin;
+            } else if (position % 2 == 0) {
                 outRect.right = 2 * margin;
                 outRect.left = margin;
             } else {

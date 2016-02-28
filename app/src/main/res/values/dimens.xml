@@ -3,7 +3,7 @@
     <dimen name="view_item_list_margin">4dp</dimen>
     <dimen name="item_info_fab_margin">8dp</dimen>
     <dimen name="item_info_text_padding">16dp</dimen>
-    <dimen name="item_info_text_margin">16dp</dimen>
+
     <dimen name="alert_buy_text_padding">16dp</dimen>
     <dimen name="item_cart_image_size">80dp</dimen>
     <dimen name="item_cart_text_margin">16dp</dimen>
