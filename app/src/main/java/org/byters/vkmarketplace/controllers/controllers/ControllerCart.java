@@ -105,4 +105,10 @@ public class ControllerCart {
         if (cart == null) return 0;
         return cart.getCost(controllerItems);
     }
+
+    public void clearCart(Context context) {
+        cart = null;
+        //todo update cache on app closing
+        ControllerStorage.writeObjectToFile(context, cart, ControllerStorage.CART_CACHE);
+    }
 }
