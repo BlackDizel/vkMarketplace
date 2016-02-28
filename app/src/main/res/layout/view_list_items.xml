@@ -26,7 +26,7 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="center_vertical"
-            android:maxLines="@dimen/max_lines_market_list"
+            android:maxLines="@integer/max_lines_market_list"
             android:paddingBottom="@dimen/view_list_item_text_padding"
             android:paddingStart="@dimen/view_list_item_text_padding"
             android:paddingTop="@dimen/view_list_item_text_padding"
