@@ -17,4 +17,6 @@
     <dimen name="cart_cost_text_padding_vertical">8dp</dimen>
     <dimen name="cart_cost_text_padding_horizontal">16dp</dimen>
     <dimen name="activity_item_info_text_padding_left">8dp</dimen>
+    <dimen name="item_news_likes_text_padding">8dp</dimen>
+    <dimen name="item_news_likes_info_padding">8dp</dimen>
 </resources>

@@ -10,6 +10,11 @@ public class NewsItem implements Serializable {
     ArrayList<NewsAttachment> attachments;
     private String text;
     private int id;
+    private MarketplaceItem.LikeInfo likes;
+
+    public MarketplaceItem.LikeInfo getLikes() {
+        return likes;
+    }
 
     public int getId() {
         return id;

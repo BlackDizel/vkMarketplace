@@ -43,13 +43,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private static final int NO_VALUE = -1;
-        private TextView textView;
+        private TextView textView, tvLikes;
         private ImageView ivItem;
         private int newsId;
 
         public ViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.tvTitle);
+            tvLikes = (TextView) itemView.findViewById(R.id.tvLikes);
             ivItem = (ImageView) itemView.findViewById(R.id.ivItem);
 
             itemView.setOnClickListener(this);
@@ -61,6 +62,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 newsId = NO_VALUE;
                 textView.setVisibility(View.GONE);
                 ivItem.setImageDrawable(null);
+                tvLikes.setText("");
             } else {
                 newsId = item.getId();
                 if (TextUtils.isEmpty(item.getText()))
@@ -68,6 +70,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 else textView.setVisibility(View.VISIBLE);
 
                 textView.setText(item.getText());
+                if (item.getLikes() != null) {
+                    tvLikes.setText(String.format("%d", item.getLikes().getCount()));
+                } else {
+                    tvLikes.setText("");
+                }
                 String url = item.getPhotoUri();
                 if (!TextUtils.isEmpty(url))
                     Picasso.with(controllerMain).load(url).into(ivItem);

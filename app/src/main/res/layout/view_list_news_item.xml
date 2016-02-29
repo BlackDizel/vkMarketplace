@@ -19,4 +19,29 @@
         android:lines="3"
         android:padding="@dimen/view_news_list_padding"
         android:textColor="@color/white" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:orientation="horizontal"
+        android:padding="@dimen/item_news_likes_info_padding">
+
+        <TextView
+            android:id="@+id/tvLikes"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/item_news_likes_text_padding"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_favorite_white_24dp"
+            android:tint="@color/colorAccent" />
+
+    </LinearLayout>
+
 </FrameLayout>
