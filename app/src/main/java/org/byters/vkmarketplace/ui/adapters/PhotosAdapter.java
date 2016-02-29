@@ -102,7 +102,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
             tvPrice.setText(data.getPrice().getText().toUpperCase().replace(".", ""));
 
             if (data.getLikes() != null)
-                tvLikes.setText(String.format("%d", data.getLikes().getUser_likes()));
+                tvLikes.setText(String.format("%d", data.getLikes().getCount()));
         }
     }
 
