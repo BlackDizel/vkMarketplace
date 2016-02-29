@@ -42,4 +42,12 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/ivFav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:padding="@dimen/item_news_likes_info_padding"
+        android:src="@drawable/ic_star_white_24dp" />
+
 </android.support.percent.PercentFrameLayout>

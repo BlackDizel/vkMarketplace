@@ -7,9 +7,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -113,7 +115,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
     public class ViewHolderItem extends ViewHolder implements View.OnClickListener {
         private static final int NO_VALUE = -1;
-        ImageView ivItem;
+        ImageView ivItem, ivFav;
         TextView tvTitle, tvPrice;
         private int id;
 
@@ -122,6 +124,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvPrice = (TextView) itemView.findViewById(R.id.tvPrice);
             ivItem = (ImageView) itemView.findViewById(R.id.ivItem);
+            ivFav = (ImageView) itemView.findViewById(R.id.ivFav);
             itemView.setOnClickListener(this);
         }
 
@@ -133,6 +136,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 tvPrice.setText("");
                 id = NO_VALUE;
                 ivItem.setImageDrawable(null);
+                ivFav.setVisibility(View.GONE);
             } else {
                 tvTitle.setText(item.getTitle());
                 if (item.getPrice() != null && !TextUtils.isEmpty(item.getPrice().getText()))
@@ -140,6 +144,16 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 else tvPrice.setText("");
                 Picasso.with(controllerMain).load(item.getThumb_photo()).into(ivItem);
                 id = item.getId();
+                if (controllerMain.getControllerFavorites().isFavorite(id))
+                    ivFav.setVisibility(View.VISIBLE);
+                else
+                    ivFav.setVisibility(View.GONE);
+
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+                if (position % 2 == 0)
+                    params.gravity = Gravity.END;
+                else params.gravity = Gravity.START;
+                ivFav.setLayoutParams(params);
             }
         }
 

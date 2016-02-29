@@ -92,6 +92,7 @@ public class ActivityMain extends ActivityBase
 
         ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
         ((ControllerMain) getApplicationContext()).getControllerNews().addListener(this);
+        adapter.notifyDataSetChanged();
     }
     //endregion
 
