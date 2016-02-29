@@ -86,20 +86,23 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
     }
 
     private class ViewHolderHeader extends ViewHolder {
-        private TextView tvDescription, tvPrice;
+        private TextView tvDescription, tvPrice, tvLikes;
 
         public ViewHolderHeader(View itemView) {
             super(itemView);
             tvDescription = ((TextView) itemView.findViewById(R.id.tvDescription));
             tvPrice = ((TextView) itemView.findViewById(R.id.tvPrice));
+            tvLikes = ((TextView) itemView.findViewById(R.id.tvLikes));
         }
 
         @Override
         public void setData(int position) {
             if (data == null) return;
             tvDescription.setText(Html.fromHtml(data.getDescription()));
-            tvPrice.setText(data.getPrice().getText());
+            tvPrice.setText(data.getPrice().getText().toUpperCase().replace(".", ""));
 
+            if (data.getLikes() != null)
+                tvLikes.setText(String.format("%d", data.getLikes().getUser_likes()));
         }
     }
 
