@@ -53,7 +53,7 @@ public class MarketplaceItem implements Serializable {
         return photos.get(position).getSrc_big();
     }
 
-    public class LikeInfo {
+    public class LikeInfo implements Serializable {
         private int user_likes;
         private int count;
 
