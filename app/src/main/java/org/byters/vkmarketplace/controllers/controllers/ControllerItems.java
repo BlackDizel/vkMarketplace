@@ -61,7 +61,7 @@ public class ControllerItems implements Callback<MarketplaceBlob> {
             return;
         }
         isLoading = true;
-        VkService.getApi().getMarketItems(market, 0, token, v).enqueue(this);
+        VkService.getApi().getMarketItems(market, 0, token, 1, v).enqueue(this);
     }
 
     private void updateListeners(ArrayList<MarketplaceItem> data) {

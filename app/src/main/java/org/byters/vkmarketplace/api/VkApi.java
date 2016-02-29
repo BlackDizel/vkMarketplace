@@ -15,6 +15,7 @@ public interface VkApi {
     Call<MarketplaceBlob> getMarketItems(@Query("owner_id") int owner_id
             , @Query("offset") int offset
             , @Query("access_token") String token
+            , @Query("extended") int isExtended
             , @Query("v") String v);
 
     @GET("market.getById")
