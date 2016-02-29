@@ -11,22 +11,23 @@ public interface VkApi {
 
     String BASE_URL = "https://api.vk.com/method/";
 
-    //fixme add v=5.45 to avoid vk api bug
     @GET("market.get")
     Call<MarketplaceBlob> getMarketItems(@Query("owner_id") int owner_id
             , @Query("offset") int offset
-            , @Query("access_token") String token);
+            , @Query("access_token") String token
+            , @Query("v") String v);
 
     @GET("market.getById")
     Call<MarketplaceBlob> getMarketItemsById(@Query("item_ids") String ids
             , @Query("extended") int isExtended
-            , @Query("access_token") String token);
+            , @Query("access_token") String token
+            , @Query("v") String v);
 
     @GET("wall.get")
     Call<NewsBlob> getNews(@Query("owner_id") int owner_id
             , @Query("filter") String filter
             , @Query("count") int count
-            , @Query("v") double v);
+            , @Query("v") String v);
 
     /*
     @GET("users/{username}")

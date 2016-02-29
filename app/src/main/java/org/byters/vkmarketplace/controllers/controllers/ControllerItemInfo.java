@@ -1,7 +1,6 @@
 package org.byters.vkmarketplace.controllers.controllers;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -12,8 +11,10 @@ import org.byters.vkmarketplace.controllers.controllers.utils.OnItemUpdateListen
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 
-import java.io.IOException;
 import java.util.ArrayList;
+
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ControllerItemInfo {
     private ArrayList<OnItemUpdateListener> listeners;
@@ -54,50 +55,41 @@ public class ControllerItemInfo {
             return;
         }
 
-        new DetailedItemInfoDownloader(id
-                , String.format("%d_%d", context.getResources().getInteger(R.integer.market), id)
-                , token).execute();
+        VkService.getApi().getMarketItemsById(String.format("%d_%d", context.getResources().getInteger(R.integer.market), id)
+                , 1
+                , token
+                , context.getString(R.string.vk_api_ver)).enqueue(new CallbackItemInfo(id));
+
     }
 
-    private class DetailedItemInfoDownloader extends AsyncTask<Void, Void, MarketplaceItem> {
 
-        private String ids;
-        private String token;
+    private class CallbackItemInfo implements Callback<MarketplaceBlob> {
+
         private int id;
 
-        public DetailedItemInfoDownloader(int id, String ids, String token) {
-            this.ids = ids;
-            this.token = token;
+        public CallbackItemInfo(int id) {
             this.id = id;
         }
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            updatingIds.add(id);
-        }
+        public void onResponse(Response<MarketplaceBlob> response) {
 
-        @Override
-        protected MarketplaceItem doInBackground(Void... params) {
-            try {
-                MarketplaceBlob result = VkService.getApi().getMarketItemsById(ids, 1, token).execute().body();
-                if (result == null || result.getItems().size() == 0) return null;
-                return result.getItems().get(0);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(MarketplaceItem item) {
-            super.onPostExecute(item);
-            //todo write item to cache
+            MarketplaceItem item = null;
+            if (response != null
+                    && response.body() != null
+                    && response.body().getItems() != null
+                    && response.body().getItems().size() > 0)
+                item = response.body().getItems().get(0);
 
             updateListeners(item);
-            updatingIds.remove((Integer) id); //todo check situation no onpostexecute called
+            updatingIds.remove((Integer) id);
+        }
+
+        @Override
+        public void onFailure(Throwable t) {
+            updateListeners(null);
+            updatingIds.remove((Integer) id);
         }
     }
-
 
 }

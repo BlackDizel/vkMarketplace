@@ -1,7 +1,6 @@
 package org.byters.vkmarketplace.controllers.controllers;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -13,10 +12,12 @@ import org.byters.vkmarketplace.model.dataclasses.MarketplaceBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.model.models.ModelItems;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class ControllerItems {
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class ControllerItems implements Callback<MarketplaceBlob> {
     private static ModelItems model;
     private static boolean isLoading;
     private Context context;
@@ -27,13 +28,14 @@ public class ControllerItems {
         this.context = context;
         if (model == null) {
             model = new ModelItems(context);
-            if (model.isNull() && !TextUtils.isEmpty(token))
-                getData(context.getResources().getInteger(R.integer.market), token);
+            if (model.isNull() && !TextUtils.isEmpty(token)) {
+                updateData(context, token);
+            }
         }
     }
 
     public void updateData(@NonNull Context context, @Nullable String token) {
-        getData(context.getResources().getInteger(R.integer.market), token);
+        getData(context.getResources().getInteger(R.integer.market), token, context.getString(R.string.vk_api_ver));
     }
 
     //region listeners
@@ -53,34 +55,13 @@ public class ControllerItems {
         return model;
     }
 
-    public void getData(final int market, @Nullable final String token) {
+    public void getData(final int market, @Nullable final String token, final String v) {
         if (isLoading || TextUtils.isEmpty(token)) {
             updateListeners(null);
             return;
         }
         isLoading = true;
-        new AsyncTask<Void, Void, ArrayList<MarketplaceItem>>() {
-            @Override
-            protected ArrayList<MarketplaceItem> doInBackground(Void... params) {
-                try {
-                    MarketplaceBlob result = VkService.getApi().getMarketItems(market, 0, token).execute().body();
-                    if (result == null) return null;
-                    ArrayList<MarketplaceItem> list = result.getItems();
-                    return list;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(ArrayList<MarketplaceItem> result) {
-                super.onPostExecute(result);
-                ControllerItems.this.writeData(result);
-                updateListeners(result);
-                isLoading = false; //todo check situation no onpostexecute called
-            }
-        }.execute();
+        VkService.getApi().getMarketItems(market, 0, token, v).enqueue(this);
     }
 
     private void updateListeners(ArrayList<MarketplaceItem> data) {
@@ -96,4 +77,20 @@ public class ControllerItems {
         isLoading = false;
     }
 
+    @Override
+    public void onResponse(Response<MarketplaceBlob> response) {
+        ArrayList<MarketplaceItem> list = null;
+        if (response != null && response.body() != null) {
+            list = response.body().getItems();
+            ControllerItems.this.writeData(list);
+        }
+        updateListeners(list);
+        isLoading = false;
+    }
+
+    @Override
+    public void onFailure(Throwable t) {
+        updateListeners(null);
+        isLoading = false;
+    }
 }

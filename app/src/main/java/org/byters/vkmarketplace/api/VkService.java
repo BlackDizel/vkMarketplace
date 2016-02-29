@@ -8,8 +8,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
-import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
-
 import java.lang.reflect.Type;
 import java.util.concurrent.TimeUnit;
 
@@ -38,6 +36,7 @@ public class VkService {
                         //this will closed request so Gson will not parse response
                         String s = new String(chain.proceed(chain.request()).body().bytes());
                         android.util.Log.v("some",""+s);
+                        android.util.Log.v("some",""+chain.request().url());
                         return  chain.proceed(chain.request());
                     }
                 })*/
@@ -54,19 +53,6 @@ public class VkService {
                         }
                     }
                 })
-                .registerTypeAdapter(MarketplaceItem.class, new JsonDeserializer<MarketplaceItem>() {
-                    @Override
-                    public MarketplaceItem deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                        try {
-                            //todo check. may generate overhead
-                            return new GsonBuilder().create().fromJson(json, MarketplaceItem.class);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        return null;
-                    }
-                })
-
                 .setFieldNamingStrategy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
 

@@ -1,22 +1,27 @@
 package org.byters.vkmarketplace.model.dataclasses;
 
-import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 
 public class MarketplaceBlob {
 
-    private ArrayList<MarketplaceItem> response;
+    private MarketplaceItemBlob response;
 
+    @Nullable
     public ArrayList<MarketplaceItem> getItems() {
-        //todo check
-        if (response == null || response.size() == 0) return null;
+        if (response == null) return null;
+        return response.getItems();
+    }
 
-        ArrayList<MarketplaceItem> items = new ArrayList<>();
-        for (MarketplaceItem item : response)
-            if (item != null) items.add(item);
+    private class MarketplaceItemBlob {
 
-        if (items.size() == 0) return null;
-        return items;
+        private ArrayList<MarketplaceItem> items;
+
+        @Nullable
+        public ArrayList<MarketplaceItem> getItems() {
+            if (items == null || items.size() == 0) return null;
+            return items;
+        }
     }
 }

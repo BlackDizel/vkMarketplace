@@ -37,7 +37,7 @@ public class ControllerNews implements Callback<NewsBlob> {
 
     public void updateData(ControllerMain context) {
         VkService.getApi()
-                .getNews(context.getResources().getInteger(R.integer.market), "owner", 10, 5.45)
+                .getNews(context.getResources().getInteger(R.integer.market), "owner", 10, context.getString(R.string.vk_api_ver))
                 .enqueue(this);
     }
 
