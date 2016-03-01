@@ -8,6 +8,8 @@ import org.byters.vkmarketplace.R;
 
 public class ActivitySplash extends AppCompatActivity {
 
+    private boolean isNeedToNavigate = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,11 +19,18 @@ public class ActivitySplash extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ActivityMain.display(ActivitySplash.this);
-            }
-        }, getResources().getInteger(R.integer.splash_time));
+        if (isNeedToNavigate)
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ActivityMain.display(ActivitySplash.this);
+                }
+            }, getResources().getInteger(R.integer.splash_time));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isNeedToNavigate = false;
     }
 }
