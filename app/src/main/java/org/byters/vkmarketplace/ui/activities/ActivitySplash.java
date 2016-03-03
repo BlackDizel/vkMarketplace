@@ -26,6 +26,7 @@ public class ActivitySplash extends AppCompatActivity {
                     ActivityMain.display(ActivitySplash.this);
                 }
             }, getResources().getInteger(R.integer.splash_time));
+        else finish();
     }
 
     @Override
