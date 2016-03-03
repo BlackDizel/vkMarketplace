@@ -8,6 +8,8 @@ import org.byters.vkmarketplace.controllers.controllers.ControllerCart;
 import org.byters.vkmarketplace.controllers.controllers.ControllerFavorites;
 import org.byters.vkmarketplace.controllers.controllers.ControllerItemInfo;
 import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
+import org.byters.vkmarketplace.controllers.controllers.ControllerMarkets;
+import org.byters.vkmarketplace.controllers.controllers.ControllerNews;
 import org.byters.vkmarketplace.controllers.controllers.utils.OnItemUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 
@@ -19,6 +21,7 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
     private ControllerCart controllerCart;
     private ControllerFavorites controllerFavorites;
     private ControllerNews controllerNews;
+    private ControllerMarkets controllerMarkets;
 
     public ControllerItems getControllerItems() {
         return controllerItems;
@@ -40,6 +43,10 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
         return controllerNews;
     }
 
+    public ControllerMarkets getControllerMarkets() {
+        return controllerMarkets;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -52,6 +59,7 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
         controllerCart = new ControllerCart(this);
         controllerFavorites = new ControllerFavorites(this);
         controllerNews = new ControllerNews(this);
+        controllerMarkets = new ControllerMarkets(this);
     }
 
     public boolean isAuth() {

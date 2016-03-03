@@ -8,6 +8,8 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +18,7 @@ import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
 import org.byters.vkmarketplace.controllers.controllers.utils.NewsUpdateListener;
+import org.byters.vkmarketplace.ui.adapters.MenuAdapter;
 import org.byters.vkmarketplace.ui.fragments.FragmentFeatured;
 import org.byters.vkmarketplace.ui.fragments.FragmentGoods;
 
@@ -36,6 +39,10 @@ public class ActivityMain extends ActivityBase
         setContentView(R.layout.activity_main);
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
+        RecyclerView rvMenu = (RecyclerView) findViewById(R.id.rvMenu);
+        rvMenu.setLayoutManager(new LinearLayoutManager(this));
+        rvMenu.setAdapter(new MenuAdapter(this));
 
         initTabs();
     }
@@ -105,7 +112,6 @@ public class ActivityMain extends ActivityBase
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        //todo try to add animation
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         if (tab.getText().equals(getString(R.string.tab_featured))) {
