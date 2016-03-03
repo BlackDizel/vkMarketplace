@@ -9,10 +9,17 @@ import java.util.ArrayList;
 
 public class ControllerMarkets {
 
+    @Nullable
     private ArrayList<MarketInfo> data;
 
     public ControllerMarkets(ControllerMain controllerMain) {
         data = (ArrayList<MarketInfo>) ControllerStorage.readObjectFromFile(controllerMain, ControllerStorage.MARKETS_CACHE);
+    }
+
+    public void addItem(MarketInfo item) {
+        if (data == null) data = new ArrayList<>();
+        if (!data.contains(item))
+            data.add(item);
     }
 
     public int getSize() {

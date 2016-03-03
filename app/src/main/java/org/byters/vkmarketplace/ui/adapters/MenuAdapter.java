@@ -12,11 +12,14 @@ import android.widget.TextView;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.model.dataclasses.MarketInfo;
+import org.byters.vkmarketplace.ui.activities.ActivitySearchMarkets;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     ControllerMain controllerMain;
+    Context context;
 
     public MenuAdapter(Context context) {
+        this.context = context;
         controllerMain = ((ControllerMain) context.getApplicationContext());
     }
 
@@ -43,6 +46,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
         public ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             textView = (TextView) itemView.findViewById(R.id.tvTitle);
             ivItem = (ImageView) itemView.findViewById(R.id.ivItem);
         }
@@ -68,7 +72,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         @Override
         public void onClick(View v) {
             if (TextUtils.isEmpty(market_uri)) {
-                //todo navigate to add market page
+                ActivitySearchMarkets.display(context);
             } else {
                 //todo navigate to selected market
             }

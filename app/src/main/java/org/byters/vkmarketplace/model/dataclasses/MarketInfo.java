@@ -28,4 +28,11 @@ public class MarketInfo {
     public void setAddress(String address) {
         this.address = address;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof MarketInfo)) return false;
+        return ((MarketInfo) o).getAddress().equals(getAddress());
+    }
 }
