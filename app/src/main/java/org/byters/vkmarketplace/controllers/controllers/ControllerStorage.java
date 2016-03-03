@@ -18,6 +18,7 @@ public class ControllerStorage {
     public static final String CART_CACHE = "cart_cache";
     public static final String FAVORITES_CACHE = "favorites_cache";
     public static final String NEWS_CACHE = "cache_news";
+    public static final String MARKETS_CACHE = "cache_markets";
     private static final String TAG = "controllerStorage";
 
     public synchronized static void writeObjectToFile(Context context, Object object, String filename) {
