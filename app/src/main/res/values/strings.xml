@@ -35,4 +35,6 @@
     <string name="cart_clear_dialog_positive">Очистить</string>
     <string name="cart_clear_dialog_cancel">Отмена</string>
     <string name="vk_api_ver">5.45</string>
+    <string name="tab_featured">новинки</string>
+    <string name="tab_goods">все товары</string>
 </resources>

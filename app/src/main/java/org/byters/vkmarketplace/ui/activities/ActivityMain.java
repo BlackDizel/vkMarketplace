@@ -2,32 +2,29 @@ package org.byters.vkmarketplace.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
 import org.byters.vkmarketplace.controllers.controllers.utils.NewsUpdateListener;
-import org.byters.vkmarketplace.ui.adapters.ItemsAdapter;
+import org.byters.vkmarketplace.ui.fragments.FragmentFeatured;
+import org.byters.vkmarketplace.ui.fragments.FragmentGoods;
 
 import java.util.ArrayList;
 
 public class ActivityMain extends ActivityBase
-        implements ItemsUpdateListener, NewsUpdateListener, SwipeRefreshLayout.OnRefreshListener {
-
-    private SwipeRefreshLayout refreshLayout;
-    private ItemsAdapter adapter;
+        implements ItemsUpdateListener
+        , NewsUpdateListener
+        , TabLayout.OnTabSelectedListener {
 
     public static void display(Context context) {
         context.startActivity(new Intent(context, ActivityMain.class));
@@ -39,18 +36,16 @@ public class ActivityMain extends ActivityBase
         setContentView(R.layout.activity_main);
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.srlItems);
-        refreshLayout.setOnRefreshListener(this);
 
-        adapter = new ItemsAdapter((ControllerMain) getApplicationContext());
+        initTabs();
+    }
 
-        RecyclerView rv = (RecyclerView) findViewById(R.id.rvItems);
-        int columns = getResources().getInteger(R.integer.items_list_columns);
-        GridLayoutManager manager = new GridLayoutManager(this, columns);
-        manager.setSpanSizeLookup(new SpanSizeLookupWithHeader());
-        rv.setLayoutManager(manager);
-        rv.addItemDecoration(new ItemDecoration(this));
-        rv.setAdapter(adapter);
+    private void initTabs() {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.setOnTabSelectedListener(this);
+
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_featured)), true);
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_goods)));
     }
 
     //region menu
@@ -92,9 +87,14 @@ public class ActivityMain extends ActivityBase
 
         ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
         ((ControllerMain) getApplicationContext()).getControllerNews().addListener(this);
-        adapter.notifyDataSetChanged();
     }
     //endregion
+
+    //region update data
+    @Override
+    public void onUpdated(ArrayList data) {
+        //todo update fragments data
+    }
 
     @Override
     protected void onPause() {
@@ -103,63 +103,29 @@ public class ActivityMain extends ActivityBase
         ((ControllerMain) getApplicationContext()).getControllerNews().removeListener(this);
     }
 
-    //region update data
     @Override
-    public void onUpdated(ArrayList data) {
-        if (refreshLayout != null) refreshLayout.setRefreshing(false);
-        if (adapter != null && data != null) adapter.updateData();
+    public void onTabSelected(TabLayout.Tab tab) {
+        //todo try to add animation
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        if (tab.getText().equals(getString(R.string.tab_featured))) {
+            transaction.setCustomAnimations(R.anim.slide_from_left, R.anim.slide_to_right);
+            Fragment f = FragmentFeatured.newInstance();
+            transaction.replace(R.id.content_view, f).commit();
+        } else if (tab.getText().equals(getString(R.string.tab_goods))) {
+            transaction.setCustomAnimations(R.anim.slide_from_right, R.anim.slide_to_left);
+            Fragment f = FragmentGoods.newInstance();
+            transaction.replace(R.id.content_view, f).commit();
+        }
     }
 
     @Override
-    public void onRefresh() {
-        ((ControllerMain) getApplicationContext()).updateMarketList();
-        ((ControllerMain) getApplicationContext()).updateNews();
+    public void onTabUnselected(TabLayout.Tab tab) {
+
     }
 
-    private class SpanSizeLookupWithHeader extends GridLayoutManager.SpanSizeLookup {
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
 
-        @Override
-        public int getSpanSize(int position) {
-            return position == 0 ? 2 : 1;
-        }
     }
-    //endregion
-
-    //region itemDecorator
-    private class ItemDecoration extends RecyclerView.ItemDecoration {
-
-        private int margin;
-
-        public ItemDecoration(Context context) {
-            margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP
-                    , context.getResources().getDimension(R.dimen.view_item_list_margin)
-                    , context.getResources().getDisplayMetrics());
-
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-
-            int position = parent.getChildLayoutPosition(view);
-
-            outRect.top = 2 * margin;
-
-            if (position == 0) {
-                outRect.right = 2 * margin;
-                outRect.left = 2 * margin;
-            } else if (position % 2 == 0) {
-                outRect.right = 2 * margin;
-                outRect.left = margin;
-            } else {
-                outRect.right = margin;
-                outRect.left = 2 * margin;
-
-                //margins sum = const
-            }
-
-        }
-    }
-    //endregion
-
 }
