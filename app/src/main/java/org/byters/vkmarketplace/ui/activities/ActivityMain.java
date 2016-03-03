@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,14 +19,12 @@ import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListene
 import org.byters.vkmarketplace.controllers.controllers.utils.NewsUpdateListener;
 import org.byters.vkmarketplace.ui.adapters.MenuAdapter;
 import org.byters.vkmarketplace.ui.fragments.FragmentFeatured;
-import org.byters.vkmarketplace.ui.fragments.FragmentGoods;
 
 import java.util.ArrayList;
 
 public class ActivityMain extends ActivityBase
         implements ItemsUpdateListener
-        , NewsUpdateListener
-        , TabLayout.OnTabSelectedListener {
+        , NewsUpdateListener {
 
     public static void display(Context context) {
         context.startActivity(new Intent(context, ActivityMain.class));
@@ -44,15 +41,11 @@ public class ActivityMain extends ActivityBase
         rvMenu.setLayoutManager(new LinearLayoutManager(this));
         rvMenu.setAdapter(new MenuAdapter(this));
 
-        initTabs();
-    }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        //transaction.setCustomAnimations(R.anim.slide_from_left, R.anim.slide_to_right);
+        Fragment f = FragmentFeatured.newInstance();
+        transaction.replace(R.id.content_view, f).commit();
 
-    private void initTabs() {
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.setOnTabSelectedListener(this);
-
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_featured)), true);
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_goods)));
     }
 
     //region menu
@@ -108,30 +101,5 @@ public class ActivityMain extends ActivityBase
         super.onPause();
         ((ControllerMain) getApplicationContext()).getControllerItems().removeListener(this);
         ((ControllerMain) getApplicationContext()).getControllerNews().removeListener(this);
-    }
-
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        if (tab.getText().equals(getString(R.string.tab_featured))) {
-            transaction.setCustomAnimations(R.anim.slide_from_left, R.anim.slide_to_right);
-            Fragment f = FragmentFeatured.newInstance();
-            transaction.replace(R.id.content_view, f).commit();
-        } else if (tab.getText().equals(getString(R.string.tab_goods))) {
-            transaction.setCustomAnimations(R.anim.slide_from_right, R.anim.slide_to_left);
-            Fragment f = FragmentGoods.newInstance();
-            transaction.replace(R.id.content_view, f).commit();
-        }
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
     }
 }
