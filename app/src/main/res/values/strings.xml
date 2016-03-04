@@ -40,4 +40,6 @@
     <string name="menu_add_market">Добавить группу</string>
     <string name="menu_item_text_error">маркет не найден</string>
     <string name="text_share">Поделиться</string>
+    <string name="action_share_title">Поделиться</string>
+    <string name="action_share_error">Временно недоступно.</string>
 </resources>

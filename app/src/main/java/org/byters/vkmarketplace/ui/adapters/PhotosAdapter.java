@@ -10,13 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.dialogs.DialogImage;
+import org.byters.vkmarketplace.ui.utils.SharingHelper;
 
 public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder> {
     private static final int TYPE_HEADER = 0;
@@ -110,8 +110,8 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
         @Override
         public void onClick(View v) {
-            //todo share
-            Toast.makeText(v.getContext(), "share", Toast.LENGTH_SHORT).show();
+            if (data == null) return;
+            SharingHelper.shareItem(v.getContext(), data.getId());
         }
     }
 
