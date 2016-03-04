@@ -26,6 +26,8 @@ public class ActivityMain extends ActivityBase
         implements ItemsUpdateListener
         , NewsUpdateListener {
 
+    private static final String MAIN_FRAGMENT_TAG = "fragment_goods_tag";
+
     public static void display(Context context) {
         context.startActivity(new Intent(context, ActivityMain.class));
     }
@@ -44,7 +46,7 @@ public class ActivityMain extends ActivityBase
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         //transaction.setCustomAnimations(R.anim.slide_from_left, R.anim.slide_to_right);
         Fragment f = FragmentFeatured.newInstance();
-        transaction.replace(R.id.content_view, f).commit();
+        transaction.replace(R.id.content_view, f, MAIN_FRAGMENT_TAG).commit();
 
     }
 
@@ -93,7 +95,9 @@ public class ActivityMain extends ActivityBase
     //region update data
     @Override
     public void onUpdated(ArrayList data) {
-        //todo update fragments data
+        Fragment f = getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT_TAG);
+        if (f instanceof FragmentFeatured)
+            ((FragmentFeatured) f).updateData(data);
     }
 
     @Override
