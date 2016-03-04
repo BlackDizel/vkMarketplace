@@ -25,4 +25,5 @@
 
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_margin_end">32dp</dimen>
+    <dimen name="list_fab_space">88dp</dimen>
 </resources>
