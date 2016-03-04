@@ -41,7 +41,7 @@
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="@dimen/fab_margin"
             android:layout_marginEnd="@dimen/fab_margin_end"
-            android:src="@android:drawable/ic_menu_search"
+            android:src="@drawable/ic_search_white_24dp"
             android:visibility="gone"
             app:layout_behavior="org.byters.vkmarketplace.ui.utils.FABScrollBehavior" />
 
