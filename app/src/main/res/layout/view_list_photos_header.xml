@@ -3,6 +3,63 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/llShare"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:padding="@dimen/item_info_text_padding">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_share_white_24dp"
+                android:tint="@color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:paddingStart="@dimen/activity_item_info_text_padding_left"
+                android:text="@string/text_share" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/item_info_text_padding">
+
+            <TextView
+                android:id="@+id/tvLikes"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingEnd="@dimen/activity_item_info_text_padding_left" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_favorite_white_24dp"
+                android:tint="@color/black" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/tvDescription"
         android:layout_width="match_parent"
@@ -12,6 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingBottom="@dimen/item_info_text_padding"
         android:paddingTop="@dimen/item_info_text_padding">
 
         <ImageView
@@ -21,29 +79,8 @@
             android:tint="@color/black" />
 
         <TextView
-            android:paddingStart="@dimen/activity_item_info_text_padding_left"
             android:id="@+id/tvPrice"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/item_info_text_padding">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_favorite_white_24dp"
-            android:tint="@color/black" />
-
-        <TextView
-            android:id="@+id/tvLikes"
-            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingStart="@dimen/activity_item_info_text_padding_left" />

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -85,7 +86,8 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         }
     }
 
-    private class ViewHolderHeader extends ViewHolder {
+    private class ViewHolderHeader extends ViewHolder
+            implements View.OnClickListener {
         private TextView tvDescription, tvPrice, tvLikes;
 
         public ViewHolderHeader(View itemView) {
@@ -93,6 +95,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
             tvDescription = ((TextView) itemView.findViewById(R.id.tvDescription));
             tvPrice = ((TextView) itemView.findViewById(R.id.tvPrice));
             tvLikes = ((TextView) itemView.findViewById(R.id.tvLikes));
+            itemView.findViewById(R.id.llShare).setOnClickListener(this);
         }
 
         @Override
@@ -103,6 +106,12 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
             if (data.getLikes() != null)
                 tvLikes.setText(String.format("%d", data.getLikes().getCount()));
+        }
+
+        @Override
+        public void onClick(View v) {
+            //todo share
+            Toast.makeText(v.getContext(), "share", Toast.LENGTH_SHORT).show();
         }
     }
 
