@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 
 public class ActivityMain extends ActivityBase
         implements ItemsUpdateListener
-        , NewsUpdateListener {
+        , NewsUpdateListener, View.OnClickListener {
 
     private static final String MAIN_FRAGMENT_TAG = "fragment_goods_tag";
 
@@ -47,6 +48,8 @@ public class ActivityMain extends ActivityBase
         //transaction.setCustomAnimations(R.anim.slide_from_left, R.anim.slide_to_right);
         Fragment f = FragmentFeatured.newInstance();
         transaction.replace(R.id.content_view, f, MAIN_FRAGMENT_TAG).commit();
+
+        findViewById(R.id.fab).setOnClickListener(this);
 
     }
 
@@ -105,5 +108,10 @@ public class ActivityMain extends ActivityBase
         super.onPause();
         ((ControllerMain) getApplicationContext()).getControllerItems().removeListener(this);
         ((ControllerMain) getApplicationContext()).getControllerNews().removeListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        ActivitySearch.display(this);
     }
 }
