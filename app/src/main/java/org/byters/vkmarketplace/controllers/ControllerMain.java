@@ -10,6 +10,7 @@ import org.byters.vkmarketplace.controllers.controllers.ControllerItemInfo;
 import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
 import org.byters.vkmarketplace.controllers.controllers.ControllerMarkets;
 import org.byters.vkmarketplace.controllers.controllers.ControllerNews;
+import org.byters.vkmarketplace.controllers.controllers.ControllerSearchResult;
 import org.byters.vkmarketplace.controllers.controllers.utils.OnItemUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 
@@ -22,6 +23,7 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
     private ControllerFavorites controllerFavorites;
     private ControllerNews controllerNews;
     private ControllerMarkets controllerMarkets;
+    private ControllerSearchResult controllerSearchResult;
 
     public ControllerItems getControllerItems() {
         return controllerItems;
@@ -45,6 +47,12 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
 
     public ControllerMarkets getControllerMarkets() {
         return controllerMarkets;
+    }
+
+    public ControllerSearchResult getControllerSearchResult() {
+        if (controllerSearchResult == null)
+            controllerSearchResult = new ControllerSearchResult(this);
+        return controllerSearchResult;
     }
 
     @Override
