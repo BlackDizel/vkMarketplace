@@ -27,10 +27,11 @@ public interface VkApi {
             , @Query("extended") int isExtended
             , @Query("v") String v);
 
-    @GET("market.searcg")
+    @GET("market.search")
     Call<MarketplaceBlob> searchMarketItems(@Query("owner_id") int owner_id
-            , @Query("q") int offset
+            , @Query("q") String query
             , @Query("extended") int isExtended
+            , @Query("access_token") String token
             , @Query("v") String v);
 
     @GET("market.getById")

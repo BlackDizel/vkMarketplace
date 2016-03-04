@@ -41,6 +41,10 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         return controllerMain.getControllerSearchResult().getSize();
     }
 
+    public void updateData() {
+        notifyDataSetChanged();
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {

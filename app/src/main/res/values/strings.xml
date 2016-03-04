@@ -42,4 +42,5 @@
     <string name="text_share">Поделиться</string>
     <string name="action_share_title">Поделиться</string>
     <string name="action_share_error">Временно недоступно.</string>
+    <string name="action_search_label">Поиск</string>
 </resources>

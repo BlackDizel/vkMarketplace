@@ -90,6 +90,10 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
         controllerNews.updateData(this);
     }
 
+    public void searchItems(String query) {
+        getControllerSearchResult().search(query, controllerAuth.getToken());
+    }
+
     public void updateDetailedItemInfo(int itemId) {
         MarketplaceItem item = controllerItems.getModel().getItemById(itemId);
         if (item != null && item.getPhotos() != null) {

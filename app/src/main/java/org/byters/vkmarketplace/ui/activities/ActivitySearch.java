@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -13,9 +14,17 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.byters.vkmarketplace.R;
+import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
+import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.adapters.SearchResultAdapter;
 
-public class ActivitySearch extends ActivityBase {
+import java.util.ArrayList;
+
+public class ActivitySearch extends ActivityBase
+        implements SearchView.OnQueryTextListener, ItemsUpdateListener {
+
+    private SearchResultAdapter adapter;
 
     public static void display(Context context) {
         context.startActivity(new Intent(context, ActivitySearch.class));
@@ -33,13 +42,30 @@ public class ActivitySearch extends ActivityBase {
         RecyclerView rvItems = (RecyclerView) findViewById(R.id.rvItems);
         rvItems.setLayoutManager(new GridLayoutManager(this, 2));
         rvItems.addItemDecoration(new ItemDecoration(this));
-        rvItems.setAdapter(new SearchResultAdapter(this));
+        adapter = new SearchResultAdapter(this);
+        rvItems.setAdapter(adapter);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((ControllerMain) getApplicationContext()).getControllerSearchResult().setListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ((ControllerMain) getApplicationContext()).getControllerSearchResult().removeListener();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_search_menu, menu);
+
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setOnQueryTextListener(this);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -51,6 +77,22 @@ public class ActivitySearch extends ActivityBase {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        ((ControllerMain) getApplicationContext()).searchItems(newText);
+        return false;
+    }
+
+    @Override
+    public void onUpdated(ArrayList<MarketplaceItem> data) {
+        adapter.updateData();
     }
 
     //region itemDecorator
