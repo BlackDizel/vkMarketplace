@@ -1,5 +1,6 @@
 package org.byters.vkmarketplace.api;
 
+import org.byters.vkmarketplace.model.dataclasses.AccountInfoBlob;
 import org.byters.vkmarketplace.model.dataclasses.AlbumBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceBlob;
 import org.byters.vkmarketplace.model.dataclasses.NewsBlob;
@@ -11,6 +12,7 @@ import retrofit2.http.Query;
 public interface VkApi {
 
     String BASE_URL = "https://api.vk.com/method/";
+    String USER_INFO_FIELDS = "photo_max_orig";
 
     @GET("market.get")
     Call<MarketplaceBlob> getMarketItems(@Query("owner_id") int owner_id
@@ -48,6 +50,12 @@ public interface VkApi {
 
     @GET("market.getAlbums")
     Call<AlbumBlob> getAlbums(@Query("owner_id") int owner_id
+            , @Query("v") String v);
+
+    @GET("users.get")
+    Call<AccountInfoBlob> getAccountInfo(
+            @Query("user_ids") String ids
+            , @Query("fields") String fields
             , @Query("v") String v);
 
     /*
