@@ -5,10 +5,19 @@ import java.util.ArrayList;
 
 public class AlbumBlob {
 
-    private ArrayList<AlbumItem> items;
+    private AlbumItemsBlob response;
 
     public ArrayList<AlbumItem> getItems() {
-        return items;
+        return response == null ? null : response.getItems();
+    }
+
+    public class AlbumItemsBlob {
+
+        private ArrayList<AlbumItem> items;
+
+        public ArrayList<AlbumItem> getItems() {
+            return items;
+        }
     }
 
     public class AlbumItem implements Serializable {
@@ -33,6 +42,4 @@ public class AlbumBlob {
             return count;
         }
     }
-
-
 }
