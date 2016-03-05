@@ -20,6 +20,7 @@ public class ControllerStorage {
     public static final String NEWS_CACHE = "cache_news";
     public static final String MARKETS_CACHE = "cache_markets";
     public static final String USERINFO_CACHE = "cache_userinfo";
+    public static final String ALBUMS_CACHE = "cache_albums";
     private static final String TAG = "controllerStorage";
 
     public synchronized static void writeObjectToFile(Context context, Object object, String filename) {
