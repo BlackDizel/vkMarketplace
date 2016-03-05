@@ -49,6 +49,22 @@ public class ControllerAlbums
         return data.get(pos);
     }
 
+    @Nullable
+    public String getTitle(int id) {
+        AlbumBlob.AlbumItem item = getItemById(id);
+        if (item == null) return null;
+        return item.getTitle();
+    }
+
+    @Nullable
+    private AlbumBlob.AlbumItem getItemById(int id) {
+        if (data == null) return null;
+        for (AlbumBlob.AlbumItem item : data)
+            if (item.getId() == id)
+                return item;
+        return null;
+    }
+
     public void updateData(String key) {
         if (!TextUtils.isEmpty(key) && (request == null || request.isExecuted())) {
             request = VkService.getApi().getAlbums(
