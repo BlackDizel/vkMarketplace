@@ -11,6 +11,7 @@ import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
 import org.byters.vkmarketplace.controllers.controllers.ControllerMarkets;
 import org.byters.vkmarketplace.controllers.controllers.ControllerNews;
 import org.byters.vkmarketplace.controllers.controllers.ControllerSearchResult;
+//import org.byters.vkmarketplace.controllers.controllers.ControllerUserData;
 import org.byters.vkmarketplace.controllers.controllers.utils.OnItemUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 
@@ -24,6 +25,7 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
     private ControllerNews controllerNews;
     private ControllerMarkets controllerMarkets;
     private ControllerSearchResult controllerSearchResult;
+   // private ControllerUserData controllerUserData;
 
     public ControllerItems getControllerItems() {
         return controllerItems;
@@ -49,11 +51,22 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
         return controllerMarkets;
     }
 
+
+    /*public void getUserData() {
+        getControllerUserData().getUserData(controllerAuth.getUserId());
+    }*/
+
     public ControllerSearchResult getControllerSearchResult() {
         if (controllerSearchResult == null)
             controllerSearchResult = new ControllerSearchResult(this);
         return controllerSearchResult;
     }
+
+/*    public ControllerUserData getControllerUserData() {
+        if (controllerUserData == null)
+            controllerUserData = new ControllerUserData(this);
+        return controllerUserData;
+    }*/
 
     @Override
     public void onCreate() {
@@ -78,8 +91,10 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
         controllerAuth.setToken(this, key);
         controllerItems.updateData(this, key);
         controllerNews.updateData(this);
+    }
 
-        //todo update detailed item info
+    public void setUserID(@NonNull String id) {
+        controllerAuth.setUserId(this, id);
     }
 
     public void updateMarketList() {

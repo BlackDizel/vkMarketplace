@@ -46,16 +46,19 @@ public class ActivityLogin extends ActivityBase {
 
             UrlQuerySanitizer sanitizer = new UrlQuerySanitizer();
             sanitizer.registerParameter(getString(R.string.access_token_key), UrlQuerySanitizer.getAllButNulLegal());
+            sanitizer.registerParameter(getString(R.string.user_id_key), UrlQuerySanitizer.getAllButNulLegal());
 
             String query = getQuery(url);
             if (TextUtils.isEmpty(query)) finish();
             sanitizer.parseQuery(query);
 
             String key = sanitizer.getValue(getString(R.string.access_token_key));
-
             if (TextUtils.isEmpty(key)) finish();
-
             ((ControllerMain) getApplicationContext()).setToken(key);
+
+            String id = sanitizer.getValue(getString(R.string.user_id_key));
+            if (TextUtils.isEmpty(id)) finish();
+            ((ControllerMain) getApplicationContext()).setUserID(id);
 
             finish();
         }
