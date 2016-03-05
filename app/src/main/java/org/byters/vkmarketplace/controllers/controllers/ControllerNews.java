@@ -3,7 +3,7 @@ package org.byters.vkmarketplace.controllers.controllers;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
 import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.utils.NewsUpdateListener;
+import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.NewsBlob;
 import org.byters.vkmarketplace.model.dataclasses.NewsItem;
 
@@ -14,7 +14,7 @@ import retrofit2.Response;
 
 public class ControllerNews implements Callback<NewsBlob> {
 
-    private ArrayList<NewsUpdateListener> listeners;
+    private ArrayList<DataUpdateListener> listeners;
 
     private ArrayList<NewsItem> data;
 
@@ -41,12 +41,12 @@ public class ControllerNews implements Callback<NewsBlob> {
                 .enqueue(this);
     }
 
-    public void removeListener(NewsUpdateListener listener) {
+    public void removeListener(DataUpdateListener listener) {
         if (listeners != null)
             listeners.remove(listener);
     }
 
-    public void addListener(NewsUpdateListener listener) {
+    public void addListener(DataUpdateListener listener) {
         if (listener == null) return;
         if (listeners == null) listeners = new ArrayList<>();
         listeners.add(listener);
@@ -65,8 +65,8 @@ public class ControllerNews implements Callback<NewsBlob> {
         ControllerStorage.writeObjectToFile(controllerMain, this.data, ControllerStorage.NEWS_CACHE);
 
         if (listeners == null) return;
-        for (NewsUpdateListener listener : listeners)
-            listener.onUpdated(this.data);
+        for (DataUpdateListener listener : listeners)
+            listener.onUpdated(DataUpdateListener.TYPE_NEWS);
     }
 
     @Override

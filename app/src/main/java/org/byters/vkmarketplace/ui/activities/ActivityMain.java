@@ -17,18 +17,14 @@ import android.view.View;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
-import org.byters.vkmarketplace.controllers.controllers.utils.NewsUpdateListener;
+import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.controllers.controllers.utils.UserInfoUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.AccountInfo;
 import org.byters.vkmarketplace.ui.adapters.MenuAdapter;
 import org.byters.vkmarketplace.ui.fragments.FragmentFeatured;
 
-import java.util.ArrayList;
-
 public class ActivityMain extends ActivityBase
-        implements ItemsUpdateListener
-        , NewsUpdateListener
+        implements DataUpdateListener
         , UserInfoUpdateListener
         , View.OnClickListener {
 
@@ -112,10 +108,14 @@ public class ActivityMain extends ActivityBase
 
     //region update data
     @Override
-    public void onUpdated(ArrayList data) {
-        Fragment f = getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT_TAG);
-        if (f instanceof FragmentFeatured)
-            ((FragmentFeatured) f).updateData(data);
+    public void onUpdated(int type) {
+        if (type == TYPE_ALBUM)
+            menuAdapter.updateData();
+        else {
+            Fragment f = getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT_TAG);
+            if (f instanceof FragmentFeatured)
+                ((FragmentFeatured) f).updateData();
+        }
     }
 
     @Override

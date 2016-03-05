@@ -22,15 +22,12 @@ import android.widget.TextView;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.ControllerCart;
-import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
-import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
+import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.ui.adapters.CartAdapter;
-
-import java.util.ArrayList;
 
 public class ActivityCart extends ActivityBase
         implements AlertDialog.OnClickListener
-        , ItemsUpdateListener
+        , DataUpdateListener
         , SwipeRefreshLayout.OnRefreshListener
         , View.OnClickListener {
 
@@ -78,7 +75,7 @@ public class ActivityCart extends ActivityBase
     }
 
     @Override
-    public void onUpdated(ArrayList<MarketplaceItem> data) {
+    public void onUpdated(int type) {
         if (refreshLayout != null)
             refreshLayout.setRefreshing(false);
         checkState();

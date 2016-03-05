@@ -15,14 +15,12 @@ import android.view.View;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
-import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
+import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.ui.adapters.SearchResultAdapter;
 
-import java.util.ArrayList;
-
 public class ActivitySearch extends ActivityBase
-        implements SearchView.OnQueryTextListener, ItemsUpdateListener {
+        implements SearchView.OnQueryTextListener
+        , DataUpdateListener {
 
     private SearchResultAdapter adapter;
 
@@ -91,8 +89,9 @@ public class ActivitySearch extends ActivityBase
     }
 
     @Override
-    public void onUpdated(ArrayList<MarketplaceItem> data) {
-        adapter.updateData();
+    public void onUpdated(int type) {
+        if (type == TYPE_SEARCH)
+            adapter.updateData();
     }
 
     //region itemDecorator

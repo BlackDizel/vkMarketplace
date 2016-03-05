@@ -20,15 +20,15 @@ import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
+import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.controllers.controllers.utils.OnItemUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.adapters.PhotosAdapter;
 
-import java.util.ArrayList;
-
 public class ActivityItemInfo extends ActivityBase
-        implements ItemsUpdateListener, OnItemUpdateListener, View.OnClickListener {
+        implements DataUpdateListener
+        , OnItemUpdateListener
+        , View.OnClickListener {
 
     public final static String INTENT_EXTRA_ITEM_ID = "item_id";
     private final static int NO_VALUE = -1;
@@ -84,8 +84,7 @@ public class ActivityItemInfo extends ActivityBase
         else if (!TextUtils.isEmpty(item.getThumb_photo()))
             Picasso.with(this).load(item.getThumb_photo()).into((ImageView) findViewById(R.id.ivItem));
 
-        if (item.getPhotosSize() > 1)
-            photosAdapter.updateData(item);
+        photosAdapter.updateData(item);
     }
 
     //region listener
@@ -139,8 +138,7 @@ public class ActivityItemInfo extends ActivityBase
     //endregion
 
     @Override
-    public void onUpdated(ArrayList<MarketplaceItem> data) {
-        if (data == null) return;
+    public void onUpdated(int type) {
         setData();
     }
 

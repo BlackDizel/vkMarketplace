@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
 import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
+import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 
@@ -20,13 +20,13 @@ public class ControllerSearchResult implements Callback<MarketplaceBlob> {
     private ArrayList<MarketplaceItem> data;
     private ControllerMain controllerMain;
     private Call<MarketplaceBlob> request;
-    private ItemsUpdateListener listener;
+    private DataUpdateListener listener;
 
     public ControllerSearchResult(ControllerMain controllerMain) {
         this.controllerMain = controllerMain;
     }
 
-    public void setListener(ItemsUpdateListener listener) {
+    public void setListener(DataUpdateListener listener) {
         this.listener = listener;
     }
 
@@ -73,12 +73,12 @@ public class ControllerSearchResult implements Callback<MarketplaceBlob> {
             if (data != null && data.size() == 0) data = null;
         }
         if (listener != null)
-            listener.onUpdated(data);
+            listener.onUpdated(DataUpdateListener.TYPE_SEARCH);
     }
 
     @Override
     public void onFailure(Throwable t) {
         if (listener != null)
-            listener.onUpdated(data);
+            listener.onUpdated(DataUpdateListener.TYPE_SEARCH);
     }
 }

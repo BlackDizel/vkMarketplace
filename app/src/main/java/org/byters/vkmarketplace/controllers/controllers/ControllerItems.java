@@ -7,7 +7,7 @@ import android.text.TextUtils;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
-import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
+import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.model.models.ModelItems;
@@ -21,7 +21,7 @@ public class ControllerItems implements Callback<MarketplaceBlob> {
     private static ModelItems model;
     private static boolean isLoading;
     private Context context;
-    private ArrayList<ItemsUpdateListener> listeners;
+    private ArrayList<DataUpdateListener> listeners;
 
     public ControllerItems(@NonNull Context context, @Nullable String token) {
         isLoading = false;
@@ -39,13 +39,13 @@ public class ControllerItems implements Callback<MarketplaceBlob> {
     }
 
     //region listeners
-    public void addListener(ItemsUpdateListener listener) {
+    public void addListener(DataUpdateListener listener) {
         if (listener == null) return;
         if (listeners == null) listeners = new ArrayList<>();
         listeners.add(listener);
     }
 
-    public void removeListener(ItemsUpdateListener listener) {
+    public void removeListener(DataUpdateListener listener) {
         if (listeners == null || listener == null) return;
         listeners.remove(listener);
     }
@@ -57,17 +57,17 @@ public class ControllerItems implements Callback<MarketplaceBlob> {
 
     public void getData(final int market, @Nullable final String token, final String v) {
         if (isLoading || TextUtils.isEmpty(token)) {
-            updateListeners(null);
+            updateListeners();
             return;
         }
         isLoading = true;
         VkService.getApi().getMarketItems(market, 0, token, 1, v).enqueue(this);
     }
 
-    private void updateListeners(ArrayList<MarketplaceItem> data) {
+    private void updateListeners() {
         if (listeners != null)
-            for (ItemsUpdateListener listener : listeners)
-                if (listener != null) listener.onUpdated(data);
+            for (DataUpdateListener listener : listeners)
+                if (listener != null) listener.onUpdated(DataUpdateListener.TYPE_ITEMS);
     }
 
     private void writeData(ArrayList<MarketplaceItem> result) {
@@ -84,13 +84,13 @@ public class ControllerItems implements Callback<MarketplaceBlob> {
             list = response.body().getItems();
             ControllerItems.this.writeData(list);
         }
-        updateListeners(list);
+        updateListeners();
         isLoading = false;
     }
 
     @Override
     public void onFailure(Throwable t) {
-        updateListeners(null);
+        updateListeners();
         isLoading = false;
     }
 }

@@ -47,9 +47,9 @@ public class FragmentFeatured extends FragmentBase
         return v;
     }
 
-    public void updateData(ArrayList data) {
+    public void updateData() {
         if (refreshLayout != null) refreshLayout.setRefreshing(false);
-        if (adapter != null && data != null) adapter.updateData();
+        if (adapter != null) adapter.updateData();
     }
 
     @Override
