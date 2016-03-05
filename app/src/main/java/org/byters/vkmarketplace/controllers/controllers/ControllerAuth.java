@@ -15,7 +15,8 @@ public class ControllerAuth {
 
     @Nullable
     public String getToken() {
-        return model.getData();
+        if (model.getData() == null) return null;
+        return model.getData().getToken();
     }
 
     public boolean isAuth() {
@@ -23,6 +24,16 @@ public class ControllerAuth {
     }
 
     public void setToken(Context context, String key) {
-        model.setData(context, key);
+        model.setToken(context, key);
+    }
+
+    public void setUserId(Context context, String id) {
+        model.setUserId(context, id);
+    }
+
+    @Nullable
+    public String getUserId() {
+        if (model.getData() == null) return null;
+        return model.getData().getUserId();
     }
 }
