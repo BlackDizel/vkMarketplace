@@ -3,19 +3,20 @@ package org.byters.vkmarketplace.controllers;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
+import org.byters.vkmarketplace.controllers.controllers.ControllerAlbums;
 import org.byters.vkmarketplace.controllers.controllers.ControllerAuth;
 import org.byters.vkmarketplace.controllers.controllers.ControllerCart;
 import org.byters.vkmarketplace.controllers.controllers.ControllerFavorites;
 import org.byters.vkmarketplace.controllers.controllers.ControllerItemInfo;
 import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
-import org.byters.vkmarketplace.controllers.controllers.ControllerMarkets;
 import org.byters.vkmarketplace.controllers.controllers.ControllerNews;
 import org.byters.vkmarketplace.controllers.controllers.ControllerSearchResult;
 import org.byters.vkmarketplace.controllers.controllers.ControllerUserData;
 import org.byters.vkmarketplace.controllers.controllers.utils.OnItemUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 
-public class ControllerMain extends Application implements OnItemUpdateListener {
+public class ControllerMain extends Application
+        implements OnItemUpdateListener {
 
     private ControllerAuth controllerAuth;
     private ControllerItems controllerItems;
@@ -23,9 +24,9 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
     private ControllerCart controllerCart;
     private ControllerFavorites controllerFavorites;
     private ControllerNews controllerNews;
-    private ControllerMarkets controllerMarkets;
     private ControllerSearchResult controllerSearchResult;
     private ControllerUserData controllerUserData;
+    private ControllerAlbums controllerAlbums;
 
     public ControllerItems getControllerItems() {
         return controllerItems;
@@ -47,10 +48,6 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
         return controllerNews;
     }
 
-    public ControllerMarkets getControllerMarkets() {
-        return controllerMarkets;
-    }
-
     public ControllerSearchResult getControllerSearchResult() {
         if (controllerSearchResult == null)
             controllerSearchResult = new ControllerSearchResult(this);
@@ -61,6 +58,16 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
         if (controllerUserData == null)
             controllerUserData = new ControllerUserData(this);
         return controllerUserData;
+    }
+
+    public ControllerAlbums getControllerAlbums() {
+        if (controllerAlbums == null)
+            controllerAlbums = new ControllerAlbums(this);
+        return controllerAlbums;
+    }
+
+    public void updateAlbums() {
+        getControllerAlbums().updateData(controllerAuth.getToken());
     }
 
     @Override
@@ -75,7 +82,6 @@ public class ControllerMain extends Application implements OnItemUpdateListener 
         controllerCart = new ControllerCart(this);
         controllerFavorites = new ControllerFavorites(this);
         controllerNews = new ControllerNews(this);
-        controllerMarkets = new ControllerMarkets(this);
     }
 
     public boolean isAuth() {
