@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +19,8 @@ import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.ItemsUpdateListener;
 import org.byters.vkmarketplace.controllers.controllers.utils.NewsUpdateListener;
+import org.byters.vkmarketplace.controllers.controllers.utils.UserInfoUpdateListener;
+import org.byters.vkmarketplace.model.dataclasses.AccountInfo;
 import org.byters.vkmarketplace.ui.adapters.MenuAdapter;
 import org.byters.vkmarketplace.ui.fragments.FragmentFeatured;
 
@@ -25,9 +28,12 @@ import java.util.ArrayList;
 
 public class ActivityMain extends ActivityBase
         implements ItemsUpdateListener
-        , NewsUpdateListener, View.OnClickListener {
+        , NewsUpdateListener
+        , UserInfoUpdateListener
+        , View.OnClickListener {
 
     private static final String MAIN_FRAGMENT_TAG = "fragment_goods_tag";
+    private MenuAdapter menuAdapter;
 
     public static void display(Context context) {
         context.startActivity(new Intent(context, ActivityMain.class));
@@ -42,7 +48,8 @@ public class ActivityMain extends ActivityBase
 
         RecyclerView rvMenu = (RecyclerView) findViewById(R.id.rvMenu);
         rvMenu.setLayoutManager(new LinearLayoutManager(this));
-        rvMenu.setAdapter(new MenuAdapter(this));
+        menuAdapter = new MenuAdapter(this);
+        rvMenu.setAdapter(menuAdapter);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         //transaction.setCustomAnimations(R.anim.slide_from_left, R.anim.slide_to_right);
@@ -50,7 +57,6 @@ public class ActivityMain extends ActivityBase
         transaction.replace(R.id.content_view, f, MAIN_FRAGMENT_TAG).commit();
 
         findViewById(R.id.fab).setOnClickListener(this);
-
     }
 
     //region menu
@@ -82,6 +88,7 @@ public class ActivityMain extends ActivityBase
         }
         return super.onOptionsItemSelected(item);
     }
+    //endregion
 
     @Override
     protected void onResume() {
@@ -92,8 +99,16 @@ public class ActivityMain extends ActivityBase
 
         ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
         ((ControllerMain) getApplicationContext()).getControllerNews().addListener(this);
+        ((ControllerMain) getApplicationContext()).getControllerUserData().setListener(this);
     }
-    //endregion
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ((ControllerMain) getApplicationContext()).getControllerItems().removeListener(this);
+        ((ControllerMain) getApplicationContext()).getControllerNews().removeListener(this);
+        ((ControllerMain) getApplicationContext()).getControllerUserData().removeListener();
+    }
 
     //region update data
     @Override
@@ -104,11 +119,10 @@ public class ActivityMain extends ActivityBase
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        ((ControllerMain) getApplicationContext()).getControllerItems().removeListener(this);
-        ((ControllerMain) getApplicationContext()).getControllerNews().removeListener(this);
+    public void onUpdated(@Nullable AccountInfo info) {
+        menuAdapter.updateData();
     }
+    //endregion
 
     @Override
     public void onClick(View v) {
