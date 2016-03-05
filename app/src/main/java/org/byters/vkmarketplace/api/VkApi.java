@@ -50,6 +50,7 @@ public interface VkApi {
 
     @GET("market.getAlbums")
     Call<AlbumBlob> getAlbums(@Query("owner_id") int owner_id
+            , @Query("access_token") String token
             , @Query("v") String v);
 
     @GET("users.get")
