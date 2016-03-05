@@ -19,7 +19,7 @@
     <dimen name="activity_item_info_text_padding_left">8dp</dimen>
     <dimen name="item_news_likes_text_padding">8dp</dimen>
     <dimen name="item_news_likes_info_padding">8dp</dimen>
-    <dimen name="menu_item_image_size">48dp</dimen>
+    <dimen name="menu_item_image_size">32dp</dimen>
     <dimen name="menu_item_margin_start">16dp</dimen>
     <dimen name="menu_item_text_padding">16dp</dimen>
 
