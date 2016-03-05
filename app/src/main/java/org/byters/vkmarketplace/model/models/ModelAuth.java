@@ -17,6 +17,7 @@ public class ModelAuth {
     }
 
     public boolean isAuth() {
+        if (data == null) return false;
         return !TextUtils.isEmpty(data.getToken());
     }
 
