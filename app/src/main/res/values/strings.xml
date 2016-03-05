@@ -37,8 +37,7 @@
     <string name="vk_api_ver">5.45</string>
     <string name="tab_featured">новинки</string>
     <string name="tab_goods">все товары</string>
-    <string name="menu_add_market">Добавить группу</string>
-    <string name="menu_item_text_error">маркет не найден</string>
+    <string name="menu_item_text_error">ошибка альбома</string>
     <string name="text_share">Поделиться</string>
     <string name="action_share_title">Поделиться</string>
     <string name="action_share_error">Временно недоступно.</string>

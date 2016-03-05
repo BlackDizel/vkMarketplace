@@ -96,6 +96,7 @@ public class ActivityMain extends ActivityBase
         ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
         ((ControllerMain) getApplicationContext()).getControllerNews().addListener(this);
         ((ControllerMain) getApplicationContext()).getControllerUserData().setListener(this);
+        ((ControllerMain) getApplicationContext()).getControllerAlbums().setListener(this);
     }
 
     @Override
@@ -104,6 +105,7 @@ public class ActivityMain extends ActivityBase
         ((ControllerMain) getApplicationContext()).getControllerItems().removeListener(this);
         ((ControllerMain) getApplicationContext()).getControllerNews().removeListener(this);
         ((ControllerMain) getApplicationContext()).getControllerUserData().removeListener();
+        ((ControllerMain) getApplicationContext()).getControllerAlbums().removeListener();
     }
 
     //region update data

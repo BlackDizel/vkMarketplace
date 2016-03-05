@@ -2,7 +2,6 @@ package org.byters.vkmarketplace.ui.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,8 @@ import com.squareup.picasso.Picasso;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.model.dataclasses.AccountInfo;
-import org.byters.vkmarketplace.model.dataclasses.MarketInfo;
-import org.byters.vkmarketplace.ui.activities.ActivitySearchMarkets;
+import org.byters.vkmarketplace.model.dataclasses.AlbumBlob;
+import org.byters.vkmarketplace.ui.utils.PluralName;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     private static final int TYPE_HEADER = 0;
@@ -27,6 +26,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         this.context = context;
         controllerMain = ((ControllerMain) context.getApplicationContext());
         controllerMain.updateUserData();
+        controllerMain.updateAlbums();
     }
 
     public void updateData() {
@@ -53,48 +53,41 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return controllerMain.getControllerMarkets().getSize() + 2;
+        return controllerMain.getControllerAlbums().getSize() + 1;
     }
 
     public class ViewHolderItem extends ViewHolder
             implements View.OnClickListener {
-        private TextView textView;
+        private TextView tvTitle, tvSubtitle;
         private ImageView ivItem;
-        private String market_uri;
 
         public ViewHolderItem(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            textView = (TextView) itemView.findViewById(R.id.tvTitle);
+            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            tvSubtitle = (TextView) itemView.findViewById(R.id.tvSubtitle);
             ivItem = (ImageView) itemView.findViewById(R.id.ivItem);
 
         }
 
         @Override
         public void onClick(View v) {
-            if (TextUtils.isEmpty(market_uri)) {
-                ActivitySearchMarkets.display(context);
-            } else {
-                //todo navigate to selected market
-            }
+            //todo navigate to selected category
         }
 
         @Override
         public void setData(int position) {
-            if (position + 1 == getItemCount()) {
-                market_uri = null;
-                textView.setText(R.string.menu_add_market);
-                //todo add image
+            AlbumBlob.AlbumItem item = controllerMain.getControllerAlbums().getItem(position - 1);
+            if (item == null) {
+                tvTitle.setText(R.string.menu_item_text_error);
+                tvSubtitle.setText("");
+                ivItem.setImageDrawable(null);
             } else {
-                MarketInfo item = controllerMain.getControllerMarkets().getItem(position - 1);
-                if (item == null) {
-                    textView.setText(R.string.menu_item_text_error);
-                    //todo add image
-                } else {
-                    market_uri = item.getAddress();
-                    textView.setText(item.getTitle());
-                    //todo add image
-                }
+                tvTitle.setText(item.getTitle());
+                tvSubtitle.setText(String.format("%s %s"
+                        , String.valueOf(item.getCount())
+                        , PluralName.ITEM.toString(controllerMain, item.getCount())));
+                Picasso.with(controllerMain).load(item.getPhoto().getLittlePhoto()).into(ivItem);
             }
         }
     }
