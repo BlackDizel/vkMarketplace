@@ -6,9 +6,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -43,9 +45,19 @@ public class ActivityMain extends ActivityBase
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this
+                , drawerLayout
+                , toolbar
+                , R.string.action_open_cart
+                , R.string.action_open_cart);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
         RecyclerView rvMenu = (RecyclerView) findViewById(R.id.rvMenu);
         rvMenu.setLayoutManager(new LinearLayoutManager(this));
@@ -122,12 +134,6 @@ public class ActivityMain extends ActivityBase
             super.onBackPressed();
     }
 
-    @Override
-    public void setTitle(CharSequence title) {
-        String customTitle = ((ControllerMain) getApplicationContext()).getCustomTitle();
-        super.setTitle(TextUtils.isEmpty(customTitle) ? title : customTitle);
-    }
-
     //region update data
     @Override
     public void onUpdated(int type) {
@@ -142,7 +148,9 @@ public class ActivityMain extends ActivityBase
 
     public void invalidateData() {
         drawerLayout.closeDrawers();
-        //todo updatetitle;
+        ActivityCompat.invalidateOptionsMenu(this);
+        String customTitle = ((ControllerMain) getApplicationContext()).getCustomTitle();
+        setTitle(!TextUtils.isEmpty(customTitle) ? customTitle : getString(R.string.app_name));
 
         Fragment f = getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT_TAG);
         if (f instanceof FragmentFeatured)
