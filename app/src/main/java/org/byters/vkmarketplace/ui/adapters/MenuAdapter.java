@@ -14,6 +14,7 @@ import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.model.dataclasses.AccountInfo;
 import org.byters.vkmarketplace.model.dataclasses.AlbumBlob;
+import org.byters.vkmarketplace.ui.activities.ActivityMain;
 import org.byters.vkmarketplace.ui.utils.PluralName;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
@@ -58,8 +59,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     public class ViewHolderItem extends ViewHolder
             implements View.OnClickListener {
+        private static final int NO_VALUE = -1;
         private TextView tvTitle, tvSubtitle;
         private ImageView ivItem;
+        private int album_id;
 
         public ViewHolderItem(View itemView) {
             super(itemView);
@@ -67,12 +70,17 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvSubtitle = (TextView) itemView.findViewById(R.id.tvSubtitle);
             ivItem = (ImageView) itemView.findViewById(R.id.ivItem);
-
+            album_id = NO_VALUE;
         }
 
         @Override
         public void onClick(View v) {
-            //todo navigate to selected category
+            if (album_id != NO_VALUE) {
+                controllerMain.getControllerItems().setAlbum(album_id);
+
+                if (v.getContext() instanceof ActivityMain)
+                    ((ActivityMain) v.getContext()).invalidateData();
+            }
         }
 
         @Override
@@ -82,12 +90,14 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                 tvTitle.setText(R.string.menu_item_text_error);
                 tvSubtitle.setText("");
                 ivItem.setImageDrawable(null);
+                album_id = NO_VALUE;
             } else {
                 tvTitle.setText(item.getTitle());
                 tvSubtitle.setText(String.format("%s %s"
                         , String.valueOf(item.getCount())
                         , PluralName.ITEM.toString(controllerMain, item.getCount())));
                 Picasso.with(controllerMain).load(item.getPhoto().getLittlePhoto()).into(ivItem);
+                album_id = item.getId();
             }
         }
     }

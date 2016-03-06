@@ -29,13 +29,14 @@ public class ModelItems {
         ControllerStorage.writeObjectToFile(context, data, ControllerStorage.ITEMS_INFO);
     }
 
-    public void setData(Context context, ArrayList<MarketplaceItem> data) {
+    public void setData(Context context, ArrayList<MarketplaceItem> data, boolean isCacheNeeded) {
         if (data == null || data.size() == 0) {
             this.data = null;
         } else {
             this.data = data;
         }
-        ControllerStorage.writeObjectToFile(context, data, ControllerStorage.ITEMS_INFO);
+        if (isCacheNeeded)
+            ControllerStorage.writeObjectToFile(context, data, ControllerStorage.ITEMS_INFO);
     }
 
     public void clearData(Context context) {

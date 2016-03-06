@@ -14,28 +14,98 @@ import org.byters.vkmarketplace.model.models.ModelItems;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ControllerItems implements Callback<MarketplaceBlob> {
+public class ControllerItems {
+    private static final int NO_VALUE = -1;
     private static ModelItems model;
-    private static boolean isLoading;
     private Context context;
     private ArrayList<DataUpdateListener> listeners;
+    private int album_id;
+    private Call<MarketplaceBlob> request;
 
     public ControllerItems(@NonNull Context context, @Nullable String token) {
-        isLoading = false;
         this.context = context;
+        album_id = NO_VALUE;
+
         if (model == null) {
             model = new ModelItems(context);
-            if (model.isNull() && !TextUtils.isEmpty(token)) {
+            if (model.isNull()) {
                 updateData(context, token);
             }
         }
     }
 
+    public void clearAlbum() {
+        album_id = NO_VALUE;
+    }
+
+    public void setAlbum(int album_id) {
+        this.album_id = album_id;
+    }
+
+    public boolean isCustomAlbum() {
+        return album_id != NO_VALUE;
+    }
+
+    public int getAlbumId() {
+        return album_id;
+    }
+
     public void updateData(@NonNull Context context, @Nullable String token) {
-        getData(context.getResources().getInteger(R.integer.market), token, context.getString(R.string.vk_api_ver));
+        updateListeners();
+        if (!TextUtils.isEmpty(token)) {
+            if (request != null)
+                request.cancel();
+
+            if (album_id == NO_VALUE) {
+                request = VkService.getApi().getMarketItems(
+                        context.getResources().getInteger(R.integer.market)
+                        , 0
+                        , token
+                        , 1
+                        , context.getString(R.string.vk_api_ver));
+
+                request.enqueue(new Callback<MarketplaceBlob>() {
+                    @Override
+                    public void onResponse(Response<MarketplaceBlob> response) {
+                        if (response != null && response.body() != null)
+                            writeData(response.body().getItems(), true);
+                        updateListeners();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        updateListeners();
+                    }
+                });
+
+            } else {
+                request = VkService.getApi().getMarketItems(
+                        context.getResources().getInteger(R.integer.market)
+                        , album_id
+                        , 0
+                        , token
+                        , 1
+                        , context.getString(R.string.vk_api_ver));
+
+                request.enqueue(new Callback<MarketplaceBlob>() {
+                    @Override
+                    public void onResponse(Response<MarketplaceBlob> response) {
+                        if (response != null && response.body() != null)
+                            writeData(response.body().getItems(), false);
+                        updateListeners();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        updateListeners();
+                    }
+                });
+            }
+        }
     }
 
     //region listeners
@@ -55,42 +125,15 @@ public class ControllerItems implements Callback<MarketplaceBlob> {
         return model;
     }
 
-    public void getData(final int market, @Nullable final String token, final String v) {
-        if (isLoading || TextUtils.isEmpty(token)) {
-            updateListeners();
-            return;
-        }
-        isLoading = true;
-        VkService.getApi().getMarketItems(market, 0, token, 1, v).enqueue(this);
-    }
-
     private void updateListeners() {
         if (listeners != null)
             for (DataUpdateListener listener : listeners)
                 if (listener != null) listener.onUpdated(DataUpdateListener.TYPE_ITEMS);
     }
 
-    private void writeData(ArrayList<MarketplaceItem> result) {
+    private void writeData(ArrayList<MarketplaceItem> result, boolean isCacheNeeded) {
         if (result != null) {
-            if (context != null) model.setData(context, result);
+            if (context != null) model.setData(context, result, isCacheNeeded);
         }
-        isLoading = false;
-    }
-
-    @Override
-    public void onResponse(Response<MarketplaceBlob> response) {
-        ArrayList<MarketplaceItem> list = null;
-        if (response != null && response.body() != null) {
-            list = response.body().getItems();
-            ControllerItems.this.writeData(list);
-        }
-        updateListeners();
-        isLoading = false;
-    }
-
-    @Override
-    public void onFailure(Throwable t) {
-        updateListeners();
-        isLoading = false;
     }
 }

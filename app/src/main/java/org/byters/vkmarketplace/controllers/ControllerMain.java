@@ -2,6 +2,7 @@ package org.byters.vkmarketplace.controllers;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import org.byters.vkmarketplace.controllers.controllers.ControllerAlbums;
 import org.byters.vkmarketplace.controllers.controllers.ControllerAuth;
@@ -74,7 +75,6 @@ public class ControllerMain extends Application
     public void onCreate() {
         super.onCreate();
 
-        //todo set imageloader config
         controllerAuth = new ControllerAuth(this);
         controllerItems = new ControllerItems(this, controllerAuth.getToken());
         controllerItemInfo = new ControllerItemInfo();
@@ -126,5 +126,11 @@ public class ControllerMain extends Application
     @Override
     public void onItemLoaded(@NonNull MarketplaceItem item) {
         controllerItems.getModel().setItem(this, item);
+    }
+
+    @Nullable
+    public String getCustomTitle() {
+        if (!getControllerItems().isCustomAlbum()) return null;
+        return getControllerAlbums().getTitle(getControllerItems().getAlbumId());
     }
 }

@@ -8,9 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +32,7 @@ public class ActivityMain extends ActivityBase
 
     private static final String MAIN_FRAGMENT_TAG = "fragment_goods_tag";
     private MenuAdapter menuAdapter;
+    private DrawerLayout drawerLayout;
 
     public static void display(Context context) {
         context.startActivity(new Intent(context, ActivityMain.class));
@@ -41,6 +44,8 @@ public class ActivityMain extends ActivityBase
         setContentView(R.layout.activity_main);
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
         RecyclerView rvMenu = (RecyclerView) findViewById(R.id.rvMenu);
         rvMenu.setLayoutManager(new LinearLayoutManager(this));
@@ -108,6 +113,21 @@ public class ActivityMain extends ActivityBase
         ((ControllerMain) getApplicationContext()).getControllerAlbums().removeListener();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (((ControllerMain) getApplicationContext()).getControllerItems().isCustomAlbum()) {
+            ((ControllerMain) getApplicationContext()).getControllerItems().clearAlbum();
+            invalidateData();
+        } else
+            super.onBackPressed();
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        String customTitle = ((ControllerMain) getApplicationContext()).getCustomTitle();
+        super.setTitle(TextUtils.isEmpty(customTitle) ? title : customTitle);
+    }
+
     //region update data
     @Override
     public void onUpdated(int type) {
@@ -118,6 +138,15 @@ public class ActivityMain extends ActivityBase
             if (f instanceof FragmentFeatured)
                 ((FragmentFeatured) f).updateData();
         }
+    }
+
+    public void invalidateData() {
+        drawerLayout.closeDrawers();
+        //todo updatetitle;
+
+        Fragment f = getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT_TAG);
+        if (f instanceof FragmentFeatured)
+            ((FragmentFeatured) f).onRefresh();
     }
 
     @Override

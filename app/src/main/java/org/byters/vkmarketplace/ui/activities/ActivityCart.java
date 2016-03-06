@@ -151,6 +151,7 @@ public class ActivityCart extends ActivityBase
 
     @Override
     public void onRefresh() {
+        ((ControllerMain) getApplicationContext()).getControllerItems().clearAlbum();
         ((ControllerMain) getApplicationContext()).updateMarketList();
     }
 
