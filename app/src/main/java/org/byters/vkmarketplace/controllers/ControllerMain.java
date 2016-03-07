@@ -128,6 +128,11 @@ public class ControllerMain extends Application
         controllerItems.getModel().setItem(this, item);
     }
 
+    @Override
+    public void onItemLoadError(int itemId) {
+
+    }
+
     @Nullable
     public String getCustomTitle() {
         if (!getControllerItems().isCustomAlbum()) return null;

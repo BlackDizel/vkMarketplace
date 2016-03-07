@@ -146,6 +146,11 @@ public class ActivityMain extends ActivityBase
         }
     }
 
+    @Override
+    public void onError(int type) {
+
+    }
+
     public void invalidateData() {
         drawerLayout.closeDrawers();
         ActivityCompat.invalidateOptionsMenu(this);
@@ -158,8 +163,13 @@ public class ActivityMain extends ActivityBase
     }
 
     @Override
-    public void onUpdated(@Nullable AccountInfo info) {
+    public void onUserInfoLoaded(@Nullable AccountInfo info) {
         menuAdapter.updateData();
+    }
+
+    @Override
+    public void onUserInfoLoadError() {
+
     }
     //endregion
 

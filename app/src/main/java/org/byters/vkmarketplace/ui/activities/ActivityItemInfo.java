@@ -143,12 +143,22 @@ public class ActivityItemInfo extends ActivityBase
     }
 
     @Override
+    public void onError(int type) {
+
+    }
+
+    @Override
     public void onItemLoaded(@NonNull MarketplaceItem item) {
         //todo add check error state
         if (item.getId() != id) return;
 
         //todo state idle
         setData();
+    }
+
+    @Override
+    public void onItemLoadError(int itemId) {
+
     }
 
     @Override

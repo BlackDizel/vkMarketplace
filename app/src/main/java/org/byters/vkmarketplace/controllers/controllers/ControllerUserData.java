@@ -62,11 +62,11 @@ public class ControllerUserData implements Callback<AccountInfoBlob> {
                 && response.body().getResponse() != null)
             setData(response.body().getResponse());
 
-        if (listener != null) listener.onUpdated(data);
+        if (listener != null) listener.onUserInfoLoaded(data);
     }
 
     @Override
     public void onFailure(Throwable t) {
-        if (listener != null) listener.onUpdated(null);
+        if (listener != null) listener.onUserInfoLoaded(null);
     }
 }

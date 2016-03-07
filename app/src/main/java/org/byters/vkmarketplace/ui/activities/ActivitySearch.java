@@ -94,6 +94,11 @@ public class ActivitySearch extends ActivityBase
             adapter.updateData();
     }
 
+    @Override
+    public void onError(int type) {
+
+    }
+
     //region itemDecorator
     private class ItemDecoration extends RecyclerView.ItemDecoration {
 

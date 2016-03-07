@@ -7,4 +7,6 @@ public interface DataUpdateListener {
     int TYPE_ALBUM = 3;
 
     void onUpdated(int type);
+
+    void onError(int type);
 }

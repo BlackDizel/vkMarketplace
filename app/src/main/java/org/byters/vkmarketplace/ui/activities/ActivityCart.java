@@ -82,6 +82,11 @@ public class ActivityCart extends ActivityBase
     }
 
     @Override
+    public void onError(int type) {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
