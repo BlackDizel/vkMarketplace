@@ -44,6 +44,13 @@ public class ControllerItemInfo {
             if (listener != null) listener.onItemLoaded(item);
 
     }
+
+    public void updateListenersError(int itemId) {
+        if (listeners == null) return;
+        for (OnItemUpdateListener listener : listeners)
+            if (listener != null) listener.onItemLoadError(itemId);
+
+    }
     //endregion
 
     public void getItemInfo(@NonNull Context context, int id, @Nullable String token) {
@@ -87,7 +94,7 @@ public class ControllerItemInfo {
 
         @Override
         public void onFailure(Throwable t) {
-            updateListeners(null);
+            updateListenersError(id);
             updatingIds.remove((Integer) id);
         }
     }

@@ -67,6 +67,6 @@ public class ControllerUserData implements Callback<AccountInfoBlob> {
 
     @Override
     public void onFailure(Throwable t) {
-        if (listener != null) listener.onUserInfoLoaded(null);
+        if (listener != null) listener.onUserInfoLoadError();
     }
 }

@@ -71,6 +71,8 @@ public class ControllerNews implements Callback<NewsBlob> {
 
     @Override
     public void onFailure(Throwable t) {
-
+        if (listeners == null) return;
+        for (DataUpdateListener listener : listeners)
+            listener.onError(DataUpdateListener.TYPE_NEWS);
     }
 }

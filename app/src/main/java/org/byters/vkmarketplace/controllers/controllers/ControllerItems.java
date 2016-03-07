@@ -78,7 +78,7 @@ public class ControllerItems {
 
                     @Override
                     public void onFailure(Throwable t) {
-                        updateListeners();
+                        updateListenersError();
                     }
                 });
 
@@ -101,7 +101,7 @@ public class ControllerItems {
 
                     @Override
                     public void onFailure(Throwable t) {
-                        updateListeners();
+                        updateListenersError();
                     }
                 });
             }
@@ -129,6 +129,12 @@ public class ControllerItems {
         if (listeners != null)
             for (DataUpdateListener listener : listeners)
                 if (listener != null) listener.onUpdated(DataUpdateListener.TYPE_ITEMS);
+    }
+
+    private void updateListenersError() {
+        if (listeners != null)
+            for (DataUpdateListener listener : listeners)
+                if (listener != null) listener.onError(DataUpdateListener.TYPE_ITEMS);
     }
 
     private void writeData(ArrayList<MarketplaceItem> result, boolean isCacheNeeded) {

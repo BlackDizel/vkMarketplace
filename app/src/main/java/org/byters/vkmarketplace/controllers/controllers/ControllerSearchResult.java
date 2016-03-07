@@ -79,6 +79,6 @@ public class ControllerSearchResult implements Callback<MarketplaceBlob> {
     @Override
     public void onFailure(Throwable t) {
         if (listener != null)
-            listener.onUpdated(DataUpdateListener.TYPE_SEARCH);
+            listener.onError(DataUpdateListener.TYPE_SEARCH);
     }
 }

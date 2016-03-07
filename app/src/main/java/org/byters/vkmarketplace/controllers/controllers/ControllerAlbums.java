@@ -96,6 +96,6 @@ public class ControllerAlbums
     @Override
     public void onFailure(Throwable t) {
         if (listener != null)
-            listener.onUpdated(DataUpdateListener.TYPE_ALBUM);
+            listener.onError(DataUpdateListener.TYPE_ALBUM);
     }
 }
