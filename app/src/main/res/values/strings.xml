@@ -44,4 +44,6 @@
     <string name="action_search_label">Поиск</string>
     <string name="user_id_key">user_id</string>
     <string name="text_offline">оффлайн режим</string>
+    <string name="error_title">Шеф, нас заметили!</string>
+    <string name="error_button_text">Попробовать еще раз</string>
 </resources>
