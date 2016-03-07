@@ -28,4 +28,5 @@
     <dimen name="list_fab_space">88dp</dimen>
     <dimen name="item_info_text_padding_end">16dp</dimen>
     <dimen name="nav_menu_header_text_margin">16dp</dimen>
+    <dimen name="text_offline_padding">4dp</dimen>
 </resources>
