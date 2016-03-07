@@ -4,7 +4,6 @@ import android.net.UrlQuerySanitizer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -14,15 +13,26 @@ import org.byters.vkmarketplace.controllers.ControllerMain;
 
 public class ActivityLogin extends ActivityBase {
 
+    WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        WebView wv = (WebView) findViewById(R.id.wvLogin);
-        wv.setWebViewClient(new AuthClient());
-        wv.loadUrl(getString(R.string.vk_auth_url));
+        webView = (WebView) findViewById(R.id.wvLogin);
+        webView.setWebViewClient(new AuthClient());
+        loadUrl();
+    }
 
+    @Override
+    protected void reloadData() {
+        super.reloadData();
+        loadUrl();
+    }
+
+    private void loadUrl() {
+        webView.loadUrl(getString(R.string.vk_auth_url));
     }
 
     private class AuthClient extends WebViewClient {
@@ -61,6 +71,12 @@ public class ActivityLogin extends ActivityBase {
             ((ControllerMain) getApplicationContext()).setUserID(id);
 
             finish();
+        }
+
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            super.onReceivedError(view, errorCode, description, failingUrl);
+            showError(null);
         }
 
         private void finish() {
