@@ -48,6 +48,9 @@ public class FragmentFeatured extends FragmentBase
     }
 
     public void updateData() {
+        //todo if no cached data, show error
+        //todo if updated with error, show offline state text
+        //todo implement reload button
         if (refreshLayout != null) refreshLayout.setRefreshing(false);
         if (adapter != null) adapter.updateData();
     }

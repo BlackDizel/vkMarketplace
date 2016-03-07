@@ -96,7 +96,10 @@ public class ActivitySearch extends ActivityBase
 
     @Override
     public void onError(int type) {
-
+        //todo if no cached data, show error
+        //todo else show offline mode and search in cache
+        if (type == TYPE_SEARCH)
+            adapter.updateData();
     }
 
     //region itemDecorator

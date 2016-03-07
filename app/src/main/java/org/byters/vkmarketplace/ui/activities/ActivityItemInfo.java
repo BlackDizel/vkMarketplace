@@ -94,7 +94,7 @@ public class ActivityItemInfo extends ActivityBase
         ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
         ((ControllerMain) getApplicationContext()).getControllerItemInfo().addItemInfoUpdatedListener(this);
 
-        ((ControllerMain) getApplicationContext()).updateDetailedItemInfo(id);
+        reloadData();
         //todo state updating
     }
 
@@ -144,21 +144,31 @@ public class ActivityItemInfo extends ActivityBase
 
     @Override
     public void onError(int type) {
+        //todo if no cached data, show error
+        //todo else show offline mode
+        setData();
+    }
 
+    @Override
+    protected void reloadData() {
+        super.reloadData();
+        ((ControllerMain) getApplicationContext()).updateDetailedItemInfo(id);
     }
 
     @Override
     public void onItemLoaded(@NonNull MarketplaceItem item) {
-        //todo add check error state
         if (item.getId() != id) return;
 
-        //todo state idle
         setData();
     }
 
     @Override
     public void onItemLoadError(int itemId) {
+        if (itemId != id) return;
 
+        //todo if no cached data, show error
+        //todo else show offline mode
+        setData();
     }
 
     @Override

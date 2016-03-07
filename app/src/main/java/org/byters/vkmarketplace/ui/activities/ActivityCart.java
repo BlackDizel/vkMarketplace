@@ -83,7 +83,11 @@ public class ActivityCart extends ActivityBase
 
     @Override
     public void onError(int type) {
-
+        //todo if no cached data, show error
+        //todo else show offline mode
+        if (refreshLayout != null)
+            refreshLayout.setRefreshing(false);
+        checkState();
     }
 
     @Override

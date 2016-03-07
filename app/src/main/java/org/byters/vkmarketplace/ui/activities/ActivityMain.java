@@ -148,7 +148,13 @@ public class ActivityMain extends ActivityBase
 
     @Override
     public void onError(int type) {
-
+        if (type == TYPE_ALBUM)
+            menuAdapter.updateData();
+        else {
+            Fragment f = getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT_TAG);
+            if (f instanceof FragmentFeatured)
+                ((FragmentFeatured) f).updateData();
+        }
     }
 
     public void invalidateData() {
@@ -169,9 +175,15 @@ public class ActivityMain extends ActivityBase
 
     @Override
     public void onUserInfoLoadError() {
-
+        menuAdapter.updateData();
     }
     //endregion
+
+    @Override
+    protected void reloadData() {
+        super.reloadData();
+        invalidateData();
+    }
 
     @Override
     public void onClick(View v) {
