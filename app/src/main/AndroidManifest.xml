@@ -28,7 +28,6 @@
         <activity
             android:name=".ui.activities.ActivityFavorites"
             android:label="@string/activity_fav_title" />
-        <activity android:name=".ui.activities.ActivitySearchMarkets" />
         <activity android:name=".ui.activities.ActivitySearch"/>
     </application>
 
