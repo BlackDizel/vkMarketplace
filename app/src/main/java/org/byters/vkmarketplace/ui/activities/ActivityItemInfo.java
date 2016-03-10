@@ -60,7 +60,7 @@ public class ActivityItemInfo extends ActivityBase
         glm.setSpanSizeLookup(new DataSpanSizeLookup());
         rvPhotos.setLayoutManager(glm);
         rvPhotos.addItemDecoration(new ItemDecoration(this));
-        photosAdapter = new PhotosAdapter((ControllerMain)getApplicationContext());
+        photosAdapter = new PhotosAdapter((ControllerMain) getApplicationContext());
         rvPhotos.setAdapter(photosAdapter);
 
         setData();
@@ -213,11 +213,10 @@ public class ActivityItemInfo extends ActivityBase
             int position = parent.getChildLayoutPosition(view);
 
             outRect.top = 2 * margin;
-            if (position == 0) {
-                outRect.top = 4 * margin;
+            if (position == 0) { //header
                 outRect.right = 2 * margin;
                 outRect.left = 2 * margin;
-            } else if (position % 2 == 0) {
+            } else if (position % 2 == 0) { //items
                 outRect.right = 2 * margin;
                 outRect.left = margin;
             } else {
