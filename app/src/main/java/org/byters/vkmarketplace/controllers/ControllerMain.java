@@ -138,4 +138,14 @@ public class ControllerMain extends Application
         if (!getControllerItems().isCustomAlbum()) return null;
         return getControllerAlbums().getTitle(getControllerItems().getAlbumId());
     }
+
+    /*public void addLike(int product_id, Callback callback) {
+        VkService.getApi().addLike(
+                "post" //todo server return item not found. send message to api support team
+                , getResources().getInteger(R.integer.market)
+                , product_id
+                , controllerAuth.getToken()
+                , getString(R.string.vk_api_ver)
+        ).enqueue(callback);
+    }*/
 }
