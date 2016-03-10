@@ -63,4 +63,8 @@ public class ModelItems {
             if (item.getId() == id) return item;
         return null;
     }
+
+    public boolean isEmpty() {
+        return getSize() == 0;
+    }
 }
