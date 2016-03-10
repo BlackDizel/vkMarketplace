@@ -15,12 +15,18 @@ public abstract class ActivityBase extends AppCompatActivity {
     public static final int STATE_LOADING = 1;
     public static final int STATE_OFFLINE = 2;
     public static final int STATE_OK = 3;
+    private static boolean isOffline;
 
     private View vError;
     private View vOffline;
     private View vLoading;
     private TextView tvErrorDescription;
     private ViewGroup contentView;
+
+    public static void setIsOffline(ActivityBase activity, boolean isOffline) {
+        ActivityBase.isOffline = isOffline;
+        activity.setState(isOffline ? STATE_OFFLINE : STATE_OK);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,9 @@ public abstract class ActivityBase extends AppCompatActivity {
 
         View vReload = findViewById(R.id.tvReload);
         if (vReload != null) vReload.setOnClickListener(new ErrorClickListener());
+
+        if (isOffline)
+            setState(STATE_OFFLINE);
     }
 
     @Override
@@ -44,7 +53,7 @@ public abstract class ActivityBase extends AppCompatActivity {
         getLayoutInflater().inflate(layoutResId, contentView);
     }
 
-    protected void setState(int state) {
+    public void setState(int state) {
 
         if (vError != null)
             vError.setVisibility(View.GONE);
