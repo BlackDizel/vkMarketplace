@@ -154,8 +154,10 @@ public class ActivityMain extends ActivityBase
             menuAdapter.updateData();
         else {
             Fragment f = getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT_TAG);
-            if (f instanceof FragmentFeatured)
+            if (f instanceof FragmentFeatured) {
                 ((FragmentFeatured) f).updateData();
+                ((FragmentFeatured) f).updateWithError();
+            }
         }
     }
 

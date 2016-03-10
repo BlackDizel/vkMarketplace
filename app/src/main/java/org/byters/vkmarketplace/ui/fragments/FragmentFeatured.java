@@ -13,19 +13,18 @@ import android.view.ViewGroup;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.ui.activities.ActivityBase;
 import org.byters.vkmarketplace.ui.adapters.ItemsAdapter;
 
-import java.util.ArrayList;
-
 public class FragmentFeatured extends FragmentBase
-        implements SwipeRefreshLayout.OnRefreshListener{
+        implements SwipeRefreshLayout.OnRefreshListener {
+
+    private SwipeRefreshLayout refreshLayout;
+    private ItemsAdapter adapter;
 
     public static FragmentFeatured newInstance() {
         return new FragmentFeatured();
     }
-
-    private SwipeRefreshLayout refreshLayout;
-    private ItemsAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,11 +47,17 @@ public class FragmentFeatured extends FragmentBase
     }
 
     public void updateData() {
-        //todo if no cached data, show error
-        //todo if updated with error, show offline state text
-        //todo implement reload button
         if (refreshLayout != null) refreshLayout.setRefreshing(false);
         if (adapter != null) adapter.updateData();
+        ((ActivityBase) getActivity()).setIsOffline((ActivityBase) getActivity(), false);
+
+    }
+
+    public void updateWithError() {
+        if (((ControllerMain) getContext().getApplicationContext()).getControllerItems().getModel().isEmpty())
+            ((ActivityBase) getActivity()).setState(ActivityBase.STATE_ERROR);
+        else
+            ((ActivityBase) getActivity()).setIsOffline((ActivityBase) getActivity(), true);
     }
 
     @Override
