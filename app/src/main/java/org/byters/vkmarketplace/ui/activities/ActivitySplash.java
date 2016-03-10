@@ -2,11 +2,10 @@ package org.byters.vkmarketplace.ui.activities;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 
 import org.byters.vkmarketplace.R;
 
-public class ActivitySplash extends AppCompatActivity {
+public class ActivitySplash extends ActivityBase {
 
     private boolean isNeedToNavigate = true;
 
