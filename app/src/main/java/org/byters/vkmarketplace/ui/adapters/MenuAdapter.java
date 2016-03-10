@@ -26,6 +26,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     public MenuAdapter(Context context) {
         this.context = context;
         controllerMain = ((ControllerMain) context.getApplicationContext());
+        downloadData();
+    }
+
+    public void downloadData() {
         controllerMain.updateUserData();
         controllerMain.updateAlbums();
     }
