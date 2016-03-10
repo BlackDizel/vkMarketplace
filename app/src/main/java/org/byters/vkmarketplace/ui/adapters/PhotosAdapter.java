@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
+import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.dialogs.DialogImage;
 import org.byters.vkmarketplace.ui.utils.SharingHelper;
@@ -24,6 +25,12 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
     @Nullable
     private MarketplaceItem data;
+
+    private ControllerMain controllerMain;
+
+    public PhotosAdapter(ControllerMain controllerMain) {
+        this.controllerMain = controllerMain;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -96,6 +103,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
             tvPrice = ((TextView) itemView.findViewById(R.id.tvPrice));
             tvLikes = ((TextView) itemView.findViewById(R.id.tvLikes));
             itemView.findViewById(R.id.llShare).setOnClickListener(this);
+            itemView.findViewById(R.id.llLikes).setOnClickListener(this);
         }
 
         @Override
@@ -110,8 +118,18 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
         @Override
         public void onClick(View v) {
-            if (data == null) return;
-            SharingHelper.shareItem(v.getContext(), data.getId());
+            switch (v.getId()) {
+                case R.id.llShare:
+                    if (data == null) return;
+                    SharingHelper.shareItem(v.getContext(), data.getId());
+                    break;
+                case R.id.llLikes:
+                    if (data == null)
+                        return;
+                    //todo add like
+                    //controllerMain.addLike(data.getId(), this);
+                    break;
+            }
         }
     }
 

@@ -60,7 +60,7 @@ public class ActivityItemInfo extends ActivityBase
         glm.setSpanSizeLookup(new DataSpanSizeLookup());
         rvPhotos.setLayoutManager(glm);
         rvPhotos.addItemDecoration(new ItemDecoration(this));
-        photosAdapter = new PhotosAdapter();
+        photosAdapter = new PhotosAdapter((ControllerMain)getApplicationContext());
         rvPhotos.setAdapter(photosAdapter);
 
         setData();
