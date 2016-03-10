@@ -2,15 +2,15 @@ package org.byters.vkmarketplace.ui.activities;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.byters.vkmarketplace.R;
 
-public class ActivityBase extends AppCompatActivity {
+public abstract class ActivityBase extends AppCompatActivity {
     public static final int STATE_ERROR = 0;
     public static final int STATE_LOADING = 1;
     public static final int STATE_OFFLINE = 2;
@@ -20,13 +20,15 @@ public class ActivityBase extends AppCompatActivity {
     private View vOffline;
     private View vLoading;
     private TextView tvErrorDescription;
+    private ViewGroup contentView;
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        super.setContentView(R.layout.activity_base);
 
-        //todo setlayout
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        contentView = (ViewGroup) findViewById(R.id.vContent);
 
         vError = findViewById(R.id.vError);
         vLoading = findViewById(R.id.vLoading);
@@ -37,6 +39,10 @@ public class ActivityBase extends AppCompatActivity {
         if (vReload != null) vReload.setOnClickListener(new ErrorClickListener());
     }
 
+    @Override
+    public void setContentView(int layoutResId) {
+        getLayoutInflater().inflate(layoutResId, contentView);
+    }
 
     protected void setState(int state) {
 
