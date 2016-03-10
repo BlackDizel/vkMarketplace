@@ -37,6 +37,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llLikes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
