@@ -16,7 +16,7 @@
     <string name="requset_buy_error_no_products">нет добавленных позиций</string>
     <string name="action_view_market">перейти на сайт</string>
     <string name="market_address">http://vk.com/katriniya_group</string>
-    <string name="action_view_browser_error">не найден браузер</string>
+    <string name="action_view_browser_error">Не найден браузер</string>
     <string name="action_favorite">избранное</string>
     <string name="action_favorites">избранные товары</string>
     <string name="button_save">Cохранить</string>
@@ -53,4 +53,6 @@
     <string name="action_feedback">написать отзыв</string>
     <string name="feedback_message_title">Отзыв о приложении</string>
     <string name="feedback_message_body">Привет! Хочу рассказать, что мне понравилось/не понравилось в приложении</string>
+    <string name="activity_login_lead">К сожалению, vk.com требует авторизацию для отображения маркета. Однако, вы всегда можете перейти на страницу магазина через браузер</string>
+    <string name="activity_login_text_navigate">Перейти в магазин через браузер</string>
 </resources>
