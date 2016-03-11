@@ -97,6 +97,20 @@ public class ActivityMain extends ActivityBase
             case R.id.action_favorites_show:
                 ActivityFavorites.display(this);
                 break;
+            case R.id.action_feedback:
+                Intent intentSend = ((ControllerMain) getApplicationContext()).getIntentSendEmail(
+                        this
+                        , getString(R.string.feedback_message_title)
+                        , getString(R.string.feedback_message_body)
+                );
+
+                if (intentSend.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intentSend);
+                } else {
+                    Snackbar.make(findViewById(R.id.rootView), R.string.email_app_error_no_found, Snackbar.LENGTH_LONG)
+                            .show();
+                }
+                break;
 
         }
         return super.onOptionsItemSelected(item);

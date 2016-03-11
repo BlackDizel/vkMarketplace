@@ -34,19 +34,18 @@ public class ControllerCart {
             return;
         }
 
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{context.getString(R.string.request_buy_email)});
-        intent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.request_buy_email_title));
-        intent.putExtra(Intent.EXTRA_TEXT, getRequestText(context));
-        intent.setType("message/rfc882");
+        Intent intent = ((ControllerMain) context.getApplicationContext()).getIntentSendEmail(
+                context
+                , context.getString(R.string.request_buy_email_title)
+                , getRequestText(context)
+        );
 
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             cart = null;
-            //todo update cache on app closing
             ControllerStorage.writeObjectToFile(context, cart, ControllerStorage.CART_CACHE);
             context.startActivity(intent);
         } else {
-            Snackbar.make(view, R.string.request_buy_error_no_app_found, Snackbar.LENGTH_LONG)
+            Snackbar.make(view, R.string.email_app_error_no_found, Snackbar.LENGTH_LONG)
                     .show();
         }
     }

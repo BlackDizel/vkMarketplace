@@ -10,7 +10,7 @@
     <string name="alert_buy_positive_button">оформить заказ</string>
     <string name="alert_buy_comment_hint">Укажите комментарий к заказу</string>
     <string name="item_cart_error_value">no data</string>
-    <string name="request_buy_error_no_app_found">не найдено приложение для отправки писем</string>
+    <string name="email_app_error_no_found">Не найдено приложение для отправки писем</string>
     <string name="request_buy_email">example@mail.com</string>
     <string name="request_buy_email_title">Заказ</string>
     <string name="requset_buy_error_no_products">нет добавленных позиций</string>
@@ -50,4 +50,7 @@
     <string name="market_item_like_type">market</string>
     <string name="action_like_success">Лайк поставлен</string>
     <string name="action_like_error">Не удалось поставить лайк</string>
+    <string name="action_feedback">написать отзыв</string>
+    <string name="feedback_message_title">Отзыв о приложении</string>
+    <string name="feedback_message_body">Привет! Хочу рассказать, что мне понравилось/не понравилось в приложении</string>
 </resources>
