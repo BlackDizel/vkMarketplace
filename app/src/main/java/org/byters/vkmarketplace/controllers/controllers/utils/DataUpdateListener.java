@@ -5,6 +5,7 @@ public interface DataUpdateListener {
     int TYPE_NEWS = 1;
     int TYPE_SEARCH = 2;
     int TYPE_ALBUM = 3;
+    int TYPE_COMMENTS = 4;
 
     void onUpdated(int type);
 
