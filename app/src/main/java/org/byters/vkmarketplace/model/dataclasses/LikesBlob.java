@@ -4,6 +4,7 @@ public class LikesBlob {
     private LikesInfo response;
 
     public boolean isLiked() {
+        if (response == null) return false;
         return response.getLiked() > 0;
     }
 
