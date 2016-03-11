@@ -55,4 +55,6 @@
     <string name="feedback_message_body">Привет! Хочу рассказать, что мне понравилось/не понравилось в приложении</string>
     <string name="activity_login_lead">К сожалению, vk.com требует авторизацию для отображения маркета. Однако, вы всегда можете перейти на страницу магазина через браузер</string>
     <string name="activity_login_text_navigate">Перейти в магазин через браузер</string>
+    <string name="comment_no_title">Неизвестный</string>
+    <string name="comment_no_text">Сообщение не получено</string>
 </resources>

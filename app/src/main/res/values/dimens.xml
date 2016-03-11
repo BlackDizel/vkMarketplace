@@ -33,4 +33,6 @@
     <dimen name="activity_base_error_image_margin">16dp</dimen>
     <dimen name="activity_login_lead_pagging">16dp</dimen>
     <dimen name="activity_login_navigate_button_padding">16dp</dimen>
+    <dimen name="view_item_comment_text_margin">16dp</dimen>
+    <dimen name="view_item_comment_text_margin_top">4dp</dimen>
 </resources>

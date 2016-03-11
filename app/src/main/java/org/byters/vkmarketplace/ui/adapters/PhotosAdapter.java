@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.model.dataclasses.CommentsBlob;
 import org.byters.vkmarketplace.model.dataclasses.LikesBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.dialogs.DialogImage;
@@ -27,6 +28,7 @@ import retrofit2.Response;
 public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder> {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
+    private static final int TYPE_COMMENT = 2;
     private boolean isLikeEnabled;
     @Nullable
     private View rootView;
@@ -44,14 +46,21 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         if (viewType == TYPE_HEADER)
             return new ViewHolderHeader(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.view_list_photos_header, parent, false));
-        else
+        else if (viewType == TYPE_ITEM)
             return new ViewHolderItem(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.view_list_photos_item, parent, false));
+        else
+            return new ViewHolderComment(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.view_list_photos_comment, parent, false));
     }
 
     @Override
     public int getItemViewType(int position) {
-        return position == 0 ? TYPE_HEADER : TYPE_ITEM;
+        return position == 0
+                ? TYPE_HEADER
+                : (position < getHeaderWithItemsSize()
+                ? TYPE_ITEM
+                : TYPE_COMMENT);
     }
 
     @Override
@@ -59,9 +68,17 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         holder.setData(position);
     }
 
+    private int getHeaderWithItemsSize() {
+        return data == null
+                ? 0
+                : (data.getPhotosSize() + 1);
+    }
+
     @Override
     public int getItemCount() {
-        return (data == null ? 0 : data.getPhotosSize()) + 1;
+        return (data == null ? 0
+                : (getHeaderWithItemsSize()
+                + controllerMain.getControllerComments().getSize(data.getId())));
     }
 
     public void updateData(@NonNull MarketplaceItem item, View rootView) {
@@ -87,6 +104,55 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
                 }
             });
+    }
+
+    public boolean isComment(int position) {
+        return position >= getHeaderWithItemsSize();
+    }
+
+    private class ViewHolderComment extends ViewHolder implements View.OnClickListener {
+        private ImageView ivUser;
+        private TextView tvUser, tvText;
+
+        public ViewHolderComment(View itemView) {
+            super(itemView);
+            ivUser = (ImageView) itemView.findViewById(R.id.ivUser);
+            tvUser = (TextView) itemView.findViewById(R.id.tvName);
+            tvText = (TextView) itemView.findViewById(R.id.tvComment);
+        }
+
+        @Override
+        public void onClick(View v) {
+            //todo implement
+        }
+
+        @Override
+        public void setData(int position) {
+            super.setData(position);
+
+            if (data == null) {
+                ivUser.setImageDrawable(null);
+                tvUser.setText(R.string.comment_no_title);
+                tvText.setText(R.string.comment_no_text);
+                return;
+            }
+
+            CommentsBlob.CommentInfo info = controllerMain.getControllerComments().getCommentsItem(data.getId(), position - getHeaderWithItemsSize());
+            if (info == null) {
+                ivUser.setImageDrawable(null);
+                tvUser.setText(R.string.comment_no_title);
+                tvText.setText(R.string.comment_no_text);
+                return;
+            }
+
+            String url = info.getImageUrl();
+            if (TextUtils.isEmpty(url))
+                ivUser.setImageDrawable(null);
+            else
+                Picasso.with(controllerMain).load(url).into(ivUser);
+            tvUser.setText(info.getTitle());
+            tvText.setText(info.getText());
+        }
     }
 
     private class ViewHolderItem extends ViewHolder implements View.OnClickListener {
