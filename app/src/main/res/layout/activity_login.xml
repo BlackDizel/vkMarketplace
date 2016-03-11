@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="org.byters.vkmarketplace.ui.activities.ActivityLogin">
+    android:layout_height="match_parent">
 
-    <WebView
-        android:id="@+id/wvLogin"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="org.byters.vkmarketplace.ui.activities.ActivityLogin">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/activity_login_lead_pagging"
+            android:text="@string/activity_login_lead" />
+
+        <TextView
+            android:id="@+id/tvNavigate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/activity_login_navigate_button_padding"
+            android:text="@string/activity_login_text_navigate" />
+
+        <WebView
+            android:id="@+id/wvLogin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
