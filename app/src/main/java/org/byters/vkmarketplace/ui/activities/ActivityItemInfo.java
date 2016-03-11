@@ -93,6 +93,9 @@ public class ActivityItemInfo extends ActivityBase
         super.onResume();
         ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
         ((ControllerMain) getApplicationContext()).getControllerItemInfo().addItemInfoUpdatedListener(this);
+        ((ControllerMain) getApplicationContext()).getControllerComments().addListener(this);
+
+        ((ControllerMain) getApplicationContext()).getItemComments(id);
 
         reloadData();
         //todo state updating
@@ -103,6 +106,7 @@ public class ActivityItemInfo extends ActivityBase
         super.onPause();
         ((ControllerMain) getApplicationContext()).getControllerItems().removeListener(this);
         ((ControllerMain) getApplicationContext()).getControllerItemInfo().removeItemUpdatedListener(this);
+        ((ControllerMain) getApplicationContext()).getControllerComments().removeListener(this);
     }
     //endregion
 
@@ -190,7 +194,9 @@ public class ActivityItemInfo extends ActivityBase
 
         @Override
         public int getSpanSize(int position) {
-            return position == 0 ? 2 : 1;
+            if (position == 0) return 2;
+            if (photosAdapter != null && photosAdapter.isComment(position)) return 2;
+            return 1;
         }
     }
 
@@ -214,6 +220,9 @@ public class ActivityItemInfo extends ActivityBase
 
             outRect.top = 2 * margin;
             if (position == 0) { //header
+                outRect.right = 2 * margin;
+                outRect.left = 2 * margin;
+            } else if (photosAdapter != null && photosAdapter.isComment(position)) { //comments
                 outRect.right = 2 * margin;
                 outRect.left = 2 * margin;
             } else if (position % 2 == 0) { //items
