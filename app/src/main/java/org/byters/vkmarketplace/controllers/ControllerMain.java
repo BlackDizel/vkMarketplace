@@ -11,6 +11,7 @@ import org.byters.vkmarketplace.api.VkService;
 import org.byters.vkmarketplace.controllers.controllers.ControllerAlbums;
 import org.byters.vkmarketplace.controllers.controllers.ControllerAuth;
 import org.byters.vkmarketplace.controllers.controllers.ControllerCart;
+import org.byters.vkmarketplace.controllers.controllers.ControllerComments;
 import org.byters.vkmarketplace.controllers.controllers.ControllerFavorites;
 import org.byters.vkmarketplace.controllers.controllers.ControllerItemInfo;
 import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
@@ -34,6 +35,7 @@ public class ControllerMain extends Application
     private ControllerSearchResult controllerSearchResult;
     private ControllerUserData controllerUserData;
     private ControllerAlbums controllerAlbums;
+    private ControllerComments controllerComments;
 
     public ControllerItems getControllerItems() {
         return controllerItems;
@@ -71,6 +73,12 @@ public class ControllerMain extends Application
         if (controllerAlbums == null)
             controllerAlbums = new ControllerAlbums(this);
         return controllerAlbums;
+    }
+
+    public ControllerComments getControllerComments() {
+        if (controllerComments == null)
+            controllerComments = new ControllerComments(this);
+        return controllerComments;
     }
 
     public void updateAlbums() {
@@ -175,4 +183,9 @@ public class ControllerMain extends Application
 
         return intent;
     }
+
+    public void getItemComments(int id) {
+        getControllerComments().getComments(this, id, controllerAuth.getToken());
+    }
+
 }
