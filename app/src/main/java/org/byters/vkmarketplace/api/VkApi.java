@@ -2,8 +2,10 @@ package org.byters.vkmarketplace.api;
 
 import org.byters.vkmarketplace.model.dataclasses.AccountInfoBlob;
 import org.byters.vkmarketplace.model.dataclasses.AlbumBlob;
+import org.byters.vkmarketplace.model.dataclasses.LikesBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceBlob;
 import org.byters.vkmarketplace.model.dataclasses.NewsBlob;
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -59,14 +61,22 @@ public interface VkApi {
             , @Query("fields") String fields
             , @Query("v") String v);
 
-    /*@GET("likes.add")
+    @GET("likes.add")
     Call<JSONObject> addLike(
             @Query("type") String type
             , @Query("owner_id") int owner_id
             , @Query("item_id") int item_id
             , @Query("access_token") String token
             , @Query("v") String v);
-*/
+
+    @GET("likes.isLiked")
+    Call<LikesBlob> isLiked(
+            @Query("type") String type
+            , @Query("owner_id") int owner_id
+            , @Query("item_id") int item_id
+            , @Query("access_token") String token
+            , @Query("v") String v);
+
     /*
     @GET("users/{username}")
     Call<UserInfo> getUserInfo(@Path("username") String username);
