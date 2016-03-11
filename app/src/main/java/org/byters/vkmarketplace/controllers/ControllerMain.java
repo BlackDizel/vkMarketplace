@@ -4,6 +4,8 @@ import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.byters.vkmarketplace.R;
+import org.byters.vkmarketplace.api.VkService;
 import org.byters.vkmarketplace.controllers.controllers.ControllerAlbums;
 import org.byters.vkmarketplace.controllers.controllers.ControllerAuth;
 import org.byters.vkmarketplace.controllers.controllers.ControllerCart;
@@ -15,6 +17,8 @@ import org.byters.vkmarketplace.controllers.controllers.ControllerSearchResult;
 import org.byters.vkmarketplace.controllers.controllers.ControllerUserData;
 import org.byters.vkmarketplace.controllers.controllers.utils.OnItemUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
+
+import retrofit2.Callback;
 
 public class ControllerMain extends Application
         implements OnItemUpdateListener {
@@ -114,9 +118,9 @@ public class ControllerMain extends Application
         getControllerSearchResult().search(query, controllerAuth.getToken());
     }
 
-    public void updateDetailedItemInfo(int itemId) {
+    public void updateDetailedItemInfo(int itemId, boolean isCacheAllowed) {
         MarketplaceItem item = controllerItems.getModel().getItemById(itemId);
-        if (item != null && item.getPhotos() != null) {
+        if (item != null && item.getPhotos() != null && isCacheAllowed) {
             controllerItemInfo.updateListeners(item);
             return;
         }
@@ -139,13 +143,23 @@ public class ControllerMain extends Application
         return getControllerAlbums().getTitle(getControllerItems().getAlbumId());
     }
 
-    /*public void addLike(int product_id, Callback callback) {
+    public void addLike(int product_id, Callback callback) {
         VkService.getApi().addLike(
-                "post" //todo server return item not found. send message to api support team
+                getString(R.string.market_item_like_type)
                 , getResources().getInteger(R.integer.market)
                 , product_id
                 , controllerAuth.getToken()
                 , getString(R.string.vk_api_ver)
         ).enqueue(callback);
-    }*/
+    }
+
+    public void isLiked(int product_id, Callback callback) {
+        VkService.getApi().isLiked(
+                getString(R.string.market_item_like_type)
+                , getResources().getInteger(R.integer.market)
+                , product_id
+                , controllerAuth.getToken()
+                , getString(R.string.vk_api_ver)
+        ).enqueue(callback);
+    }
 }

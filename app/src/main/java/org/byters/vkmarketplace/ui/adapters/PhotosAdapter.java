@@ -2,6 +2,7 @@ package org.byters.vkmarketplace.ui.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -15,14 +16,20 @@ import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.model.dataclasses.LikesBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.dialogs.DialogImage;
 import org.byters.vkmarketplace.ui.utils.SharingHelper;
 
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder> {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
-
+    private boolean isLikeEnabled;
+    @Nullable
+    private View rootView;
     @Nullable
     private MarketplaceItem data;
 
@@ -57,9 +64,29 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         return (data == null ? 0 : data.getPhotosSize()) + 1;
     }
 
-    public void updateData(@NonNull MarketplaceItem item) {
+    public void updateData(@NonNull MarketplaceItem item, View rootView) {
         this.data = item;
+        this.rootView = rootView;
+
         notifyDataSetChanged();
+
+        if (data != null)
+            controllerMain.isLiked(data.getId(), new Callback<LikesBlob>() {
+
+                @Override
+                public void onResponse(Response<LikesBlob> response) {
+                    if (response == null) return;
+                    LikesBlob item = response.body();
+                    if (item == null) return;
+                    isLikeEnabled = !item.isLiked();
+                    notifyItemChanged(0);
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+
+                }
+            });
     }
 
     private class ViewHolderItem extends ViewHolder implements View.OnClickListener {
@@ -96,6 +123,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
     private class ViewHolderHeader extends ViewHolder
             implements View.OnClickListener {
         private TextView tvDescription, tvPrice, tvLikes;
+        private View llLikes;
 
         public ViewHolderHeader(View itemView) {
             super(itemView);
@@ -103,7 +131,8 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
             tvPrice = ((TextView) itemView.findViewById(R.id.tvPrice));
             tvLikes = ((TextView) itemView.findViewById(R.id.tvLikes));
             itemView.findViewById(R.id.llShare).setOnClickListener(this);
-            itemView.findViewById(R.id.llLikes).setOnClickListener(this);
+            llLikes = itemView.findViewById(R.id.llLikes);
+            llLikes.setOnClickListener(this);
         }
 
         @Override
@@ -114,6 +143,8 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
             if (data.getLikes() != null)
                 tvLikes.setText(String.format("%d", data.getLikes().getCount()));
+
+            llLikes.setClickable(isLikeEnabled);
         }
 
         @Override
@@ -126,8 +157,23 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
                 case R.id.llLikes:
                     if (data == null)
                         return;
-                    //todo add like
-                    //controllerMain.addLike(data.getId(), this);
+
+                    controllerMain.addLike(data.getId(), new Callback() {
+                        @Override
+                        public void onResponse(Response response) {
+                            if (rootView != null) {
+                                Snackbar.make(rootView, R.string.action_like_success, Snackbar.LENGTH_SHORT).show();
+                                if (data != null)
+                                    controllerMain.updateDetailedItemInfo(data.getId(), false);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+                            if (rootView != null)
+                                Snackbar.make(rootView, R.string.action_like_error, Snackbar.LENGTH_SHORT).show();
+                        }
+                    });
                     break;
             }
         }

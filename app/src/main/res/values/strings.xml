@@ -47,4 +47,7 @@
     <string name="text_offline">оффлайн режим</string>
     <string name="error_title">Что-то пошло не так</string>
     <string name="error_button_text">Попробовать еще раз</string>
+    <string name="market_item_like_type">market</string>
+    <string name="action_like_success">Лайк поставлен</string>
+    <string name="action_like_error">Не удалось поставить лайк</string>
 </resources>

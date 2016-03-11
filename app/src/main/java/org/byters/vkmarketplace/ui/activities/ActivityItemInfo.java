@@ -84,7 +84,7 @@ public class ActivityItemInfo extends ActivityBase
         else if (!TextUtils.isEmpty(item.getThumb_photo()))
             Picasso.with(this).load(item.getThumb_photo()).into((ImageView) findViewById(R.id.ivItem));
 
-        photosAdapter.updateData(item);
+        photosAdapter.updateData(item, findViewById(R.id.rootView));
     }
 
     //region listener
@@ -152,7 +152,7 @@ public class ActivityItemInfo extends ActivityBase
     @Override
     protected void reloadData() {
         super.reloadData();
-        ((ControllerMain) getApplicationContext()).updateDetailedItemInfo(id);
+        ((ControllerMain) getApplicationContext()).updateDetailedItemInfo(id, true);
     }
 
     @Override
