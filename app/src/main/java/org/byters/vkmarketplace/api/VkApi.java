@@ -2,6 +2,7 @@ package org.byters.vkmarketplace.api;
 
 import org.byters.vkmarketplace.model.dataclasses.AccountInfoBlob;
 import org.byters.vkmarketplace.model.dataclasses.AlbumBlob;
+import org.byters.vkmarketplace.model.dataclasses.CommentsBlob;
 import org.byters.vkmarketplace.model.dataclasses.LikesBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceBlob;
 import org.byters.vkmarketplace.model.dataclasses.NewsBlob;
@@ -38,9 +39,26 @@ public interface VkApi {
             , @Query("access_token") String token
             , @Query("v") String v);
 
+    @GET("market.getComments")
+    Call<CommentsBlob> getMarketItemsComments(
+            @Query("owner_id") int group_id
+            , @Query("item_id") int id
+            , @Query("need_likes") int isNeedLikes
+            , @Query("sort") String sort
+            , @Query("extended") int isExtended
+            , @Query("fields") String fields
+            , @Query("access_token") String token
+            , @Query("v") String v);
+
     @GET("market.getById")
     Call<MarketplaceBlob> getMarketItemsById(@Query("item_ids") String ids
             , @Query("extended") int isExtended
+            , @Query("access_token") String token
+            , @Query("v") String v);
+
+
+    @GET("market.getAlbums")
+    Call<AlbumBlob> getAlbums(@Query("owner_id") int owner_id
             , @Query("access_token") String token
             , @Query("v") String v);
 
@@ -48,11 +66,6 @@ public interface VkApi {
     Call<NewsBlob> getNews(@Query("owner_id") int owner_id
             , @Query("filter") String filter
             , @Query("count") int count
-            , @Query("v") String v);
-
-    @GET("market.getAlbums")
-    Call<AlbumBlob> getAlbums(@Query("owner_id") int owner_id
-            , @Query("access_token") String token
             , @Query("v") String v);
 
     @GET("users.get")
