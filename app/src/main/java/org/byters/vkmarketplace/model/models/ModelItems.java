@@ -22,6 +22,7 @@ public class ModelItems {
     }
 
     public void setItem(@NonNull Context context, @NonNull MarketplaceItem newItem) {
+        if (newItem == null) return;
         MarketplaceItem item = getItemById(newItem.getId());
         if (item == null) return;
         int index = data.indexOf(item);

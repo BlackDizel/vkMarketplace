@@ -139,6 +139,7 @@ public class ControllerMain extends Application
 
     @Override
     public void onItemLoaded(@NonNull MarketplaceItem item) {
+        if (item == null) return;
         controllerItems.getModel().setItem(this, item);
     }
 
