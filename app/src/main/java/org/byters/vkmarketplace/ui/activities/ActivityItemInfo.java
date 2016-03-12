@@ -24,6 +24,7 @@ import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener
 import org.byters.vkmarketplace.controllers.controllers.utils.OnItemUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.adapters.PhotosAdapter;
+import org.byters.vkmarketplace.ui.dialogs.DialogComment;
 
 public class ActivityItemInfo extends ActivityBase
         implements DataUpdateListener
@@ -95,8 +96,6 @@ public class ActivityItemInfo extends ActivityBase
         ((ControllerMain) getApplicationContext()).getControllerItemInfo().addItemInfoUpdatedListener(this);
         ((ControllerMain) getApplicationContext()).getControllerComments().addListener(this);
 
-        ((ControllerMain) getApplicationContext()).getItemComments(id);
-
         reloadData();
         //todo state updating
     }
@@ -130,8 +129,10 @@ public class ActivityItemInfo extends ActivityBase
         switch (item.getItemId()) {
             case R.id.action_favorite:
                 ((ControllerMain) getApplicationContext()).getControllerFavorites().toggleFavorite(this, id);
-
                 checkFav(item);
+                break;
+            case R.id.action_comment:
+                new DialogComment(this, findViewById(R.id.rootView), id).show();
                 break;
             case android.R.id.home:
                 onBackPressed();
@@ -143,11 +144,17 @@ public class ActivityItemInfo extends ActivityBase
 
     @Override
     public void onUpdated(int type) {
+        if (type == TYPE_ADD_COMMENT) {
+            Snackbar.make(findViewById(R.id.rootView), R.string.activity_item_info_comment_added, Snackbar.LENGTH_SHORT).show();
+            reloadData();
+        }
         setData();
     }
 
     @Override
     public void onError(int type) {
+        if (type == TYPE_ADD_COMMENT)
+            Snackbar.make(findViewById(R.id.rootView), R.string.activity_item_info_comment_add_error, Snackbar.LENGTH_SHORT).show();
         //todo if no cached data, show error
         //todo else show offline mode
         setData();
@@ -157,6 +164,7 @@ public class ActivityItemInfo extends ActivityBase
     protected void reloadData() {
         super.reloadData();
         ((ControllerMain) getApplicationContext()).updateDetailedItemInfo(id, true);
+        ((ControllerMain) getApplicationContext()).getItemComments(id);
     }
 
     @Override
