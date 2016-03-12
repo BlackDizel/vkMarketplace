@@ -22,9 +22,13 @@ import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.controllers.controllers.utils.OnItemUpdateListener;
+import org.byters.vkmarketplace.model.dataclasses.LikesBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.adapters.PhotosAdapter;
 import org.byters.vkmarketplace.ui.dialogs.DialogComment;
+
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ActivityItemInfo extends ActivityBase
         implements DataUpdateListener
@@ -165,6 +169,23 @@ public class ActivityItemInfo extends ActivityBase
         super.reloadData();
         ((ControllerMain) getApplicationContext()).updateDetailedItemInfo(id, true);
         ((ControllerMain) getApplicationContext()).getItemComments(id);
+
+        ((ControllerMain) getApplicationContext()).isLiked(id, new Callback<LikesBlob>() {
+
+            @Override
+            public void onResponse(Response<LikesBlob> response) {
+                if (response == null) return;
+                LikesBlob item = response.body();
+                if (item == null) return;
+                photosAdapter.updateDataHeader(!item.isLiked());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+
     }
 
     @Override

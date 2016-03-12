@@ -17,7 +17,6 @@ import com.squareup.picasso.Picasso;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.model.dataclasses.CommentsBlob;
-import org.byters.vkmarketplace.model.dataclasses.LikesBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.dialogs.DialogImage;
 import org.byters.vkmarketplace.ui.utils.SharingHelper;
@@ -86,28 +85,16 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         this.rootView = rootView;
 
         notifyDataSetChanged();
-
-        if (data != null)
-            controllerMain.isLiked(data.getId(), new Callback<LikesBlob>() {
-
-                @Override
-                public void onResponse(Response<LikesBlob> response) {
-                    if (response == null) return;
-                    LikesBlob item = response.body();
-                    if (item == null) return;
-                    isLikeEnabled = !item.isLiked();
-                    notifyItemChanged(0);
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-
-                }
-            });
     }
 
     public boolean isComment(int position) {
         return position >= getHeaderWithItemsSize();
+    }
+
+    public void updateDataHeader(boolean isLikeAvailable) {
+        this.isLikeEnabled = isLikeAvailable;
+        if (getItemCount() > 0)
+            notifyItemChanged(0);
     }
 
     private class ViewHolderComment extends ViewHolder implements View.OnClickListener {
