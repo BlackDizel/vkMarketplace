@@ -71,6 +71,10 @@ public class FragmentFeatured extends FragmentBase
         if (getActivity() != null) {
             ((ControllerMain) getContext().getApplicationContext()).updateMarketList();
             ((ControllerMain) getContext().getApplicationContext()).updateNews();
+
+            //todo add interface and move code to activityMain
+            ((ControllerMain) getContext().getApplicationContext()).updateUserData();
+            ((ControllerMain) getContext().getApplicationContext()).updateAlbums();
         }
     }
 
