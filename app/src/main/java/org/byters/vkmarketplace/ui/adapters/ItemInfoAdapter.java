@@ -171,8 +171,9 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
         public ViewHolderPhotos(View itemView) {
             super(itemView);
             RecyclerView rvPhotos = (RecyclerView) itemView.findViewById(R.id.rvPhotos);
-            rvPhotos.setLayoutManager(new GridLayoutManager(itemView.getContext(), 2));
-            rvPhotos.addItemDecoration(new ItemPhotosDecoration(controllerMain));
+            int columns = controllerMain.getResources().getInteger(R.integer.photos_columns);
+            rvPhotos.setLayoutManager(new GridLayoutManager(itemView.getContext(), columns));
+            rvPhotos.addItemDecoration(new ItemPhotosDecoration(controllerMain, columns));
             adapter = new ItemPhotosAdapter(controllerMain);
             rvPhotos.setAdapter(adapter);
         }
@@ -187,10 +188,12 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
         //region itemDecorator
         private class ItemPhotosDecoration extends RecyclerView.ItemDecoration {
 
+            private int columns;
             private int margin;
 
-            public ItemPhotosDecoration(Context context) {
+            public ItemPhotosDecoration(Context context, int columns) {
                 margin = (int) context.getResources().getDimension(R.dimen.view_photos_list_margin);
+                this.columns = columns;
             }
 
             @Override
@@ -199,7 +202,8 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
 
                 int position = parent.getChildLayoutPosition(view);
 
-                outRect.top = margin;
+                if (position >= columns)
+                    outRect.top = 2 * margin;
                 if (position % 2 == 0) { //items
                     outRect.right = margin;
                 } else {
