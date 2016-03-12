@@ -34,7 +34,7 @@
     <string name="cart_clear_dialog_text">Убрать все позиции из корзины?</string>
     <string name="cart_clear_dialog_positive">Очистить</string>
     <string name="cart_clear_dialog_cancel">Отмена</string>
-    <string name="vk_api_ver">5.49</string>
+    <string name="vk_api_ver">5.50</string>
     <string name="tab_featured">новинки</string>
     <string name="tab_goods">все товары</string>
     <string name="menu_item_text_error">ошибка альбома</string>
@@ -57,4 +57,11 @@
     <string name="activity_login_text_navigate">Перейти в магазин через браузер</string>
     <string name="comment_no_title">Неизвестный</string>
     <string name="comment_no_text">Сообщение не получено</string>
+    <string name="action_comment">оставить отзыв</string>
+    <string name="view_dialog_comment_hint">Введите комментарий</string>
+    <string name="view_dialog_comment_title">Поделитесь отзывом</string>
+    <string name="view_dialog_comment_action_send">Отправить</string>
+    <string name="view_dialog_comment_empty_message_error">Пустое сообщение не было отправлено</string>
+    <string name="activity_item_info_comment_added">Комментарий добавлен</string>
+    <string name="activity_item_info_comment_add_error">Ошибка отправки комментария</string>
 </resources>

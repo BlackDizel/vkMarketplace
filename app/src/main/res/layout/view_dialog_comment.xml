@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/view_dialog_comment_padding_horizontal"
+    android:paddingStart="@dimen/view_dialog_comment_padding_horizontal"
+    android:paddingTop="@dimen/view_dialog_comment_padding_top">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/view_dialog_comment_title" />
+
+    <EditText
+        android:id="@+id/etComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/view_dialog_comment_hint" />
+</LinearLayout>
