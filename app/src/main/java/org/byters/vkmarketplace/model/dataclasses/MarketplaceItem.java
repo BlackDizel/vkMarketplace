@@ -12,6 +12,7 @@ public class MarketplaceItem implements Serializable {
     private String thumb_photo;
     private Price price;
     private ArrayList<MarketplaceItemPhoto> photos;
+    private int[] albums_ids;
     private LikeInfo likes;
 
     public ArrayList<MarketplaceItemPhoto> getPhotos() {
@@ -28,6 +29,10 @@ public class MarketplaceItem implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getAlbumIdsSize() {
+        return albums_ids == null ? 0 : albums_ids.length;
     }
 
     public Price getPrice() {
