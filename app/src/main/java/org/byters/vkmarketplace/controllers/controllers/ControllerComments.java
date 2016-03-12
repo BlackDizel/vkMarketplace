@@ -88,6 +88,16 @@ public class ControllerComments {
         return items.get(pos);
     }
 
+    public void sendComment(ControllerMain controllerMain, int id, String comment, String token) {
+        VkService.getApi().createComment(
+                controllerMain.getResources().getInteger(R.integer.market)
+                , id
+                , comment
+                , token
+                , controllerMain.getString(R.string.vk_api_ver)
+        ).enqueue(new AddCommentsCallback());
+    }
+
     private class CommentsCallback
             implements Callback<CommentsBlob> {
 
@@ -118,4 +128,24 @@ public class ControllerComments {
         }
 
     }
+
+    private class AddCommentsCallback implements Callback<com.google.gson.JsonObject> {
+
+        @Override
+        public void onResponse(Response<com.google.gson.JsonObject> response) {
+            if (listeners != null)
+                for (DataUpdateListener listener : listeners)
+                    if (listener != null)
+                        listener.onUpdated(DataUpdateListener.TYPE_ADD_COMMENT);
+        }
+
+        @Override
+        public void onFailure(Throwable t) {
+            if (listeners != null)
+                for (DataUpdateListener listener : listeners)
+                    if (listener != null)
+                        listener.onError(DataUpdateListener.TYPE_ADD_COMMENT);
+        }
+    }
+
 }

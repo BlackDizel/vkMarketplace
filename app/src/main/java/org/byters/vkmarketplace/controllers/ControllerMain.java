@@ -188,4 +188,7 @@ public class ControllerMain extends Application
         getControllerComments().getComments(this, id, controllerAuth.getToken());
     }
 
+    public void sendComment(int id, String comment) {
+        getControllerComments().sendComment(this, id, comment, controllerAuth.getToken());
+    }
 }
