@@ -1,9 +1,12 @@
 package org.byters.vkmarketplace.ui.adapters;
 
+import android.content.Context;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -19,16 +22,16 @@ import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.model.dataclasses.CommentsBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
-import org.byters.vkmarketplace.ui.dialogs.DialogImage;
 import org.byters.vkmarketplace.ui.utils.SharingHelper;
 
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder> {
+public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHolder> {
     private static final int TYPE_HEADER = 0;
-    private static final int TYPE_ITEM = 1;
+    private static final int TYPE_PHOTOS = 1;
     private static final int TYPE_COMMENT = 2;
+
     private boolean isLikeEnabled;
     @Nullable
     private View rootView;
@@ -37,7 +40,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
     private ControllerMain controllerMain;
 
-    public PhotosAdapter(ControllerMain controllerMain) {
+    public ItemInfoAdapter(ControllerMain controllerMain) {
         this.controllerMain = controllerMain;
     }
 
@@ -46,9 +49,9 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         if (viewType == TYPE_HEADER)
             return new ViewHolderHeader(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.view_list_photos_header, parent, false));
-        else if (viewType == TYPE_ITEM)
-            return new ViewHolderItem(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.view_list_photos_item, parent, false));
+        else if (viewType == TYPE_PHOTOS)
+            return new ViewHolderPhotos(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.view_list_photos_list, parent, false));
         else
             return new ViewHolderComment(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.view_list_photos_comment, parent, false));
@@ -59,7 +62,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         return position == 0
                 ? TYPE_HEADER
                 : (position < getHeaderWithItemsSize()
-                ? TYPE_ITEM
+                ? TYPE_PHOTOS
                 : TYPE_COMMENT);
     }
 
@@ -71,7 +74,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
     private int getHeaderWithItemsSize() {
         return data == null
                 ? 0
-                : (data.getPhotosSize() + 1);
+                : ((data.getPhotosSize() > 0 ? 1 : 0) + 1);
     }
 
     @Override
@@ -161,35 +164,51 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         }
     }
 
-    private class ViewHolderItem extends ViewHolder implements View.OnClickListener {
-        private ImageView imageView;
-        @Nullable
-        private String uri;
+    private class ViewHolderPhotos extends ViewHolder {
 
-        public ViewHolderItem(View itemView) {
+        private ItemPhotosAdapter adapter;
+
+        public ViewHolderPhotos(View itemView) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.ivItem);
-            itemView.setOnClickListener(this);
+            RecyclerView rvPhotos = (RecyclerView) itemView.findViewById(R.id.rvPhotos);
+            rvPhotos.setLayoutManager(new GridLayoutManager(itemView.getContext(), 2));
+            rvPhotos.addItemDecoration(new ItemPhotosDecoration(controllerMain));
+            adapter = new ItemPhotosAdapter(controllerMain);
+            rvPhotos.setAdapter(adapter);
         }
 
         @Override
         public void setData(int position) {
-            if (data == null) {
-                imageView.setImageDrawable(null);
+            if (data == null)
                 return;
-            }
-            uri = data.getPhotoByPosition(position - 1);
-            if (TextUtils.isEmpty(uri))
-                imageView.setImageDrawable(null);
-            else
-                Picasso.with(imageView.getContext()).load(uri).into(imageView);
+            adapter.updateData(data);
         }
 
-        @Override
-        public void onClick(View v) {
-            if (uri == null) return;
-            new DialogImage(v.getContext(), uri).show();
+        //region itemDecorator
+        private class ItemPhotosDecoration extends RecyclerView.ItemDecoration {
+
+            private int margin;
+
+            public ItemPhotosDecoration(Context context) {
+                margin = (int) context.getResources().getDimension(R.dimen.view_photos_list_margin);
+            }
+
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+
+                int position = parent.getChildLayoutPosition(view);
+
+                outRect.top = margin;
+                if (position % 2 == 0) { //items
+                    outRect.right = margin;
+                } else {
+                    outRect.left = margin;
+                    //margins sum = const
+                }
+            }
         }
+        //endregion
     }
 
     private class ViewHolderHeader extends ViewHolder

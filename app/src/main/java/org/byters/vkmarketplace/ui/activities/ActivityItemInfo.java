@@ -6,11 +6,10 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +23,7 @@ import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener
 import org.byters.vkmarketplace.controllers.controllers.utils.OnItemUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.LikesBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
-import org.byters.vkmarketplace.ui.adapters.PhotosAdapter;
+import org.byters.vkmarketplace.ui.adapters.ItemInfoAdapter;
 import org.byters.vkmarketplace.ui.dialogs.DialogComment;
 
 import retrofit2.Callback;
@@ -39,7 +38,7 @@ public class ActivityItemInfo extends ActivityBase
     private final static int NO_VALUE = -1;
 
     private int id;
-    private PhotosAdapter photosAdapter;
+    private ItemInfoAdapter photosAdapter;
 
     public static void display(Context context, int id) {
         Intent intent = new Intent(context, ActivityItemInfo.class);
@@ -61,11 +60,9 @@ public class ActivityItemInfo extends ActivityBase
         findViewById(R.id.fabCart).setOnClickListener(this);
 
         RecyclerView rvPhotos = (RecyclerView) findViewById(R.id.rvPhotos);
-        GridLayoutManager glm = new GridLayoutManager(this, getResources().getInteger(R.integer.photos_columns));
-        glm.setSpanSizeLookup(new DataSpanSizeLookup());
-        rvPhotos.setLayoutManager(glm);
+        rvPhotos.setLayoutManager(new LinearLayoutManager(this));
         rvPhotos.addItemDecoration(new ItemDecoration(this));
-        photosAdapter = new PhotosAdapter((ControllerMain) getApplicationContext());
+        photosAdapter = new ItemInfoAdapter((ControllerMain) getApplicationContext());
         rvPhotos.setAdapter(photosAdapter);
 
         setData();
@@ -219,26 +216,13 @@ public class ActivityItemInfo extends ActivityBase
         }
     }
 
-    private class DataSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
-
-        @Override
-        public int getSpanSize(int position) {
-            if (position == 0) return 2;
-            if (photosAdapter != null && photosAdapter.isComment(position)) return 2;
-            return 1;
-        }
-    }
-
-
     //region itemDecorator
     private class ItemDecoration extends RecyclerView.ItemDecoration {
 
         private int margin;
 
         public ItemDecoration(Context context) {
-            margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP
-                    , context.getResources().getDimension(R.dimen.view_photos_list_margin)
-                    , context.getResources().getDisplayMetrics());
+            margin = (int) context.getResources().getDimension(R.dimen.item_info_list_margin);
         }
 
         @Override
@@ -246,24 +230,14 @@ public class ActivityItemInfo extends ActivityBase
             super.getItemOffsets(outRect, view, parent, state);
 
             int position = parent.getChildLayoutPosition(view);
+            if (position == 0)
+                outRect.top = margin;
 
-            outRect.top = 2 * margin;
-            if (position == 0) { //header
-                outRect.right = 2 * margin;
-                outRect.left = 2 * margin;
-            } else if (photosAdapter != null && photosAdapter.isComment(position)) { //comments
-                outRect.right = 2 * margin;
-                outRect.left = 2 * margin;
-            } else if (position % 2 == 0) { //items
-                outRect.right = 2 * margin;
-                outRect.left = margin;
-            } else {
-                outRect.right = margin;
-                outRect.left = 2 * margin;
+            outRect.bottom = margin;
+            outRect.right = margin;
+            outRect.left = margin;
 
-                //margins sum = const
-            }
         }
     }
-    //endregion
+//endregion
 }
