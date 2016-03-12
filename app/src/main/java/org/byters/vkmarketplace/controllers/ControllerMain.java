@@ -110,6 +110,8 @@ public class ControllerMain extends Application
 
     public void setUserID(@NonNull String id) {
         controllerAuth.setUserId(this, id);
+        updateUserData();
+        updateAlbums();
     }
 
     public void updateMarketList() {
@@ -130,10 +132,8 @@ public class ControllerMain extends Application
 
     public void updateDetailedItemInfo(int itemId, boolean isCacheAllowed) {
         MarketplaceItem item = controllerItems.getModel().getItemById(itemId);
-        if (item != null && item.getPhotos() != null && isCacheAllowed) {
+        if (item != null && item.getPhotos() != null && isCacheAllowed)
             controllerItemInfo.updateListeners(item);
-            return;
-        }
         controllerItemInfo.getItemInfo(this, itemId, controllerAuth.getToken());
     }
 
