@@ -1,12 +1,13 @@
 package org.byters.vkmarketplace.api;
 
+import com.google.gson.JsonObject;
+
 import org.byters.vkmarketplace.model.dataclasses.AccountInfoBlob;
 import org.byters.vkmarketplace.model.dataclasses.AlbumBlob;
 import org.byters.vkmarketplace.model.dataclasses.CommentsBlob;
 import org.byters.vkmarketplace.model.dataclasses.LikesBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceBlob;
 import org.byters.vkmarketplace.model.dataclasses.NewsBlob;
-import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -62,6 +63,14 @@ public interface VkApi {
             , @Query("access_token") String token
             , @Query("v") String v);
 
+    @GET("market.createComment")
+    Call<JsonObject> createComment(
+            @Query("owner_id") int owner_id
+            , @Query("item_id") int item_id
+            , @Query("message") String message
+            , @Query("access_token") String token
+            , @Query("v") String v);
+
     @GET("wall.get")
     Call<NewsBlob> getNews(@Query("owner_id") int owner_id
             , @Query("filter") String filter
@@ -75,7 +84,7 @@ public interface VkApi {
             , @Query("v") String v);
 
     @GET("likes.add")
-    Call<JSONObject> addLike(
+    Call<JsonObject> addLike(
             @Query("type") String type
             , @Query("owner_id") int owner_id
             , @Query("item_id") int item_id
