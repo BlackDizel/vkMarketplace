@@ -8,4 +8,9 @@
         android:title="@string/action_favorite"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/action_comment"
+        android:title="@string/action_comment"
+        app:showAsAction="never" />
+
 </menu>
