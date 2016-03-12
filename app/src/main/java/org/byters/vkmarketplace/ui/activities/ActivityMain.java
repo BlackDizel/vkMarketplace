@@ -86,13 +86,11 @@ public class ActivityMain extends ActivityBase
                 ActivityCart.display(this);
                 break;
             case R.id.action_view_market:
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(getString(R.string.market_address)));
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                } else {
-                    Snackbar.make(findViewById(R.id.rootView), R.string.action_view_browser_error, Snackbar.LENGTH_SHORT).show();
-                }
+                ((ControllerMain)getApplicationContext()).openUrl(
+                        this
+                        , findViewById(R.id.rootView)
+                        , getString(R.string.action_view_browser_error)
+                        , Uri.parse(getString(R.string.market_address)));
                 break;
             case R.id.action_favorites_show:
                 ActivityFavorites.display(this);

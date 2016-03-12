@@ -3,8 +3,11 @@ package org.byters.vkmarketplace.controllers;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
@@ -191,5 +194,17 @@ public class ControllerMain extends Application
 
     public void sendComment(int id, String comment) {
         getControllerComments().sendComment(this, id, comment, controllerAuth.getToken());
+    }
+
+    public void openUrl(Context context, @Nullable View rootView, String error_message, Uri uri) {
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(uri);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            context.startActivity(intent);
+        } else {
+            if (rootView != null)
+                Snackbar.make(rootView, error_message, Snackbar.LENGTH_SHORT).show();
+        }
     }
 }
