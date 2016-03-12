@@ -64,4 +64,6 @@
     <string name="view_dialog_comment_empty_message_error">Пустое сообщение не было отправлено</string>
     <string name="activity_item_info_comment_added">Комментарий добавлен</string>
     <string name="activity_item_info_comment_add_error">Ошибка отправки комментария</string>
+    <string name="address_group_format">https://vk.com/public%d</string>
+    <string name="address_user_format">https://vk.com/id%d</string>
 </resources>

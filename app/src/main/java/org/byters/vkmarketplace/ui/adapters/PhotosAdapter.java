@@ -1,5 +1,6 @@
 package org.byters.vkmarketplace.ui.adapters;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -98,19 +99,34 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
     }
 
     private class ViewHolderComment extends ViewHolder implements View.OnClickListener {
+        private static final int NO_VALUE = 0;
         private ImageView ivUser;
         private TextView tvUser, tvText;
+        private int id;
 
         public ViewHolderComment(View itemView) {
             super(itemView);
             ivUser = (ImageView) itemView.findViewById(R.id.ivUser);
             tvUser = (TextView) itemView.findViewById(R.id.tvName);
             tvText = (TextView) itemView.findViewById(R.id.tvComment);
+            ivUser.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            //todo implement
+            if (id == NO_VALUE) return;
+
+            String uri = "";
+            if (id < 0)
+                uri = String.format(controllerMain.getString(R.string.address_group_format), Math.abs(id));
+            else
+                uri = String.format(controllerMain.getString(R.string.address_user_format), id);
+
+            controllerMain.openUrl(
+                    v.getContext()
+                    , rootView
+                    , v.getContext().getString(R.string.action_view_browser_error)
+                    , Uri.parse(uri));
         }
 
         @Override
@@ -121,6 +137,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
                 ivUser.setImageDrawable(null);
                 tvUser.setText(R.string.comment_no_title);
                 tvText.setText(R.string.comment_no_text);
+                id = NO_VALUE;
                 return;
             }
 
@@ -129,9 +146,11 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
                 ivUser.setImageDrawable(null);
                 tvUser.setText(R.string.comment_no_title);
                 tvText.setText(R.string.comment_no_text);
+                id = NO_VALUE;
                 return;
             }
 
+            id = info.getFrom_id();
             String url = info.getImageUrl();
             if (TextUtils.isEmpty(url))
                 ivUser.setImageDrawable(null);
