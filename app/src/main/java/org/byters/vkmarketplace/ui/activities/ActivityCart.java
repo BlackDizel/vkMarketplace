@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -188,9 +187,7 @@ public class ActivityCart extends ActivityBase
         private int margin;
 
         public ItemDecoration(Context context) {
-            margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP
-                    , context.getResources().getDimension(R.dimen.view_item_cart_list_margin)
-                    , context.getResources().getDisplayMetrics());
+            margin = (int) context.getResources().getDimension(R.dimen.view_item_cart_list_margin);
         }
 
         @Override

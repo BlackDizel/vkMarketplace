@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -73,9 +72,7 @@ public class ActivityFavorites extends ActivityBase {
         private int margin;
 
         public ItemDecoration(Context context) {
-            margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP
-                    , context.getResources().getDimension(R.dimen.view_item_fav_list_margin)
-                    , context.getResources().getDisplayMetrics());
+            margin = (int) context.getResources().getDimension(R.dimen.view_item_fav_list_margin);
         }
 
         @Override

@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -108,9 +107,7 @@ public class ActivitySearch extends ActivityBase
         private int margin;
 
         public ItemDecoration(Context context) {
-            margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP
-                    , context.getResources().getDimension(R.dimen.view_item_list_margin)
-                    , context.getResources().getDisplayMetrics());
+            margin = (int) context.getResources().getDimension(R.dimen.view_item_list_margin);
         }
 
         @Override

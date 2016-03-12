@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,9 +95,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             private int margin;
 
             public ItemDecoration() {
-                margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP
-                        , controllerMain.getResources().getDimension(R.dimen.view_item_news_margin)
-                        , controllerMain.getResources().getDisplayMetrics());
+                margin = (int) controllerMain.getResources().getDimension(R.dimen.view_item_news_margin);
             }
 
             @Override

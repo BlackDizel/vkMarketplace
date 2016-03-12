@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,10 +91,7 @@ public class FragmentFeatured extends FragmentBase
         private int margin;
 
         public ItemDecoration(Context context) {
-            margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP
-                    , context.getResources().getDimension(R.dimen.view_item_list_margin)
-                    , context.getResources().getDisplayMetrics());
-
+            margin = (int) context.getResources().getDimension(R.dimen.view_item_list_margin);
         }
 
         @Override
