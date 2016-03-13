@@ -1,24 +1,38 @@
 package org.byters.vkmarketplace.controllers.controllers;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
+import com.google.gson.JsonObject;
+
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.Cart;
 import org.byters.vkmarketplace.model.dataclasses.CartEntry;
 
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ControllerCart {
 
+    DataUpdateListener listener;
     @Nullable
     private Cart cart;
 
     public ControllerCart(Context context) {
         cart = (Cart) ControllerStorage.readObjectFromFile(context, ControllerStorage.CART_CACHE);
+    }
+
+    public void setListener(DataUpdateListener listener) {
+        this.listener = listener;
+    }
+
+    public void removeListener() {
+        this.listener = null;
     }
 
     public void addItem(Context context, int itemId) {
@@ -34,20 +48,17 @@ public class ControllerCart {
             return;
         }
 
-        Intent intent = ((ControllerMain) context.getApplicationContext()).getIntentSendEmail(
-                context
-                , context.getString(R.string.request_buy_email_title)
-                , getRequestText(context)
-        );
+        ControllerMain controllerMain = ((ControllerMain) context.getApplicationContext());
+        controllerMain.sendOrder(
+                getRequestText(context)
+                , getCartRequestAttachmentText(context)
+                , new OrderCallback(controllerMain));
+    }
 
-        if (intent.resolveActivity(context.getPackageManager()) != null) {
-            cart = null;
-            ControllerStorage.writeObjectToFile(context, cart, ControllerStorage.CART_CACHE);
-            context.startActivity(intent);
-        } else {
-            Snackbar.make(view, R.string.email_app_error_no_found, Snackbar.LENGTH_LONG)
-                    .show();
-        }
+    private String getCartRequestAttachmentText(Context context) {
+        if (cart == null || cart.getItemsSize() == 0) return "";
+        String result = cart.getRequestText(context);
+        return result == null ? "" : result;
     }
 
     @NonNull
@@ -61,7 +72,7 @@ public class ControllerCart {
     @NonNull
     private String getCartItemsText(Context context) {
         if (cart == null || cart.getItemsSize() == 0) return "";
-        String result = cart.getItemsText(((ControllerMain) context.getApplicationContext()).getControllerItems().getModel());
+        String result = cart.getItemsText(context, ((ControllerMain) context.getApplicationContext()).getControllerItems().getModel());
         return result == null ? "" : result;
     }
 
@@ -107,7 +118,28 @@ public class ControllerCart {
 
     public void clearCart(Context context) {
         cart = null;
-        //todo update cache on app closing
         ControllerStorage.writeObjectToFile(context, cart, ControllerStorage.CART_CACHE);
+    }
+
+    private class OrderCallback implements Callback<JsonObject> {
+        private ControllerMain context;
+
+        public OrderCallback(ControllerMain context) {
+            this.context = context;
+        }
+
+        @Override
+        public void onResponse(Response<JsonObject> response) {
+            cart = null;
+            ControllerStorage.writeObjectToFile(context, cart, ControllerStorage.CART_CACHE);
+            if (listener != null)
+                listener.onUpdated(DataUpdateListener.TYPE_CART_ORDER_SENT);
+        }
+
+        @Override
+        public void onFailure(Throwable t) {
+            if (listener != null)
+                listener.onError(DataUpdateListener.TYPE_CART_ORDER_SENT);
+        }
     }
 }

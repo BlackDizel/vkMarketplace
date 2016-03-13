@@ -1,7 +1,9 @@
 package org.byters.vkmarketplace.model.dataclasses;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 
+import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
 import org.byters.vkmarketplace.model.models.ModelItems;
 
@@ -54,7 +56,7 @@ public class Cart implements Serializable {
     }
 
     @Nullable
-    public String getItemsText(ModelItems model) {
+    public String getItemsText(Context context, ModelItems model) {
         if (getItemsSize() == 0) return null;
         String result = null;
         for (CartEntry item : items) {
@@ -63,8 +65,8 @@ public class Cart implements Serializable {
             String marketInfoText;
             if (marketInfo == null) marketInfoText = "";
             else marketInfoText = marketInfo.getTitle();
-            result = String.format("%s\n%d: %s, %d"
-                    , result, item.getItemId(), marketInfoText, item.getQuantity());
+            result = String.format(context.getString(R.string.request_order_item_format)
+                    , result, marketInfoText, item.getQuantity());
         }
         return result;
     }
@@ -101,5 +103,19 @@ public class Cart implements Serializable {
             sum += item.getQuantity() * cost;
         }
         return sum;
+    }
+
+    public String getRequestText(Context context) {
+        if (getItemsSize() == 0) return null;
+        String result = null;
+        for (CartEntry item : items) {
+            if (result == null) result = "";
+
+            result = String.format(context.getString(R.string.attachment_format)
+                    , result
+                    , context.getString(R.string.market_id)
+                    , item.getItemId());
+        }
+        return result;
     }
 }

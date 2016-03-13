@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -64,27 +65,39 @@ public class ActivityCart extends ActivityBase
         super.onResume();
         checkState();
         ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
+        ((ControllerMain) getApplicationContext()).getControllerCart().setListener(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         ((ControllerMain) getApplicationContext()).getControllerItems().removeListener(this);
+        ((ControllerMain) getApplicationContext()).getControllerCart().removeListener();
     }
 
     @Override
     public void onUpdated(int type) {
-        if (refreshLayout != null)
-            refreshLayout.setRefreshing(false);
+        if (type == TYPE_CART_ORDER_SENT) {
+            Snackbar.make(findViewById(R.id.rootView), R.string.activity_cart_order_sent, Snackbar.LENGTH_SHORT)
+                    .show();
+        } else {
+            if (refreshLayout != null)
+                refreshLayout.setRefreshing(false);
+        }
         checkState();
     }
 
     @Override
     public void onError(int type) {
-        //todo if no cached data, show error
-        //todo else show offline mode
-        if (refreshLayout != null)
-            refreshLayout.setRefreshing(false);
+        if (type == TYPE_CART_ORDER_SENT) {
+            Snackbar.make(findViewById(R.id.rootView), R.string.email_app_error_no_found, Snackbar.LENGTH_LONG)
+                    .show();
+        } else {
+            //todo if no cached data, show error
+            //todo else show offline mode
+            if (refreshLayout != null)
+                refreshLayout.setRefreshing(false);
+        }
         checkState();
     }
 
