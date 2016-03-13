@@ -8,6 +8,7 @@ import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.model.dataclasses.OrderHistoryInfo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ControllerOrdersHistory {
 
@@ -33,6 +34,9 @@ public class ControllerOrdersHistory {
         if (data == null) data = new ArrayList<>();
         data.add(info);
         ControllerStorage.writeObjectToFile(context, data, ControllerStorage.ORDERS_HISTORY_CACHE);
+
+        Collections.sort(data);
+        Collections.reverse(data);
     }
 
 }
