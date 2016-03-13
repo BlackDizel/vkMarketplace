@@ -39,4 +39,9 @@ public class ControllerOrdersHistory {
         Collections.reverse(data);
     }
 
+    public void clearData(Context context) {
+        data = null;
+        ControllerStorage.writeObjectToFile(context, data, ControllerStorage.ORDERS_HISTORY_CACHE);
+    }
+
 }
