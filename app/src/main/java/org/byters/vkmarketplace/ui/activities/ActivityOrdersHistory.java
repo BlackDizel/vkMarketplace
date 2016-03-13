@@ -3,14 +3,17 @@ package org.byters.vkmarketplace.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import org.byters.vkmarketplace.R;
+import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.ui.adapters.OrdersHistoryAdapter;
 
 public class ActivityOrdersHistory extends ActivityBase {
@@ -36,10 +39,23 @@ public class ActivityOrdersHistory extends ActivityBase {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_orders_history_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                break;
+            case R.id.action_view_online:
+                String uri = String.format(getString(R.string.show_orders_online_format), getString(R.string.market_id));
+                ((ControllerMain) getApplicationContext()).openUrl(this, findViewById(R.id.rootView), getString(R.string.action_view_browser_error), Uri.parse(uri));
+                break;
+            case R.id.action_clear_history:
+                //todo implement
                 break;
         }
         return super.onOptionsItemSelected(item);
