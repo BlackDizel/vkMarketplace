@@ -28,7 +28,10 @@
         <activity
             android:name=".ui.activities.ActivityFavorites"
             android:label="@string/activity_fav_title" />
-        <activity android:name=".ui.activities.ActivitySearch"/>
+        <activity android:name=".ui.activities.ActivitySearch" />
+        <activity
+            android:name=".ui.activities.ActivityOrdersHistory"
+            android:label="@string/activity_orders_history_title" />
     </application>
 
 </manifest>

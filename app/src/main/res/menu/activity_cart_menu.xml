@@ -8,4 +8,9 @@
         android:title="@string/action_buy"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/action_history"
+        android:title="@string/action_history"
+        app:showAsAction="never" />
+
 </menu>

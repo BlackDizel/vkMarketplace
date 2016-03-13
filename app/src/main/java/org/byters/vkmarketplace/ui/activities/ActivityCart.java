@@ -120,10 +120,17 @@ public class ActivityCart extends ActivityBase
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home)
-            onBackPressed();
-        if (item.getItemId() == R.id.action_send)
-            new DialogPayment(this, findViewById(R.id.rootView)).show();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.action_send:
+                new DialogPayment(this, findViewById(R.id.rootView)).show();
+                break;
+            case R.id.action_history:
+                ActivityOrdersHistory.display(this);
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
