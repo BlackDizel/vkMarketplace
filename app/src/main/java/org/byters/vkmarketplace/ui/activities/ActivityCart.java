@@ -11,7 +11,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,13 +19,13 @@ import android.widget.TextView;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.ControllerCart;
 import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.ui.adapters.CartAdapter;
+import org.byters.vkmarketplace.ui.dialogs.DialogPayment;
 
 public class ActivityCart extends ActivityBase
-        implements AlertDialog.OnClickListener
-        , DataUpdateListener
+        implements
+        DataUpdateListener
         , SwipeRefreshLayout.OnRefreshListener
         , View.OnClickListener {
 
@@ -124,37 +123,8 @@ public class ActivityCart extends ActivityBase
         if (item.getItemId() == android.R.id.home)
             onBackPressed();
         if (item.getItemId() == R.id.action_send)
-            tryToBuy();
+            new DialogPayment(this, findViewById(R.id.rootView)).show();
         return super.onOptionsItemSelected(item);
-    }
-
-    private void tryToBuy() {
-
-        View alertView = getLayoutInflater().inflate(R.layout.view_alert_buy, null);
-        etComment = (EditText) alertView.findViewById(R.id.etComment);
-
-        String comment = ((ControllerMain) getApplicationContext()).getControllerCart().getComment();
-        if (!TextUtils.isEmpty(comment))
-            etComment.setText(comment);
-
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setView(alertView)
-                .setTitle(R.string.alert_buy_title)
-                .setPositiveButton(R.string.alert_buy_positive_button, this)
-                .create();
-
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-    }
-
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        ControllerCart controllerCart = ((ControllerMain) getApplicationContext()).getControllerCart();
-
-        if (etComment != null)
-            controllerCart.setComment(this, etComment.getText().toString());
-
-        controllerCart.trySendBuyRequest(this, findViewById(R.id.rootView));
     }
 
     @Override
