@@ -13,6 +13,10 @@ import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.Cart;
 import org.byters.vkmarketplace.model.dataclasses.CartEntry;
+import org.byters.vkmarketplace.model.dataclasses.OrderHistoryInfo;
+import org.byters.vkmarketplace.model.dataclasses.OrderItemHistoryInfo;
+
+import java.util.ArrayList;
 
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -128,10 +132,23 @@ public class ControllerCart {
             this.context = context;
         }
 
+        private void writeHistory() {
+            if (cart == null) return;
+            ArrayList<OrderItemHistoryInfo> items = cart.getItemsForHistory(context, ((ControllerMain) context.getApplicationContext()).getControllerItems().getModel());
+            if (items == null) return;
+            OrderHistoryInfo item = new OrderHistoryInfo();
+            item.setItems(items);
+            item.setDate();
+            item.setSum(context.getControllerCart().getCost(context.getControllerItems()));
+            context.getControllerOrdersHistory().addItem(context, item);
+        }
+
         @Override
         public void onResponse(Response<JsonObject> response) {
-            cart = null;
-            ControllerStorage.writeObjectToFile(context, cart, ControllerStorage.CART_CACHE);
+
+            writeHistory();
+
+            clearCart(context);
             if (listener != null)
                 listener.onUpdated(DataUpdateListener.TYPE_CART_ORDER_SENT);
         }
