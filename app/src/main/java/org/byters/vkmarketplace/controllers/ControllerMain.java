@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
+import com.google.gson.JsonObject;
+
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
 import org.byters.vkmarketplace.controllers.controllers.ControllerAlbums;
@@ -206,5 +208,15 @@ public class ControllerMain extends Application
             if (rootView != null)
                 Snackbar.make(rootView, error_message, Snackbar.LENGTH_SHORT).show();
         }
+    }
+
+    public void sendOrder(String comment, String attachment, Callback<JsonObject> callback) {
+        VkService.getApi().sendMessage(
+                getString(R.string.market_id)
+                , comment
+                , attachment
+                , controllerAuth.getToken()
+                , getString(R.string.vk_api_ver))
+                .enqueue(callback);
     }
 }
