@@ -1,6 +1,8 @@
 package org.byters.vkmarketplace.ui.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -17,6 +19,8 @@ import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.ui.adapters.OrdersHistoryAdapter;
 
 public class ActivityOrdersHistory extends ActivityBase {
+
+    OrdersHistoryAdapter adapter;
 
     public static void display(Context context) {
         Intent intent = new Intent(context, ActivityOrdersHistory.class);
@@ -35,7 +39,8 @@ public class ActivityOrdersHistory extends ActivityBase {
         RecyclerView rvOrders = (RecyclerView) findViewById(R.id.rvOrders);
         rvOrders.setLayoutManager(new LinearLayoutManager(this));
         rvOrders.addItemDecoration(new ItemDecoration(this));
-        rvOrders.setAdapter(new OrdersHistoryAdapter(this));
+        adapter = new OrdersHistoryAdapter(this);
+        rvOrders.setAdapter(adapter);
     }
 
     @Override
@@ -55,7 +60,18 @@ public class ActivityOrdersHistory extends ActivityBase {
                 ((ControllerMain) getApplicationContext()).openUrl(this, findViewById(R.id.rootView), getString(R.string.action_view_browser_error), Uri.parse(uri));
                 break;
             case R.id.action_clear_history:
-                //todo implement
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.orders_history_clear_data_title)
+                        .setPositiveButton(R.string.orders_history_clear_items_message, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ((ControllerMain) getApplicationContext()).getControllerOrdersHistory().clearData(getApplicationContext());
+                                adapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton(R.string.orders_history_clear_data_cancel, null)
+                        .create()
+                        .show();
                 break;
         }
         return super.onOptionsItemSelected(item);
