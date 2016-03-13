@@ -72,6 +72,25 @@ public class Cart implements Serializable {
     }
 
     @Nullable
+    public ArrayList<OrderItemHistoryInfo> getItemsForHistory(Context context, ModelItems model) {
+        if (getItemsSize() == 0) return null;
+        ArrayList<OrderItemHistoryInfo> result = null;
+        for (CartEntry item : items) {
+            if (result == null) result = new ArrayList<>();
+            MarketplaceItem marketInfo = model.getItemById(item.getItemId());
+            String marketInfoText;
+            if (marketInfo == null) marketInfoText = "";
+            else marketInfoText = marketInfo.getTitle();
+
+            OrderItemHistoryInfo historyInfo = new OrderItemHistoryInfo();
+            historyInfo.setTitle(marketInfoText);
+            historyInfo.setCount(item.getQuantity());
+            result.add(historyInfo);
+        }
+        return result;
+    }
+
+    @Nullable
     public CartEntry getItemById(int id) {
         if (items == null) return null;
         for (CartEntry item : items)
