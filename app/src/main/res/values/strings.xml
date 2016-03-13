@@ -82,4 +82,5 @@
     <string name="orders_history_clear_data_title">Очистить историю заказов?</string>
     <string name="orders_history_clear_items_message">Удалить все заказы</string>
     <string name="orders_history_clear_data_cancel">Отмена</string>
+    <string name="activity_orders_history_no_data">Нет сохраненной истории заказов</string>
 </resources>

@@ -44,6 +44,25 @@ public class ActivityOrdersHistory extends ActivityBase {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        setData();
+    }
+
+    private void setData() {
+        adapter.notifyDataSetChanged();
+        int size = ((ControllerMain) getApplicationContext()).getControllerOrdersHistory().getSize();
+
+        if (size == 0) {
+            findViewById(R.id.tvNoItems).setVisibility(View.VISIBLE);
+            findViewById(R.id.rvOrders).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.tvNoItems).setVisibility(View.GONE);
+            findViewById(R.id.rvOrders).setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_orders_history_menu, menu);
         return super.onCreateOptionsMenu(menu);
@@ -66,7 +85,7 @@ public class ActivityOrdersHistory extends ActivityBase {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 ((ControllerMain) getApplicationContext()).getControllerOrdersHistory().clearData(getApplicationContext());
-                                adapter.notifyDataSetChanged();
+                                setData();
                             }
                         })
                         .setNegativeButton(R.string.orders_history_clear_data_cancel, null)
