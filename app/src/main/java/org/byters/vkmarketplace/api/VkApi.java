@@ -99,6 +99,14 @@ public interface VkApi {
             , @Query("access_token") String token
             , @Query("v") String v);
 
+    @GET("messages.send")
+    Call<JsonObject> sendMessage(
+            @Query("peer_id") String group_id
+            , @Query("message") String message
+            , @Query("attachment") String attach
+            , @Query("access_token") String token
+            , @Query("v") String v);
+
     /*
     @GET("users/{username}")
     Call<UserInfo> getUserInfo(@Path("username") String username);
