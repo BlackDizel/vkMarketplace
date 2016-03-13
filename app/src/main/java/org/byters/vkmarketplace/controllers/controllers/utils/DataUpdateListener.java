@@ -7,6 +7,7 @@ public interface DataUpdateListener {
     int TYPE_ALBUM = 3;
     int TYPE_COMMENTS = 4;
     int TYPE_ADD_COMMENT = 5;
+    int TYPE_CART = 6;
 
     void onUpdated(int type);
 
