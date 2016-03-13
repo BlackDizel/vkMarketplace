@@ -73,4 +73,5 @@
     <string name="activity_orders_history_title">История заказов</string>
     <string name="activity_cart_order_sent">Заказ отправлен</string>
     <string name="request_order_item_format" formatted="false">%s\n%s, %d шт</string>
+    <string name="order_history_item_format" formatted="false">%s, %d шт</string>
 </resources>

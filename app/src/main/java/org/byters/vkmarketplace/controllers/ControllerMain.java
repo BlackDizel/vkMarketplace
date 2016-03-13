@@ -21,6 +21,7 @@ import org.byters.vkmarketplace.controllers.controllers.ControllerFavorites;
 import org.byters.vkmarketplace.controllers.controllers.ControllerItemInfo;
 import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
 import org.byters.vkmarketplace.controllers.controllers.ControllerNews;
+import org.byters.vkmarketplace.controllers.controllers.ControllerOrdersHistory;
 import org.byters.vkmarketplace.controllers.controllers.ControllerSearchResult;
 import org.byters.vkmarketplace.controllers.controllers.ControllerUserData;
 import org.byters.vkmarketplace.controllers.controllers.utils.OnItemUpdateListener;
@@ -41,6 +42,7 @@ public class ControllerMain extends Application
     private ControllerUserData controllerUserData;
     private ControllerAlbums controllerAlbums;
     private ControllerComments controllerComments;
+    private ControllerOrdersHistory controllerOrdersHistory;
 
     public ControllerItems getControllerItems() {
         return controllerItems;
@@ -218,5 +220,11 @@ public class ControllerMain extends Application
                 , controllerAuth.getToken()
                 , getString(R.string.vk_api_ver))
                 .enqueue(callback);
+    }
+
+    public ControllerOrdersHistory getControllerOrdersHistory() {
+        if (controllerOrdersHistory == null)
+            controllerOrdersHistory = new ControllerOrdersHistory(this);
+        return controllerOrdersHistory;
     }
 }
