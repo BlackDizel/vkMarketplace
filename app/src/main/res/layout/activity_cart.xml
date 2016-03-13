@@ -53,6 +53,8 @@
                     android:layout_weight="1"
                     android:paddingBottom="@dimen/cart_cost_text_padding_vertical"
                     android:paddingEnd="@dimen/cart_cost_text_padding_horizontal"
+                    android:paddingLeft="@dimen/cart_cost_text_padding_horizontal"
+                    android:paddingRight="@dimen/cart_cost_text_padding_horizontal"
                     android:paddingStart="@dimen/cart_cost_text_padding_horizontal"
                     android:paddingTop="@dimen/cart_cost_text_padding_vertical" />
 
@@ -60,8 +62,11 @@
                     android:id="@+id/tvClear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     android:paddingBottom="@dimen/cart_cost_text_padding_vertical"
                     android:paddingEnd="@dimen/cart_cost_text_padding_horizontal"
+                    android:paddingLeft="@dimen/cart_cost_text_padding_horizontal"
+                    android:paddingRight="@dimen/cart_cost_text_padding_horizontal"
                     android:paddingStart="@dimen/cart_cost_text_padding_horizontal"
                     android:paddingTop="@dimen/cart_cost_text_padding_vertical"
                     android:text="@string/cart_clear" />

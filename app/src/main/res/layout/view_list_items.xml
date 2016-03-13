@@ -17,6 +17,7 @@
         android:layout_gravity="bottom"
         android:background="@drawable/item_list_text_background"
         android:orientation="horizontal"
+        android:padding="@dimen/view_list_item_text_padding"
         app:layout_widthPercent="100%">
 
         <TextView
@@ -27,9 +28,6 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="@integer/max_lines_market_list"
-            android:paddingBottom="@dimen/view_list_item_text_padding"
-            android:paddingStart="@dimen/view_list_item_text_padding"
-            android:paddingTop="@dimen/view_list_item_text_padding"
             android:textColor="@color/white" />
 
         <TextView
@@ -37,7 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:padding="@dimen/view_list_item_text_padding"
+            android:paddingLeft="@dimen/view_list_item_text_padding"
+            android:paddingStart="@dimen/view_list_item_text_padding"
             android:textColor="@color/colorAccent" />
 
     </LinearLayout>

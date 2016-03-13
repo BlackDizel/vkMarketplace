@@ -48,13 +48,13 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_HEADER)
             return new ViewHolderHeader(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.view_list_photos_header, parent, false));
+                    .inflate(R.layout.view_item_info_list_header, parent, false));
         else if (viewType == TYPE_PHOTOS)
             return new ViewHolderPhotos(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.view_list_photos_list, parent, false));
         else
             return new ViewHolderComment(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.view_list_photos_comment, parent, false));
+                    .inflate(R.layout.view_item_info_list_comment, parent, false));
     }
 
     @Override

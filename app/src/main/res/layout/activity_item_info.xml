@@ -62,7 +62,7 @@
         android:id="@+id/fabCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/item_info_fab_margin"
+        android:layout_margin="@dimen/item_info_fab_margin"
         android:src="@drawable/ic_shopping_basket_white_24dp"
         app:layout_anchor="@+id/appbar"
         app:layout_anchorGravity="bottom|end" />

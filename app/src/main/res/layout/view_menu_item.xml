@@ -5,9 +5,12 @@
     android:background="?attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingBottom="8dp"
-    android:paddingStart="@dimen/menu_item_margin_start"
-    android:paddingTop="8dp">
+    android:paddingBottom="@dimen/menu_item_padding_vertical"
+    android:paddingEnd="@dimen/menu_item_padding_horizontal"
+    android:paddingLeft="@dimen/menu_item_padding_horizontal"
+    android:paddingRight="@dimen/menu_item_padding_horizontal"
+    android:paddingStart="@dimen/menu_item_padding_horizontal"
+    android:paddingTop="@dimen/menu_item_padding_vertical">
 
     <ImageView
         android:id="@+id/ivItem"
@@ -20,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingLeft="@dimen/menu_item_text_padding"
         android:paddingStart="@dimen/menu_item_text_padding">
 
         <TextView

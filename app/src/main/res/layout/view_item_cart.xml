@@ -16,6 +16,8 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:paddingEnd="@dimen/item_cart_text_margin"
+        android:paddingLeft="@dimen/item_cart_text_margin"
+        android:paddingRight="@dimen/item_cart_text_margin"
         android:paddingStart="@dimen/item_cart_text_margin">
 
         <TextView
@@ -38,6 +40,7 @@
         android:id="@+id/tvQuantity"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
         android:padding="@dimen/item_cart_text_margin"
         android:text="0" />
 
@@ -46,7 +49,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/item_cart_text_margin"
-        android:paddingStart="@dimen/item_cart_text_margin"
         android:scaleType="fitStart"
         android:src="@drawable/ic_delete_black_24dp" />
 </LinearLayout>

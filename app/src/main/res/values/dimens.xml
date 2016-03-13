@@ -20,7 +20,7 @@
     <dimen name="item_news_likes_text_padding">8dp</dimen>
     <dimen name="item_news_likes_info_padding">8dp</dimen>
     <dimen name="menu_item_image_size">32dp</dimen>
-    <dimen name="menu_item_margin_start">16dp</dimen>
+    <dimen name="menu_item_padding_horizontal">16dp</dimen>
     <dimen name="menu_item_text_padding">16dp</dimen>
 
     <dimen name="fab_margin">16dp</dimen>
@@ -38,4 +38,5 @@
     <dimen name="view_dialog_comment_padding_horizontal">16dp</dimen>
     <dimen name="view_dialog_comment_padding_top">8dp</dimen>
     <dimen name="item_info_list_margin">16dp</dimen>
+    <dimen name="menu_item_padding_vertical">8dp</dimen>
 </resources>
