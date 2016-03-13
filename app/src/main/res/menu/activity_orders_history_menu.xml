@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_view_online"
+        android:icon="@drawable/ic_open_in_browser_white_24dp"
+        android:title="@string/action_view_orders_online"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_clear_history"
+        android:title="@string/action_clear_history"
+        app:showAsAction="never" />
+
+</menu>

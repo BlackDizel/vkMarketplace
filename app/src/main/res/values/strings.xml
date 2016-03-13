@@ -11,6 +11,7 @@
     <string name="address_group_format">https://vk.com/public%d</string>
     <string name="address_user_format">https://vk.com/id%d</string>
     <string name="attachment_format" formatted="false">%s,market%s_%s</string>
+    <string name="show_orders_online_format">https://vk.com/im?sel=%s</string>
 
     <string name="item_added_to_cart">Добавлено в корзину</string>
     <string name="action_open_cart">посмотреть</string>
@@ -76,4 +77,6 @@
     <string name="order_history_item_format" formatted="false">%s, %d шт</string>
     <string name="order_history_date_format">Заказ от%s</string>
     <string name="order_history_sum_format">На сумму %s рублей</string>
+    <string name="action_view_orders_online">Посмотреть заказы онлайн</string>
+    <string name="action_clear_history">Удалить историю заказов</string>
 </resources>
