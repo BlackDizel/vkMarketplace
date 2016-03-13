@@ -67,7 +67,7 @@ public class ItemPhotosAdapter extends RecyclerView.Adapter<ItemPhotosAdapter.Vi
                 imageView.setImageDrawable(null);
                 return;
             }
-            uri = data.getPhotoByPosition(position);
+            uri = data.getPhotoByPosition(controllerMain, position);
             if (TextUtils.isEmpty(uri))
                 imageView.setImageDrawable(null);
             else

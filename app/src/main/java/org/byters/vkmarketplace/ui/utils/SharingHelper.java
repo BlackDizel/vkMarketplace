@@ -40,7 +40,7 @@ public class SharingHelper {
                 this.cancel(true);
             if (item.getPhotos() == null || item.getPhotos().size() == 0)
                 this.cancel(true);
-            imgPath = item.getPhotos().get(0).getSrc_big();
+            imgPath = item.getPhotos().get(0).getSrc_big(context);
             if (TextUtils.isEmpty(imgPath))
                 this.cancel(true);
         }

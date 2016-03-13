@@ -1,5 +1,6 @@
 package org.byters.vkmarketplace.model.dataclasses;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 
 import java.io.Serializable;
@@ -52,10 +53,10 @@ public class MarketplaceItem implements Serializable {
     }
 
     @Nullable
-    public String getPhotoByPosition(int position) {
+    public String getPhotoByPosition(Context context, int position) {
         if (photos == null) return null;
         if (position < 0 || position >= photos.size()) return null;
-        return photos.get(position).getSrc_big();
+        return photos.get(position).getSrc_big(context);
     }
 
     public class LikeInfo implements Serializable {

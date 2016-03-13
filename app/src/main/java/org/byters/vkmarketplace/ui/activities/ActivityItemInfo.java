@@ -81,8 +81,8 @@ public class ActivityItemInfo extends ActivityBase
 
         if (item.getPhotos() != null
                 && item.getPhotos().size() > 0 &&
-                !TextUtils.isEmpty(item.getPhotos().get(0).getSrc_big()))
-            Picasso.with(this).load(item.getPhotos().get(0).getSrc_big()).into((ImageView) findViewById(R.id.ivItem));
+                !TextUtils.isEmpty(item.getPhotos().get(0).getSrc_big(this)))
+            Picasso.with(this).load(item.getPhotos().get(0).getSrc_big(this)).into((ImageView) findViewById(R.id.ivItem));
         else if (!TextUtils.isEmpty(item.getThumb_photo()))
             Picasso.with(this).load(item.getThumb_photo()).into((ImageView) findViewById(R.id.ivItem));
 
