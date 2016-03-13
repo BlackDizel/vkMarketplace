@@ -52,9 +52,9 @@ public class OrdersHistoryAdapter extends RecyclerView.Adapter<OrdersHistoryAdap
                 tvItem.setText("");
                 tvSum.setText("");
             } else {
-                tvDate.setText(item.getDate());
+                tvDate.setText(String.format(controllerMain.getString(R.string.order_history_date_format), item.getDate()));
                 tvItem.setText(item.getInfo(controllerMain));
-                tvSum.setText(String.valueOf(item.getSum()));
+                tvSum.setText(String.format(controllerMain.getString(R.string.order_history_sum_format), String.valueOf(item.getSum())));
             }
         }
     }

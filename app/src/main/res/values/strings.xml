@@ -74,4 +74,6 @@
     <string name="activity_cart_order_sent">Заказ отправлен</string>
     <string name="request_order_item_format" formatted="false">%s\n%s, %d шт</string>
     <string name="order_history_item_format" formatted="false">%s, %d шт</string>
+    <string name="order_history_date_format">Заказ от%s</string>
+    <string name="order_history_sum_format">На сумму %s рублей</string>
 </resources>
