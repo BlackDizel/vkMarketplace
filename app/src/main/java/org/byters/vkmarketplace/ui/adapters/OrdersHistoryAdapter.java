@@ -54,7 +54,7 @@ public class OrdersHistoryAdapter extends RecyclerView.Adapter<OrdersHistoryAdap
             } else {
                 tvDate.setText(item.getDate());
                 tvItem.setText(item.getInfo(controllerMain));
-                tvSum.setText(item.getSum());
+                tvSum.setText(String.valueOf(item.getSum()));
             }
         }
     }

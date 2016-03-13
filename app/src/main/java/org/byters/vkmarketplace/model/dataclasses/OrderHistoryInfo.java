@@ -3,8 +3,6 @@ package org.byters.vkmarketplace.model.dataclasses;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import org.byters.vkmarketplace.R;
-
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,7 +10,7 @@ import java.util.Date;
 
 public class OrderHistoryInfo implements Serializable {
     private long date;
-    private String sum;
+    private int sum;
     private ArrayList<OrderItemHistoryInfo> items;
 
     public String getDate() {
@@ -21,8 +19,12 @@ public class OrderHistoryInfo implements Serializable {
         return new SimpleDateFormat("dd MMMM yyyy").format(d);
     }
 
-    public String getSum() {
+    public int getSum() {
         return sum;
+    }
+
+    public void setSum(int sum) {
+        this.sum = sum;
     }
 
     @NonNull
@@ -35,12 +37,12 @@ public class OrderHistoryInfo implements Serializable {
         return result;
     }
 
-    public class OrderItemHistoryInfo implements Serializable {
-        private String title;
-        private int count;
-
-        public String getText(Context context) {
-            return String.format(context.getString(R.string.order_history_item_format), title, count);
-        }
+    public void setDate() {
+        date = System.currentTimeMillis();
     }
+
+    public void setItems(ArrayList<OrderItemHistoryInfo> items) {
+        this.items = items;
+    }
+
 }
