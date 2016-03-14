@@ -2,7 +2,7 @@
     <dimen name="view_list_item_text_padding">8dp</dimen>
     <dimen name="view_item_list_margin">8dp</dimen>
     <dimen name="item_info_fab_margin">8dp</dimen>
-    <dimen name="item_info_text_padding">8dp</dimen>
+    <dimen name="item_info_text_padding">20dp</dimen>
 
     <dimen name="alert_buy_text_padding">16dp</dimen>
     <dimen name="item_cart_image_size">80dp</dimen>
@@ -16,7 +16,7 @@
     <dimen name="view_photos_list_margin">8dp</dimen>
     <dimen name="cart_cost_text_padding_vertical">8dp</dimen>
     <dimen name="cart_cost_text_padding_horizontal">16dp</dimen>
-    <dimen name="activity_item_info_text_padding_left">8dp</dimen>
+    <dimen name="activity_item_info_text_padding_horizontal">32dp</dimen>
     <dimen name="item_news_likes_text_padding">8dp</dimen>
     <dimen name="item_news_likes_info_padding">8dp</dimen>
     <dimen name="menu_item_image_size">32dp</dimen>
