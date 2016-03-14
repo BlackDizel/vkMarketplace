@@ -38,7 +38,6 @@ public class ActivityOrdersHistory extends ActivityBase {
 
         RecyclerView rvOrders = (RecyclerView) findViewById(R.id.rvOrders);
         rvOrders.setLayoutManager(new LinearLayoutManager(this));
-        rvOrders.addItemDecoration(new ItemDecoration(this));
         adapter = new OrdersHistoryAdapter(this);
         rvOrders.setAdapter(adapter);
     }
@@ -95,28 +94,4 @@ public class ActivityOrdersHistory extends ActivityBase {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-    //region itemDecorator
-    private class ItemDecoration extends RecyclerView.ItemDecoration {
-
-        private int margin;
-
-        public ItemDecoration(Context context) {
-            margin = (int) context.getResources().getDimension(R.dimen.view_item_orders_list_margin);
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-
-            int position = parent.getChildLayoutPosition(view);
-            if (position == 0)
-                outRect.top = margin;
-            outRect.left = margin;
-            outRect.bottom = margin;
-            outRect.right = margin;
-        }
-    }
-    //endregion
 }

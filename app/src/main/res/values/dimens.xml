@@ -42,4 +42,7 @@
     <dimen name="view_item_orders_list_margin">16dp</dimen>
     <dimen name="activity_cart_list_top_padding">8dp</dimen>
     <dimen name="activity_cart_list_item_padding_vertical">20dp</dimen>
+    <dimen name="activity_orders_history_list_item_padding_start">72dp</dimen>
+    <dimen name="activity_orders_history_list_item_padding_end">16dp</dimen>
+    <dimen name="activity_orders_history_list_item_padding_vertical">20dp</dimen>
 </resources>
