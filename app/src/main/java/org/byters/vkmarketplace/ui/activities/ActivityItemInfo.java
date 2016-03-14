@@ -187,7 +187,7 @@ public class ActivityItemInfo extends ActivityBase
 
     @Override
     public void onItemLoaded(@NonNull MarketplaceItem item) {
-        if (item.getId() != id) return;
+        if (item == null || item.getId() != id) return;
 
         setData();
     }
@@ -230,13 +230,14 @@ public class ActivityItemInfo extends ActivityBase
             super.getItemOffsets(outRect, view, parent, state);
 
             int position = parent.getChildLayoutPosition(view);
-            if (position == 0)
+            if (position == 0) {
                 outRect.top = margin;
-
-            outRect.bottom = margin;
-            outRect.right = margin;
-            outRect.left = margin;
-
+                outRect.bottom = margin;
+            } else {
+                outRect.bottom = margin;
+                outRect.right = margin;
+                outRect.left = margin;
+            }
         }
     }
 //endregion
