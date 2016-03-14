@@ -204,10 +204,13 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
 
                 if (position >= columns)
                     outRect.top = 2 * margin;
+
                 if (position % 2 == 0) { //items
                     outRect.right = margin;
+                    outRect.left = margin * 2;
                 } else {
                     outRect.left = margin;
+                    outRect.right = margin * 2;
                     //margins sum = const
                 }
             }

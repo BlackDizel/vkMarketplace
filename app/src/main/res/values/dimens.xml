@@ -45,4 +45,7 @@
     <dimen name="activity_orders_history_list_item_padding_start">72dp</dimen>
     <dimen name="activity_orders_history_list_item_padding_end">16dp</dimen>
     <dimen name="activity_orders_history_list_item_padding_vertical">20dp</dimen>
+    <dimen name="activity_item_info_list_item_comment_padding_vertical">20dp</dimen>
+    <dimen name="activity_item_info_list_item_comment_padding_horizontal">16dp</dimen>
+    <dimen name="activity_item_info_list_item_comment_image_size">40dp</dimen>
 </resources>

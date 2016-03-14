@@ -2,7 +2,6 @@ package org.byters.vkmarketplace.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -38,7 +37,7 @@ public class ActivityItemInfo extends ActivityBase
     private final static int NO_VALUE = -1;
 
     private int id;
-    private ItemInfoAdapter photosAdapter;
+    private ItemInfoAdapter adapter;
 
     public static void display(Context context, int id) {
         Intent intent = new Intent(context, ActivityItemInfo.class);
@@ -59,11 +58,10 @@ public class ActivityItemInfo extends ActivityBase
 
         findViewById(R.id.fabCart).setOnClickListener(this);
 
-        RecyclerView rvPhotos = (RecyclerView) findViewById(R.id.rvPhotos);
-        rvPhotos.setLayoutManager(new LinearLayoutManager(this));
-        rvPhotos.addItemDecoration(new ItemDecoration(this));
-        photosAdapter = new ItemInfoAdapter((ControllerMain) getApplicationContext());
-        rvPhotos.setAdapter(photosAdapter);
+        RecyclerView rvItems = (RecyclerView) findViewById(R.id.rvPhotos);
+        rvItems.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new ItemInfoAdapter((ControllerMain) getApplicationContext());
+        rvItems.setAdapter(adapter);
 
         setData();
     }
@@ -86,7 +84,7 @@ public class ActivityItemInfo extends ActivityBase
         else if (!TextUtils.isEmpty(item.getThumb_photo()))
             Picasso.with(this).load(item.getThumb_photo()).into((ImageView) findViewById(R.id.ivItem));
 
-        photosAdapter.updateData(item, findViewById(R.id.rootView));
+        adapter.updateData(item, findViewById(R.id.rootView));
     }
 
     //region listener
@@ -174,7 +172,7 @@ public class ActivityItemInfo extends ActivityBase
                 if (response == null) return;
                 LikesBlob item = response.body();
                 if (item == null) return;
-                photosAdapter.updateDataHeader(!item.isLiked());
+                adapter.updateDataHeader(!item.isLiked());
             }
 
             @Override
@@ -215,30 +213,4 @@ public class ActivityItemInfo extends ActivityBase
                     .show();
         }
     }
-
-    //region itemDecorator
-    private class ItemDecoration extends RecyclerView.ItemDecoration {
-
-        private int margin;
-
-        public ItemDecoration(Context context) {
-            margin = (int) context.getResources().getDimension(R.dimen.item_info_list_margin);
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-
-            int position = parent.getChildLayoutPosition(view);
-            if (position == 0) {
-                outRect.top = margin;
-                outRect.bottom = margin;
-            } else {
-                outRect.bottom = margin;
-                outRect.right = margin;
-                outRect.left = margin;
-            }
-        }
-    }
-//endregion
 }
