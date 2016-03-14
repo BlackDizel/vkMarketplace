@@ -19,19 +19,46 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.activities.ActivityMain" />
         <activity android:name=".ui.activities.ActivityLogin" />
-        <activity android:name=".ui.activities.ActivityItemInfo" />
+
+        <activity android:name=".ui.activities.ActivityItemInfo">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.ActivityMain" />
+        </activity>
+
         <activity
             android:name=".ui.activities.ActivityCart"
-            android:label="@string/activity_cart_title" />
+            android:label="@string/activity_cart_title">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.ActivityMain" />
+        </activity>
+
         <activity
             android:name=".ui.activities.ActivityFavorites"
-            android:label="@string/activity_fav_title" />
-        <activity android:name=".ui.activities.ActivitySearch" />
+            android:label="@string/activity_fav_title">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.ActivityMain" />
+        </activity>
+
+        <activity android:name=".ui.activities.ActivitySearch">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.ActivityMain" />
+        </activity>
+
         <activity
             android:name=".ui.activities.ActivityOrdersHistory"
-            android:label="@string/activity_orders_history_title" />
+            android:label="@string/activity_orders_history_title">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.ActivityMain" />
+        </activity>
+
     </application>
 
 </manifest>
