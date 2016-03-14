@@ -49,4 +49,7 @@
     <dimen name="activity_item_info_list_item_comment_padding_horizontal">16dp</dimen>
     <dimen name="activity_item_info_list_item_comment_image_size">40dp</dimen>
     <dimen name="activity_item_info_list_padding_top">8dp</dimen>
+    <dimen name="activity_favorites_list_padding_top">8dp</dimen>
+    <dimen name="activity_favorites_list_item_padding_vertical">20dp</dimen>
+    <dimen name="activity_favorites_list_item_padding_horizontal">16dp</dimen>
 </resources>

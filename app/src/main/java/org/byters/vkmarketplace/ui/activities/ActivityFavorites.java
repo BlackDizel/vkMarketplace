@@ -2,7 +2,6 @@ package org.byters.vkmarketplace.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.widget.LinearLayoutManager;
@@ -50,7 +49,6 @@ public class ActivityFavorites extends ActivityBase {
         rvItems.setLayoutManager(new LinearLayoutManager(this));
         adapter = new FavoritesAdapter((ControllerMain) getApplicationContext());
         rvItems.setAdapter(adapter);
-        rvItems.addItemDecoration(new ItemDecoration(this));
     }
 
     @Override
@@ -69,25 +67,5 @@ public class ActivityFavorites extends ActivityBase {
     protected void onResume() {
         super.onResume();
         checkState();
-    }
-    //endregion
-
-    //region itemDecorator
-    private class ItemDecoration extends RecyclerView.ItemDecoration {
-
-        private int margin;
-
-        public ItemDecoration(Context context) {
-            margin = (int) context.getResources().getDimension(R.dimen.view_item_fav_list_margin);
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-
-            outRect.left = margin;
-            outRect.top = margin;
-            outRect.right = margin;
-        }
     }
 }
