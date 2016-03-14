@@ -2,6 +2,7 @@ package org.byters.vkmarketplace.ui.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                 tvSubtitle.setText(String.format("%s %s"
                         , String.valueOf(item.getCount())
                         , PluralName.ITEM.toString(controllerMain, item.getCount())));
-                Picasso.with(controllerMain).load(item.getPhoto().getLittlePhoto()).into(ivItem);
+                if (item.getPhoto() != null && !TextUtils.isEmpty(item.getPhoto().getLittlePhoto()))
+                    Picasso.with(controllerMain).load(item.getPhoto().getLittlePhoto()).into(ivItem);
                 album_id = item.getId();
             }
         }
