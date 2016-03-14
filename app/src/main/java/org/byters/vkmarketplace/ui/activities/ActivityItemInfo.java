@@ -119,9 +119,10 @@ public class ActivityItemInfo extends ActivityBase
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void checkFav(MenuItem item) {
+    private boolean checkFav(MenuItem item) {
         boolean isFav = ((ControllerMain) getApplicationContext()).getControllerFavorites().isFavorite(id);
         item.setIcon(getResources().getDrawable(isFav ? R.drawable.ic_star_white_24dp : R.drawable.ic_star_border_white_24dp));
+        return isFav;
     }
 
     @Override
@@ -129,7 +130,17 @@ public class ActivityItemInfo extends ActivityBase
         switch (item.getItemId()) {
             case R.id.action_favorite:
                 ((ControllerMain) getApplicationContext()).getControllerFavorites().toggleFavorite(this, id);
-                checkFav(item);
+                if (checkFav(item))
+                    Snackbar.make(findViewById(R.id.rootView), R.string.activity_item_info_fav_add, Snackbar.LENGTH_SHORT)
+                            .setAction(R.string.activity_item_info_fav_add_action, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ActivityFavorites.display(ActivityItemInfo.this);
+                                }
+                            })
+                            .show();
+                else
+                    Snackbar.make(findViewById(R.id.rootView), R.string.activity_itme_info_fav_remove, Snackbar.LENGTH_SHORT).show();
                 break;
             case R.id.action_comment:
                 new DialogComment(this, findViewById(R.id.rootView), id).show();

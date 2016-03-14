@@ -83,4 +83,7 @@
     <string name="orders_history_clear_items_message">Удалить все заказы</string>
     <string name="orders_history_clear_data_cancel">Отмена</string>
     <string name="activity_orders_history_no_data">Нет сохраненной истории заказов</string>
+    <string name="activity_item_info_fav_add">Добавлено в избранное</string>
+    <string name="activity_itme_info_fav_remove">Удалено из избранного</string>
+    <string name="activity_item_info_fav_add_action">Посмотреть</string>
 </resources>
