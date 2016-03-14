@@ -33,10 +33,9 @@ public class ControllerOrdersHistory {
     public void addItem(Context context, @NonNull OrderHistoryInfo info) {
         if (data == null) data = new ArrayList<>();
         data.add(info);
-        ControllerStorage.writeObjectToFile(context, data, ControllerStorage.ORDERS_HISTORY_CACHE);
-
         Collections.sort(data);
         Collections.reverse(data);
+        ControllerStorage.writeObjectToFile(context, data, ControllerStorage.ORDERS_HISTORY_CACHE);
     }
 
     public void clearData(Context context) {
