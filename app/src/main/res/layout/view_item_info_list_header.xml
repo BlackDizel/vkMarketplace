@@ -22,6 +22,7 @@
 
         <TextView
             android:id="@+id/tvPrice"
+            style="@style/TextAppearance.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/activity_item_info_text_padding_horizontal"
@@ -78,6 +79,7 @@
             android:tint="@color/colorPrimary" />
 
         <TextView
+            style="@style/TextAppearance.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/activity_item_info_text_padding_horizontal"
@@ -110,6 +112,7 @@
 
         <TextView
             android:id="@+id/tvLikes"
+            style="@style/TextAppearance.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/activity_item_info_text_padding_horizontal"
