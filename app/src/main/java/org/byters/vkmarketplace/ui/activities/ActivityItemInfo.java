@@ -54,6 +54,7 @@ public class ActivityItemInfo extends ActivityBase
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         id = getIntent().getIntExtra(INTENT_EXTRA_ITEM_ID, NO_VALUE);
 
@@ -75,8 +76,6 @@ public class ActivityItemInfo extends ActivityBase
         if (id == NO_VALUE) return;
         MarketplaceItem item = ((ControllerMain) getApplicationContext()).getControllerItems().getModel().getItemById(id);
         if (item == null) return;
-
-        setTitle(item.getTitle());
 
         if (item.getPhotos() != null
                 && item.getPhotos().size() > 0 &&

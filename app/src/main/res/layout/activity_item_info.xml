@@ -27,19 +27,13 @@
                 <ImageView
                     android:id="@+id/ivItem"
                     android:scaleType="centerCrop"
-                    app:layout_aspectRatio="150%"
+                    app:layout_aspectRatio="90%"
                     app:layout_widthPercent="100%" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="200dp"
                     android:background="@drawable/gradient" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_gravity="bottom"
-                    android:background="@drawable/gradient_up" />
 
             </android.support.percent.PercentFrameLayout>
 
