@@ -23,6 +23,7 @@ import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.model.dataclasses.CommentsBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
+import org.byters.vkmarketplace.ui.activities.ActivityBase;
 import org.byters.vkmarketplace.ui.utils.SharingHelper;
 
 import retrofit2.Callback;
@@ -303,7 +304,8 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
         }
     }
 
-    private class ViewHolderCollections extends ViewHolder {
+    private class ViewHolderCollections extends ViewHolder
+            implements View.OnClickListener {
 
         FlowLayout layout;
 
@@ -324,8 +326,26 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
                 if (TextUtils.isEmpty(title)) continue;
                 View v = LayoutInflater.from(layout.getContext())
                         .inflate(R.layout.view_item_info_list_collections_item, layout, true);
-                ((TextView) v.findViewById(R.id.tvTitle)).setText(title);
+                TextView tv = ((TextView) v.findViewById(R.id.tvTitle));
+                tv.setTag(data.getAlbumId(i));
+                tv.setText(title);
+                tv.setOnClickListener(this);
             }
+        }
+
+        @Override
+        public void onClick(View v) {
+            Object o = v.getTag();
+            int album_id = MarketplaceItem.NO_VALUE;
+            if (o instanceof Integer)
+                album_id = (int) o;
+
+            if (album_id == MarketplaceItem.NO_VALUE)
+                return;
+
+            controllerMain.getControllerItems().setAlbum(album_id);
+            if (v.getContext() instanceof ActivityBase)
+                ((ActivityBase) v.getContext()).onBackPressed();
         }
     }
 }
