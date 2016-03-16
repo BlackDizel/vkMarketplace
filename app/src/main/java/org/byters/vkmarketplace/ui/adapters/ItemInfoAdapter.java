@@ -220,7 +220,7 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
 
     private class ViewHolderHeader extends ViewHolder
             implements View.OnClickListener {
-        private TextView tvDescription, tvPrice, tvLikes;
+        private TextView tvDescription, tvPrice, tvLikes, tvTitle;
         private View llLikes;
 
         public ViewHolderHeader(View itemView) {
@@ -228,6 +228,7 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
             tvDescription = ((TextView) itemView.findViewById(R.id.tvDescription));
             tvPrice = ((TextView) itemView.findViewById(R.id.tvPrice));
             tvLikes = ((TextView) itemView.findViewById(R.id.tvLikes));
+            tvTitle = ((TextView) itemView.findViewById(R.id.tvTitle));
             itemView.findViewById(R.id.llShare).setOnClickListener(this);
             llLikes = itemView.findViewById(R.id.llLikes);
             llLikes.setOnClickListener(this);
@@ -238,6 +239,7 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
             if (data == null) return;
             tvDescription.setText(Html.fromHtml(data.getDescription()));
             tvPrice.setText(data.getPrice().getText().toUpperCase().replace(".", ""));
+            tvTitle.setText(data.getTitle());
 
             if (data.getLikes() != null)
                 tvLikes.setText(String.format("%d", data.getLikes().getCount()));

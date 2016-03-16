@@ -3,6 +3,17 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_item_info_header_margin_top"
+        android:paddingEnd="@dimen/item_info_list_margin"
+        android:paddingLeft="@dimen/activity_item_info_header_margin_start"
+        android:paddingRight="@dimen/item_info_list_margin"
+        android:paddingStart="@dimen/activity_item_info_header_margin_start" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
