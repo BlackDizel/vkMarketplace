@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.apmem.tools.layouts.FlowLayout;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.model.dataclasses.CommentsBlob;
@@ -31,6 +32,9 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_PHOTOS = 1;
     private static final int TYPE_COMMENT = 2;
+    private static final int TYPE_COLLECTION = 3;
+    private static final int TYPE_ERROR = 4;
+    private static final double COLLECTIONS_MAX_NUM = 10;
 
     private boolean isLikeEnabled;
     @Nullable
@@ -46,24 +50,48 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_HEADER)
-            return new ViewHolderHeader(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.view_item_info_list_header, parent, false));
-        else if (viewType == TYPE_PHOTOS)
-            return new ViewHolderPhotos(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.view_list_photos_list, parent, false));
-        else
-            return new ViewHolderComment(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.view_item_info_list_comment, parent, false));
+        switch (viewType) {
+            case TYPE_HEADER:
+                return new ViewHolderHeader(LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.view_item_info_list_header, parent, false));
+            case TYPE_PHOTOS:
+                return new ViewHolderPhotos(LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.view_list_photos_list, parent, false));
+            case TYPE_COMMENT:
+                return new ViewHolderComment(LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.view_item_info_list_comment, parent, false));
+            case TYPE_COLLECTION:
+                return new ViewHolderCollections(LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.view_item_info_list_collections, parent, false));
+        }
+        //todo return error type viewholder
+        return null;
     }
 
     @Override
     public int getItemViewType(int position) {
-        return position == 0
-                ? TYPE_HEADER
-                : (position < getHeaderWithItemsSize()
-                ? TYPE_PHOTOS
-                : TYPE_COMMENT);
+        if (position == 0) return TYPE_HEADER;
+        if (isPhotosPosition(position)) return TYPE_PHOTOS;
+        if (isCollectionsPosition(position)) return TYPE_COLLECTION;
+        if (isCommentsPosition(position)) return TYPE_COMMENT;
+        return TYPE_ERROR;
+    }
+
+    private boolean isCollectionsPosition(int position) {
+        if (data == null || data.getAlbumIdsSize() == 0) return false;
+        return position + 1 == getItemCount();
+    }
+
+    private boolean isCommentsPosition(int position) {
+        if (data == null) return false;
+        if (data.getPhotosSize() > 0 && position >= 2) return true;
+        if (data.getPhotosSize() == 0 && position >= 1) return true;
+        return false;
+    }
+
+    private boolean isPhotosPosition(int position) {
+        if (data == null) return false;
+        return data.getPhotosSize() > 0 && position == 1;
     }
 
     @Override
@@ -71,17 +99,14 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
         holder.setData(position);
     }
 
-    private int getHeaderWithItemsSize() {
-        return data == null
-                ? 0
-                : ((data.getPhotosSize() > 0 ? 1 : 0) + 1);
-    }
 
     @Override
     public int getItemCount() {
-        return (data == null ? 0
-                : (getHeaderWithItemsSize()
-                + controllerMain.getControllerComments().getSize(data.getId())));
+        if (data == null) return 0;
+        int count = 1;//add header
+        if (data.getPhotosSize() > 0) ++count;//add photos
+        if (data.getAlbumIdsSize() > 0) ++count;//add collections
+        return count + controllerMain.getControllerComments().getSize(data.getId());
     }
 
     public void updateData(@NonNull MarketplaceItem item, View rootView) {
@@ -89,10 +114,6 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
         this.rootView = rootView;
 
         notifyDataSetChanged();
-    }
-
-    public boolean isComment(int position) {
-        return position >= getHeaderWithItemsSize();
     }
 
     public void updateDataHeader(boolean isLikeAvailable) {
@@ -144,7 +165,7 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
                 return;
             }
 
-            CommentsBlob.CommentInfo info = controllerMain.getControllerComments().getCommentsItem(data.getId(), position - getHeaderWithItemsSize());
+            CommentsBlob.CommentInfo info = controllerMain.getControllerComments().getCommentsItem(data.getId(), getCommentPosition(position));
             if (info == null) {
                 ivUser.setImageDrawable(null);
                 tvUser.setText(R.string.comment_no_title);
@@ -162,6 +183,11 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
             tvUser.setText(info.getTitle());
             tvText.setText(info.getText());
         }
+
+        private int getCommentPosition(int position) {
+            if (data == null) return 0;
+            return Math.max(0, position - 1 - (data.getPhotosSize() > 0 ? 1 : 0));
+        }
     }
 
     private class ViewHolderPhotos extends ViewHolder {
@@ -171,9 +197,8 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
         public ViewHolderPhotos(View itemView) {
             super(itemView);
             RecyclerView rvPhotos = (RecyclerView) itemView.findViewById(R.id.rvPhotos);
-            int columns = controllerMain.getResources().getInteger(R.integer.photos_columns);
-            rvPhotos.setLayoutManager(new GridLayoutManager(itemView.getContext(), columns));
-            rvPhotos.addItemDecoration(new ItemPhotosDecoration(controllerMain, columns));
+            rvPhotos.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
+            rvPhotos.addItemDecoration(new ItemPhotosDecoration(controllerMain));
             adapter = new ItemPhotosAdapter(controllerMain);
             rvPhotos.setAdapter(adapter);
         }
@@ -188,31 +213,19 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
         //region itemDecorator
         private class ItemPhotosDecoration extends RecyclerView.ItemDecoration {
 
-            private int columns;
             private int margin;
 
-            public ItemPhotosDecoration(Context context, int columns) {
+            public ItemPhotosDecoration(Context context) {
                 margin = (int) context.getResources().getDimension(R.dimen.view_photos_list_margin);
-                this.columns = columns;
             }
 
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 super.getItemOffsets(outRect, view, parent, state);
 
-                int position = parent.getChildLayoutPosition(view);
-
-                if (position >= columns)
-                    outRect.top = 2 * margin;
-
-                if (position % 2 == 0) { //items
-                    outRect.right = margin;
-                    outRect.left = margin * 2;
-                } else {
-                    outRect.left = margin;
-                    outRect.right = margin * 2;
-                    //margins sum = const
-                }
+                outRect.right = margin;
+                outRect.top = margin;
+                outRect.bottom = margin;
             }
         }
         //endregion
@@ -287,6 +300,32 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
         }
 
         public void setData(int position) {
+        }
+    }
+
+    private class ViewHolderCollections extends ViewHolder {
+
+        FlowLayout layout;
+
+        public ViewHolderCollections(View view) {
+            super(view);
+            layout = (FlowLayout) view;
+        }
+
+        @Override
+        public void setData(int position) {
+            super.setData(position);
+
+            if (data == null) return;
+            layout.removeAllViews();
+            int size = (int) Math.min(data.getAlbumIdsSize(), COLLECTIONS_MAX_NUM);
+            for (int i = 0; i < size; ++i) {
+                String title = data.getCollectionTitle(controllerMain, i);
+                if (TextUtils.isEmpty(title)) continue;
+                View v = LayoutInflater.from(layout.getContext())
+                        .inflate(R.layout.view_item_info_list_collections_item, layout, true);
+                ((TextView) v.findViewById(R.id.tvTitle)).setText(title);
+            }
         }
     }
 }

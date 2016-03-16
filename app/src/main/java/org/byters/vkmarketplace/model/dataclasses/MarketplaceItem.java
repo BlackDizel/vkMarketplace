@@ -3,6 +3,8 @@ package org.byters.vkmarketplace.model.dataclasses;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
+import org.byters.vkmarketplace.controllers.ControllerMain;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -57,6 +59,13 @@ public class MarketplaceItem implements Serializable {
         if (photos == null) return null;
         if (position < 0 || position >= photos.size()) return null;
         return photos.get(position).getSrc_big(context);
+    }
+
+    @Nullable
+    public String getCollectionTitle(ControllerMain controllerMain, int position) {
+        if (position < 0 || albums_ids == null || position >= albums_ids.length)
+            return null;
+        return controllerMain.getControllerAlbums().getTitle(albums_ids[position]);
     }
 
     public class LikeInfo implements Serializable {

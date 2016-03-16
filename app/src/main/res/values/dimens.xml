@@ -13,7 +13,7 @@
     <dimen name="view_news_list_padding">8dp</dimen>
     <dimen name="view_news_item_width">320dp</dimen>
     <dimen name="view_item_news_margin">16dp</dimen>
-    <dimen name="view_photos_list_margin">8dp</dimen>
+    <dimen name="view_photos_list_margin">16dp</dimen>
     <dimen name="cart_cost_text_padding_vertical">8dp</dimen>
     <dimen name="cart_cost_text_padding_horizontal">16dp</dimen>
     <dimen name="activity_item_info_text_padding_horizontal">32dp</dimen>
@@ -54,4 +54,8 @@
     <dimen name="activity_favorites_list_item_padding_horizontal">16dp</dimen>
     <dimen name="activity_item_info_header_margin_start">72dp</dimen>
     <dimen name="activity_item_info_header_margin_top">24dp</dimen>
+    <dimen name="collections_item_padding_vertical">4dp</dimen>
+    <dimen name="collections_item_padding_horizontal">16dp</dimen>
+    <dimen name="collection_item_margin">16dp</dimen>
+    <dimen name="item_info_list_photos_item_size">160dp</dimen>
 </resources>

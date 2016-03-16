@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvTitle"
+    style="@style/TextAppearance.AppCompat.Button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/collection_item_margin"
+    android:layout_marginEnd="@dimen/collection_item_margin"
+    android:layout_marginRight="@dimen/collection_item_margin"
+    android:background="@drawable/collection_item_bg"
+    android:paddingBottom="@dimen/collections_item_padding_vertical"
+    android:paddingEnd="@dimen/collections_item_padding_horizontal"
+    android:paddingLeft="@dimen/collections_item_padding_horizontal"
+    android:paddingRight="@dimen/collections_item_padding_horizontal"
+    android:paddingStart="@dimen/collections_item_padding_horizontal"
+    android:paddingTop="@dimen/collections_item_padding_vertical"
+    android:textColor="@color/white">
+
+</TextView>

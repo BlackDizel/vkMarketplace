@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <!--suppress AndroidDomInspection-->
     <ImageView
         android:id="@+id/ivItem"
-        android:scaleType="centerCrop"
-        app:layout_aspectRatio="100%"
-        app:layout_widthPercent="100%" />
+        android:layout_width="@dimen/item_info_list_photos_item_size"
+        android:layout_height="@dimen/item_info_list_photos_item_size"
+        android:scaleType="centerCrop" />
 
-</android.support.percent.PercentFrameLayout>
+</FrameLayout>

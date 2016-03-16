@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.apmem.tools.layouts.FlowLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/item_info_list_margin"
+    android:paddingEnd="@dimen/item_info_list_margin"
+    android:paddingLeft="@dimen/activity_item_info_header_margin_start"
+    android:paddingRight="@dimen/item_info_list_margin"
+    android:paddingStart="@dimen/activity_item_info_header_margin_start" />
