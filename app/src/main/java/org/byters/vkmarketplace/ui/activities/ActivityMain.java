@@ -86,7 +86,7 @@ public class ActivityMain extends ActivityBase
                 ActivityCart.display(this);
                 break;
             case R.id.action_view_market:
-                ((ControllerMain)getApplicationContext()).openUrl(
+                ((ControllerMain) getApplicationContext()).openUrl(
                         this
                         , findViewById(R.id.rootView)
                         , getString(R.string.action_view_browser_error)
