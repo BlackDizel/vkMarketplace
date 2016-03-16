@@ -83,7 +83,7 @@ public class ControllerComments {
     public CommentsBlob.CommentInfo getCommentsItem(int id, int pos) {
         if (data == null) return null;
         ArrayList<CommentsBlob.CommentInfo> items = data.get(id);
-        if (data == null) return null;
+        if (items == null) return null;
         if (pos < 0 || pos >= items.size()) return null;
         return items.get(pos);
     }
