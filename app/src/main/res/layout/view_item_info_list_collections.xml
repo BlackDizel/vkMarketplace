@@ -7,4 +7,5 @@
     android:paddingEnd="@dimen/item_info_list_margin"
     android:paddingLeft="@dimen/activity_item_info_header_margin_start"
     android:paddingRight="@dimen/item_info_list_margin"
-    android:paddingStart="@dimen/activity_item_info_header_margin_start" />
+    android:paddingStart="@dimen/activity_item_info_header_margin_start"
+    android:paddingTop="@dimen/item_info_list_margin" />
