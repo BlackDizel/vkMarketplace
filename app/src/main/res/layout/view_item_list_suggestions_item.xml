@@ -3,7 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/suggestion_list_item_margin"
-    android:layout_marginRight="@dimen/suggestion_list_item_margin">
+    android:layout_marginRight="@dimen/suggestion_list_item_margin"
+    android:background="?attr/selectableItemBackground">
 
     <LinearLayout
         android:layout_width="wrap_content"
