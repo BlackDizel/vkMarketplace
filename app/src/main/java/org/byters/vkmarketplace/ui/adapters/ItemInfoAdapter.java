@@ -30,11 +30,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHolder> {
+    private static final int TYPE_ERROR = -1;
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_PHOTOS = 1;
     private static final int TYPE_COMMENT = 2;
     private static final int TYPE_COLLECTION = 3;
-    private static final int TYPE_ERROR = 4;
+    private static final int TYPE_SUGGESTIONS = 4;
+
     private static final double COLLECTIONS_MAX_NUM = 10;
 
     private boolean isLikeEnabled;
@@ -64,6 +66,9 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
             case TYPE_COLLECTION:
                 return new ViewHolderCollections(LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.view_item_info_list_collections, parent, false));
+            case TYPE_SUGGESTIONS:
+                return new ViewHolderSuggestions(LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.view_item_info_list_suggestions, parent, false));
         }
         //todo return error type viewholder
         return null;
@@ -74,13 +79,18 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
         if (position == 0) return TYPE_HEADER;
         if (isPhotosPosition(position)) return TYPE_PHOTOS;
         if (isCollectionsPosition(position)) return TYPE_COLLECTION;
+        if (isSuggestionsPosition(position)) return TYPE_SUGGESTIONS;
         if (isCommentsPosition(position)) return TYPE_COMMENT;
         return TYPE_ERROR;
     }
 
+    private boolean isSuggestionsPosition(int position) {
+        return position + 1 == getItemCount();
+    }
+
     private boolean isCollectionsPosition(int position) {
         if (data == null || data.getAlbumIdsSize() == 0) return false;
-        return position + 1 == getItemCount();
+        return position + 2 == getItemCount();
     }
 
     private boolean isCommentsPosition(int position) {
@@ -107,7 +117,9 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
         int count = 1;//add header
         if (data.getPhotosSize() > 0) ++count;//add photos
         if (data.getAlbumIdsSize() > 0) ++count;//add collections
-        return count + controllerMain.getControllerComments().getSize(data.getId());
+        count += controllerMain.getControllerComments().getSize(data.getId()); //add comments
+        ++count; //add suggestions
+        return count;
     }
 
     public void updateData(@NonNull MarketplaceItem item, View rootView) {
@@ -346,6 +358,26 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
             controllerMain.getControllerItems().setAlbum(album_id);
             if (v.getContext() instanceof ActivityBase)
                 ((ActivityBase) v.getContext()).onBackPressed();
+        }
+    }
+
+    private class ViewHolderSuggestions extends ViewHolder {
+        RecyclerView rvSuggestions;
+        SuggestionsAdapter adapter;
+
+        public ViewHolderSuggestions(View view) {
+            super(view);
+            adapter = new SuggestionsAdapter(controllerMain);
+            rvSuggestions = (RecyclerView) view.findViewById(R.id.rvSuggestions);
+            rvSuggestions.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
+            rvSuggestions.setAdapter(adapter);
+        }
+
+        @Override
+        public void setData(int position) {
+            super.setData(position);
+            if (data != null)
+                adapter.updateData(data.getId());
         }
     }
 }
