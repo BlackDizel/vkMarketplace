@@ -23,6 +23,7 @@ import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
 import org.byters.vkmarketplace.controllers.controllers.ControllerNews;
 import org.byters.vkmarketplace.controllers.controllers.ControllerOrdersHistory;
 import org.byters.vkmarketplace.controllers.controllers.ControllerSearchResult;
+import org.byters.vkmarketplace.controllers.controllers.ControllerSuggestions;
 import org.byters.vkmarketplace.controllers.controllers.ControllerUserData;
 import org.byters.vkmarketplace.controllers.controllers.utils.OnItemUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
@@ -43,6 +44,7 @@ public class ControllerMain extends Application
     private ControllerAlbums controllerAlbums;
     private ControllerComments controllerComments;
     private ControllerOrdersHistory controllerOrdersHistory;
+    private ControllerSuggestions controllerSuggestions;
 
     public ControllerItems getControllerItems() {
         return controllerItems;
@@ -226,5 +228,11 @@ public class ControllerMain extends Application
         if (controllerOrdersHistory == null)
             controllerOrdersHistory = new ControllerOrdersHistory(this);
         return controllerOrdersHistory;
+    }
+
+    public ControllerSuggestions getControllerSuggestions() {
+        if (controllerSuggestions == null)
+            controllerSuggestions = new ControllerSuggestions(this);
+        return controllerSuggestions;
     }
 }
