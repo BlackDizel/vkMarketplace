@@ -11,9 +11,4 @@
     <style name="AppTheme.AppBarOverlay" parent="AppTheme">
         <item name="titleTextColor">@color/white</item>
     </style>
-
-    <style name="AppTheme.AppBarOverlayCollapsed" parent="AppTheme.AppBarOverlay">
-        <item name="android:textColorPrimary">@color/white</item>
-    </style>
-
 </resources>
