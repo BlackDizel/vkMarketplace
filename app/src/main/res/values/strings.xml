@@ -87,4 +87,5 @@
     <string name="activity_itme_info_fav_remove">Удалено из избранного</string>
     <string name="activity_item_info_fav_add_action">Посмотреть</string>
     <string name="suggestion_list_title">Также будет интересно</string>
+    <string name="suggestions_list_item_error_text">нет данных</string>
 </resources>

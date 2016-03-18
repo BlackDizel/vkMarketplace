@@ -13,6 +13,7 @@ import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.ControllerSuggestions;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
+import org.byters.vkmarketplace.ui.activities.ActivityItemInfo;
 
 public class SuggestionsAdapter extends RecyclerView.Adapter<SuggestionsAdapter.ViewHolder> {
     private static final int NO_VALUE = -1;
@@ -46,35 +47,44 @@ public class SuggestionsAdapter extends RecyclerView.Adapter<SuggestionsAdapter.
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        ImageView ivItem;
-        TextView tvTitle;
+        private ImageView ivItem;
+        private TextView tvTitle;
+        private int id;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ivItem = (ImageView) itemView.findViewById(R.id.ivItem);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            itemView.setOnClickListener(this);
         }
 
         public void setData(int position) {
             MarketplaceItem item = null;
-            int id = controllerMain.getControllerSuggestions().getItem(itemId, position);
+            id = controllerMain.getControllerSuggestions().getItem(itemId, position);
             if (id != ControllerSuggestions.NO_VALUE)
                 item = controllerMain.getControllerItems().getModel().getItemById(id);
 
             if (id == ControllerSuggestions.NO_VALUE || item == null) {
                 ivItem.setImageDrawable(null);
-                tvTitle.setText("нет данных");
-            } else {
-                if (item.getPhotosSize() == 0)
-                    ivItem.setImageDrawable(null);
-                else
-                    Picasso.with(controllerMain)
-                            .load(item.getPhotos().get(0).getSrc_big(controllerMain))
-                            .into(ivItem);
-                tvTitle.setText(item.getTitle());
+                tvTitle.setText(R.string.suggestions_list_item_error_text);
+                return;
             }
+
+            tvTitle.setText(item.getTitle());
+            if (item.getPhotosSize() == 0)
+                ivItem.setImageDrawable(null);
+            else
+                Picasso.with(controllerMain)
+                        .load(item.getPhotos().get(0).getSrc_big(controllerMain))
+                        .into(ivItem);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (id == ControllerSuggestions.NO_VALUE) return;
+            ActivityItemInfo.display(v.getContext(), id);
         }
     }
 }
