@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/suggestion_list_items_margin_top"
         android:clipToPadding="false"
+        android:paddingBottom="@dimen/suggestion_list_items_padding_bottom"
         android:paddingLeft="@dimen/suggestion_list_items_padding_start"
         android:paddingStart="@dimen/suggestion_list_items_padding_start" />
 
