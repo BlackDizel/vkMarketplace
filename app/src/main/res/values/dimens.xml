@@ -58,4 +58,9 @@
     <dimen name="collections_item_padding_horizontal">16dp</dimen>
     <dimen name="collection_item_margin">16dp</dimen>
     <dimen name="item_info_list_photos_item_size">160dp</dimen>
+    <dimen name="suggestion_list_margin_top">20dp</dimen>
+    <dimen name="suggestion_list_title_margin_start">72dp</dimen>
+    <dimen name="suggestion_list_items_padding_start">72dp</dimen>
+    <dimen name="suggestion_list_items_margin_top">8dp</dimen>
+    <dimen name="suggestion_list_items_padding_end">16dp</dimen>
 </resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/suggestion_list_margin_top">
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/suggestion_list_title_margin_start"
+        android:layout_marginStart="@dimen/suggestion_list_title_margin_start"
+        android:text="@string/suggestion_list_title" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvSuggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/suggestion_list_items_margin_top"
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/suggestion_list_items_padding_start"
+        android:paddingStart="@dimen/suggestion_list_items_padding_start" />
+
+</LinearLayout>
