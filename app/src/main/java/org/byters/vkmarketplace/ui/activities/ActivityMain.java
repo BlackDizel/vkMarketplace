@@ -126,6 +126,8 @@ public class ActivityMain extends ActivityBase
         ((ControllerMain) getApplicationContext()).getControllerNews().addListener(this);
         ((ControllerMain) getApplicationContext()).getControllerUserData().setListener(this);
         ((ControllerMain) getApplicationContext()).getControllerAlbums().setListener(this);
+
+        invalidateData();
     }
 
     @Override

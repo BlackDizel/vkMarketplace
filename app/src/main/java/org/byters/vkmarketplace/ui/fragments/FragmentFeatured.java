@@ -62,7 +62,6 @@ public class FragmentFeatured extends FragmentBase
     @Override
     public void onResume() {
         super.onResume();
-        onRefresh();
         adapter.notifyDataSetChanged();
     }
 
