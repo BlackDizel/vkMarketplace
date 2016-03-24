@@ -26,6 +26,7 @@ import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.adapters.ItemInfoAdapter;
 import org.byters.vkmarketplace.ui.dialogs.DialogComment;
 
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
@@ -184,7 +185,7 @@ public class ActivityItemInfo extends ActivityBase
         ((ControllerMain) getApplicationContext()).isLiked(id, new Callback<LikesBlob>() {
 
             @Override
-            public void onResponse(Response<LikesBlob> response) {
+            public void onResponse(Call<LikesBlob> call, Response<LikesBlob> response) {
                 if (response == null) return;
                 LikesBlob item = response.body();
                 if (item == null) return;
@@ -192,7 +193,7 @@ public class ActivityItemInfo extends ActivityBase
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<LikesBlob> call, Throwable t) {
 
             }
         });

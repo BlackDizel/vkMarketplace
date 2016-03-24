@@ -56,7 +56,7 @@ public class ControllerUserData implements Callback<AccountInfoBlob> {
     }
 
     @Override
-    public void onResponse(Response<AccountInfoBlob> response) {
+    public void onResponse(Call<AccountInfoBlob> call, Response<AccountInfoBlob> response) {
         if (response != null
                 && response.body() != null
                 && response.body().getResponse() != null)
@@ -66,7 +66,7 @@ public class ControllerUserData implements Callback<AccountInfoBlob> {
     }
 
     @Override
-    public void onFailure(Throwable t) {
+    public void onFailure(Call<AccountInfoBlob> call, Throwable t) {
         if (listener != null) listener.onUserInfoLoadError();
     }
 }

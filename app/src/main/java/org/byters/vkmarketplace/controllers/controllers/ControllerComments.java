@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.google.gson.JsonObject;
+
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
 import org.byters.vkmarketplace.controllers.ControllerMain;
@@ -108,7 +110,7 @@ public class ControllerComments {
         }
 
         @Override
-        public void onResponse(Response<CommentsBlob> response) {
+        public void onResponse(Call<CommentsBlob> call, Response<CommentsBlob> response) {
             if (response != null && response.body() != null && response.body().getComments() != null)
                 addItem(id, response.body().getComments());
 
@@ -119,7 +121,7 @@ public class ControllerComments {
         }
 
         @Override
-        public void onFailure(Throwable t) {
+        public void onFailure(Call<CommentsBlob> call, Throwable t) {
             if (listeners != null)
                 for (DataUpdateListener listener : listeners)
                     if (listener != null)
@@ -132,7 +134,7 @@ public class ControllerComments {
     private class AddCommentsCallback implements Callback<com.google.gson.JsonObject> {
 
         @Override
-        public void onResponse(Response<com.google.gson.JsonObject> response) {
+        public void onResponse(Call<JsonObject> call, Response<com.google.gson.JsonObject> response) {
             if (listeners != null)
                 for (DataUpdateListener listener : listeners)
                     if (listener != null)
@@ -140,7 +142,7 @@ public class ControllerComments {
         }
 
         @Override
-        public void onFailure(Throwable t) {
+        public void onFailure(Call<JsonObject> call, Throwable t) {
             if (listeners != null)
                 for (DataUpdateListener listener : listeners)
                     if (listener != null)

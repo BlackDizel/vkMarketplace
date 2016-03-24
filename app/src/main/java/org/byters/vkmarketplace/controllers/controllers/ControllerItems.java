@@ -70,14 +70,14 @@ public class ControllerItems {
 
                 request.enqueue(new Callback<MarketplaceBlob>() {
                     @Override
-                    public void onResponse(Response<MarketplaceBlob> response) {
+                    public void onResponse(Call<MarketplaceBlob> call, Response<MarketplaceBlob> response) {
                         if (response != null && response.body() != null)
                             writeData(response.body().getItems(), true);
                         updateListeners();
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onFailure(Call<MarketplaceBlob> call, Throwable t) {
                         updateListenersError();
                     }
                 });
@@ -93,14 +93,14 @@ public class ControllerItems {
 
                 request.enqueue(new Callback<MarketplaceBlob>() {
                     @Override
-                    public void onResponse(Response<MarketplaceBlob> response) {
+                    public void onResponse(Call<MarketplaceBlob> call, Response<MarketplaceBlob> response) {
                         if (response != null && response.body() != null)
                             writeData(response.body().getItems(), false);
                         updateListeners();
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onFailure(Call<MarketplaceBlob> call, Throwable t) {
                         updateListenersError();
                     }
                 });

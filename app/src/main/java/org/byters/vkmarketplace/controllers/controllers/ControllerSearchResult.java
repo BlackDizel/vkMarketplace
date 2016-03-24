@@ -65,9 +65,9 @@ public class ControllerSearchResult implements Callback<MarketplaceBlob> {
     }
 
     @Override
-    public void onResponse(Response<MarketplaceBlob> response) {
+    public void onResponse(Call<MarketplaceBlob> call, Response<MarketplaceBlob> response) {
         if (response != null
-                && response.isSuccess()
+                && response.isSuccessful()
                 && response.body() != null) {
             data = response.body().getItems();
             if (data != null && data.size() == 0) data = null;
@@ -77,7 +77,7 @@ public class ControllerSearchResult implements Callback<MarketplaceBlob> {
     }
 
     @Override
-    public void onFailure(Throwable t) {
+    public void onFailure(Call<MarketplaceBlob> call, Throwable t) {
         if (listener != null)
             listener.onError(DataUpdateListener.TYPE_SEARCH);
     }

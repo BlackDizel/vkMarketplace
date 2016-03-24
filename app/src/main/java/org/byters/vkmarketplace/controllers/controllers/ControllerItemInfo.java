@@ -13,6 +13,7 @@ import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
@@ -79,7 +80,7 @@ public class ControllerItemInfo {
         }
 
         @Override
-        public void onResponse(Response<MarketplaceBlob> response) {
+        public void onResponse(Call<MarketplaceBlob> call, Response<MarketplaceBlob> response) {
 
             MarketplaceItem item = null;
             if (response != null
@@ -93,7 +94,7 @@ public class ControllerItemInfo {
         }
 
         @Override
-        public void onFailure(Throwable t) {
+        public void onFailure(Call<MarketplaceBlob> call, Throwable t) {
             updateListenersError(id);
             updatingIds.remove((Integer) id);
         }

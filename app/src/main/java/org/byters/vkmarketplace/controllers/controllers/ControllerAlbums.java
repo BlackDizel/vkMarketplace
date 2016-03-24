@@ -85,7 +85,7 @@ public class ControllerAlbums
     }
 
     @Override
-    public void onResponse(Response<AlbumBlob> response) {
+    public void onResponse(Call<AlbumBlob> call, Response<AlbumBlob> response) {
         if (response != null && response.body() != null && response.body().getItems() != null)
             setData(response.body().getItems());
 
@@ -94,7 +94,7 @@ public class ControllerAlbums
     }
 
     @Override
-    public void onFailure(Throwable t) {
+    public void onFailure(Call<AlbumBlob> call, Throwable t) {
         if (listener != null)
             listener.onError(DataUpdateListener.TYPE_ALBUM);
     }

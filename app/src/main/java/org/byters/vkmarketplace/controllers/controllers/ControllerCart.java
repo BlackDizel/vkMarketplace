@@ -18,6 +18,7 @@ import org.byters.vkmarketplace.model.dataclasses.OrderItemHistoryInfo;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
@@ -144,7 +145,7 @@ public class ControllerCart {
         }
 
         @Override
-        public void onResponse(Response<JsonObject> response) {
+        public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 
             writeHistory();
 
@@ -154,7 +155,7 @@ public class ControllerCart {
         }
 
         @Override
-        public void onFailure(Throwable t) {
+        public void onFailure(Call<JsonObject> call, Throwable t) {
             if (listener != null)
                 listener.onError(DataUpdateListener.TYPE_CART_ORDER_SENT);
         }

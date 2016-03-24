@@ -26,6 +26,7 @@ import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.activities.ActivityBase;
 import org.byters.vkmarketplace.ui.utils.SharingHelper;
 
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
@@ -286,7 +287,7 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
 
                     controllerMain.addLike(data.getId(), new Callback() {
                         @Override
-                        public void onResponse(Response response) {
+                        public void onResponse(Call call, Response response) {
                             if (rootView != null) {
                                 Snackbar.make(rootView, R.string.action_like_success, Snackbar.LENGTH_SHORT).show();
                                 if (data != null)
@@ -295,7 +296,7 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
                         }
 
                         @Override
-                        public void onFailure(Throwable t) {
+                        public void onFailure(Call call, Throwable t) {
                             if (rootView != null)
                                 Snackbar.make(rootView, R.string.action_like_error, Snackbar.LENGTH_SHORT).show();
                         }

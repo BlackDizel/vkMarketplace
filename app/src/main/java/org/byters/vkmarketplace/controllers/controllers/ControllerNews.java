@@ -9,6 +9,7 @@ import org.byters.vkmarketplace.model.dataclasses.NewsItem;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
@@ -53,7 +54,7 @@ public class ControllerNews implements Callback<NewsBlob> {
     }
 
     @Override
-    public void onResponse(Response<NewsBlob> response) {
+    public void onResponse(Call<NewsBlob> call, Response<NewsBlob> response) {
         NewsBlob data = response.body();
         if (data == null) return;
         NewsBlob.NewsItemsBlob news = data.getResponse();
@@ -70,7 +71,7 @@ public class ControllerNews implements Callback<NewsBlob> {
     }
 
     @Override
-    public void onFailure(Throwable t) {
+    public void onFailure(Call<NewsBlob> call, Throwable t) {
         if (listeners == null) return;
         for (DataUpdateListener listener : listeners)
             listener.onError(DataUpdateListener.TYPE_NEWS);
