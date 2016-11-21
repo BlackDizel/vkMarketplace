@@ -58,6 +58,16 @@ public class ActivityLogin extends ActivityBase
         }
     }
 
+    private void onResult(boolean isOK) {
+        if (isOK) {
+            ActivityMain.display(this);
+            finish();
+        } else {
+            //todo restart login process
+            onBackPressed();
+        }
+    }
+
     private class AuthClient extends WebViewClient {
 
         @Nullable
@@ -82,18 +92,18 @@ public class ActivityLogin extends ActivityBase
             sanitizer.registerParameter(getString(R.string.user_id_key), UrlQuerySanitizer.getAllButNulLegal());
 
             String query = getQuery(url);
-            if (TextUtils.isEmpty(query)) finish();
+            if (TextUtils.isEmpty(query)) onResult(false);
             sanitizer.parseQuery(query);
 
             String key = sanitizer.getValue(getString(R.string.access_token_key));
-            if (TextUtils.isEmpty(key)) finish();
+            if (TextUtils.isEmpty(key)) onResult(false);
             ((ControllerMain) getApplicationContext()).setToken(key);
 
             String id = sanitizer.getValue(getString(R.string.user_id_key));
-            if (TextUtils.isEmpty(id)) finish();
+            if (TextUtils.isEmpty(id)) onResult(false);
             ((ControllerMain) getApplicationContext()).setUserID(id);
 
-            finish();
+            onResult(true);
         }
 
         @Override
@@ -102,8 +112,5 @@ public class ActivityLogin extends ActivityBase
             showError(null);
         }
 
-        private void finish() {
-            onBackPressed();
-        }
     }
 }
