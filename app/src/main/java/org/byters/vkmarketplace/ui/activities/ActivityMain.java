@@ -119,9 +119,6 @@ public class ActivityMain extends ActivityBase
     protected void onResume() {
         super.onResume();
 
-        if (!((ControllerMain) getApplicationContext()).isAuth())
-            startActivity(new Intent(this, ActivityLogin.class));
-
         ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
         ((ControllerMain) getApplicationContext()).getControllerNews().addListener(this);
         ((ControllerMain) getApplicationContext()).getControllerUserData().setListener(this);

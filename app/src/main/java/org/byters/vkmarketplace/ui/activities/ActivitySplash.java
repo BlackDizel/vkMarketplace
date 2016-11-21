@@ -4,33 +4,22 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import org.byters.vkmarketplace.R;
+import org.byters.vkmarketplace.controllers.ControllerMain;
 
 public class ActivitySplash extends ActivityBase {
-
-    private boolean isNeedToNavigate = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (isNeedToNavigate)
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!((ControllerMain) getApplicationContext()).isAuth())
+                    ActivityLogin.display(ActivitySplash.this);
+                else
                     ActivityMain.display(ActivitySplash.this);
-                }
-            }, getResources().getInteger(R.integer.splash_time));
-        else finish();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        isNeedToNavigate = false;
+            }
+        }, getResources().getInteger(R.integer.splash_time));
     }
 }
