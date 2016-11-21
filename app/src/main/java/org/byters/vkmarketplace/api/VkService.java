@@ -12,6 +12,7 @@ import java.lang.reflect.Type;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -27,18 +28,13 @@ public class VkService {
 
     private static VkApi initializeApi() {
 
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(1, TimeUnit.MINUTES)
                 .readTimeout(1, TimeUnit.MINUTES)
-                /*.addInterceptor(new okhttp3.Interceptor() {
-                    @Override
-                    public okhttp3.Response intercept(Chain chain) throws IOException {
-                        String s = new String(chain.proceed(chain.request()).body().bytes());
-                        android.util.Log.v("some", "" + chain.request().url());
-                        android.util.Log.v("some", "" + s);
-                        return chain.proceed(chain.request());
-                    }
-                })*/
+                .addInterceptor(interceptor)
                 .build();
 
         Gson gson = new GsonBuilder()
