@@ -1,5 +1,6 @@
 package org.byters.vkmarketplace.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.net.UrlQuerySanitizer;
@@ -19,6 +20,10 @@ public class ActivityLogin extends ActivityBase
         implements View.OnClickListener {
 
     WebView webView;
+
+    public static void display(Context context) {
+        context.startActivity(new Intent(context, ActivityLogin.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
