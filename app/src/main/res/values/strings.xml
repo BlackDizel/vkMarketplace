@@ -6,7 +6,7 @@
 
     <string name="vk_auth_url"><![CDATA[https://oauth.vk.com/authorize?client_id=5246723&scope=market,messages,offline&redirect_uri=https://oauth.vk.com/blank.html&display=touch&v=5.44&response_type=token]]></string>
     <string name="access_token_key">access_token</string>
-    <string name="vk_api_ver">5.50</string>
+    <string name="vk_api_ver">5.60</string>
     <string name="user_id_key">user_id</string>
     <string name="address_group_format">https://vk.com/public%d</string>
     <string name="address_user_format">https://vk.com/id%d</string>
