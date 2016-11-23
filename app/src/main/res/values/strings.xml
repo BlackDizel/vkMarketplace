@@ -89,4 +89,5 @@
     <string name="payment_method_paypal">paypal</string>
     <string name="payment_method_bank_payment">перевод по реквизитам банковского счета</string>
     <string name="payment_method_private_message">другой способ оплаты</string>
+    <string name="activity_payment_title">Оплата</string>
 </resources>

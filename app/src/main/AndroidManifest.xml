@@ -41,6 +41,15 @@
         </activity>
 
         <activity
+            android:name=".ui.activities.ActivityPaymentMethod"
+            android:label="@string/activity_payment_title">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.ActivityCart" />
+        </activity>
+
+        <activity
             android:name=".ui.activities.ActivityFavorites"
             android:label="@string/activity_fav_title">
             <meta-data
