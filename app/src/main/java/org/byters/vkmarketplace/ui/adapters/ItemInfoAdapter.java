@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import org.byters.vkmarketplace.model.dataclasses.CommentsBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.activities.ActivityBase;
 import org.byters.vkmarketplace.ui.utils.SharingHelper;
+import org.byters.vkmarketplace.ui.utils.StartSnapHelper;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -215,6 +217,8 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
             rvPhotos.addItemDecoration(new ItemPhotosDecoration(controllerMain));
             adapter = new ItemPhotosAdapter(controllerMain);
             rvPhotos.setAdapter(adapter);
+            SnapHelper snapHelper = new StartSnapHelper();
+            snapHelper.attachToRecyclerView(rvPhotos);
         }
 
         @Override
@@ -372,6 +376,8 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
             rvSuggestions = (RecyclerView) view.findViewById(R.id.rvSuggestions);
             rvSuggestions.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
             rvSuggestions.setAdapter(adapter);
+            SnapHelper snapHelper = new StartSnapHelper();
+            snapHelper.attachToRecyclerView(rvSuggestions);
         }
 
         @Override

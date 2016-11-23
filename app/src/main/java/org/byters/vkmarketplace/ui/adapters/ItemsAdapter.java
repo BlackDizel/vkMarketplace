@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.activities.ActivityItemInfo;
+import org.byters.vkmarketplace.ui.utils.StartSnapHelper;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
 
@@ -82,6 +84,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             adapter = new NewsAdapter(controllerMain);
             rvHeader.setAdapter(adapter);
             rvHeader.addItemDecoration(new ItemDecoration());
+            SnapHelper snapHelper = new StartSnapHelper();
+            snapHelper.attachToRecyclerView(rvHeader);
         }
 
         @Override
