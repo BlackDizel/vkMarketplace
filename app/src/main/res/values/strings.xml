@@ -1,10 +1,4 @@
 <resources>
-    <string name="app_name">Лавка Катринии</string>
-    <string name="market_id">-94800461</string>
-    <string name="request_buy_email">example@mail.com</string>
-    <string name="market_address">http://vk.com/katriniya_group</string>
-
-    <string name="vk_auth_url"><![CDATA[https://oauth.vk.com/authorize?client_id=5246723&scope=market,messages,offline&redirect_uri=https://oauth.vk.com/blank.html&display=touch&v=5.44&response_type=token]]></string>
     <string name="access_token_key">access_token</string>
     <string name="vk_api_ver">5.60</string>
     <string name="user_id_key">user_id</string>
@@ -88,4 +82,11 @@
     <string name="activity_item_info_fav_add_action">Посмотреть</string>
     <string name="suggestion_list_title">Также будет интересно</string>
     <string name="suggestions_list_item_error_text">нет данных</string>
+
+    <string name="payment_method_phone">мобильный телефон</string>
+    <string name="payment_method_bankcard">банковская карта</string>
+    <string name="payment_method_vk_transfer">перевод вконтакте</string>
+    <string name="payment_method_paypal">paypal</string>
+    <string name="payment_method_bank_payment">перевод по реквизитам банковского счета</string>
+    <string name="payment_method_private_message">другой способ оплаты</string>
 </resources>
