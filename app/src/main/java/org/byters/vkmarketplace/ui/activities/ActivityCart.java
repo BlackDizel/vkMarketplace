@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -19,6 +18,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.byters.vkmarketplace.BuildConfig;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
@@ -138,7 +138,10 @@ public class ActivityCart extends ActivityBase
                 onBackPressed();
                 break;
             case R.id.action_send:
-                new DialogPayment(this, findViewById(R.id.rootView)).show();
+                if (BuildConfig.paymentType == BuildConfig.paymentTypeAll)
+                    ActivityPaymentMethod.display(this);
+                else if (BuildConfig.paymentType == BuildConfig.paymentTypeMessages)
+                    new DialogPayment(this, findViewById(R.id.rootView)).show();
                 break;
             case R.id.action_history:
                 ActivityOrdersHistory.display(this);
