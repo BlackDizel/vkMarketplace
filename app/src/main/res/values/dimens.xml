@@ -2,7 +2,7 @@
     <dimen name="view_list_item_text_padding">8dp</dimen>
     <dimen name="view_item_list_margin">8dp</dimen>
     <dimen name="item_info_fab_margin">8dp</dimen>
-    <dimen name="item_info_text_padding">20dp</dimen>
+    <dimen name="item_info_text_padding">12dp</dimen>
 
     <dimen name="alert_buy_text_padding">16dp</dimen>
     <dimen name="item_cart_image_size">40dp</dimen>
@@ -41,7 +41,7 @@
     <dimen name="menu_item_padding_vertical">8dp</dimen>
     <dimen name="view_item_orders_list_margin">16dp</dimen>
     <dimen name="activity_cart_list_top_padding">8dp</dimen>
-    <dimen name="activity_cart_list_item_padding_vertical">20dp</dimen>
+    <dimen name="activity_cart_list_item_padding_vertical">16dp</dimen>
     <dimen name="activity_orders_history_list_item_padding_start">72dp</dimen>
     <dimen name="activity_orders_history_list_item_padding_end">16dp</dimen>
     <dimen name="activity_orders_history_list_item_padding_vertical">20dp</dimen>
@@ -50,7 +50,7 @@
     <dimen name="activity_item_info_list_item_comment_image_size">40dp</dimen>
     <dimen name="activity_item_info_list_padding_top">8dp</dimen>
     <dimen name="activity_favorites_list_padding_top">8dp</dimen>
-    <dimen name="activity_favorites_list_item_padding_vertical">20dp</dimen>
+    <dimen name="activity_favorites_list_item_padding_vertical">16dp</dimen>
     <dimen name="activity_favorites_list_item_padding_horizontal">16dp</dimen>
     <dimen name="activity_item_info_header_margin_start">72dp</dimen>
     <dimen name="activity_item_info_header_margin_top">24dp</dimen>
