@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_send"
-        android:icon="@drawable/ic_credit_card_white_24dp"
+        android:icon="@drawable/ic_payment_white_24dp"
         android:title="@string/action_buy"
         app:showAsAction="always" />
 
