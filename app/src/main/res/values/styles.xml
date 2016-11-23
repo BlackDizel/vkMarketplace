@@ -11,4 +11,9 @@
     <style name="AppTheme.AppBarOverlay" parent="AppTheme">
         <item name="titleTextColor">@color/white</item>
     </style>
+
+    <style name="styleNumberPicker">
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>
