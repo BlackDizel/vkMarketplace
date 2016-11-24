@@ -100,11 +100,12 @@ public class FragmentFeatured extends FragmentBase
 
             int position = parent.getChildLayoutPosition(view);
 
-            outRect.top = 2 * margin;
+            if (position == 0)
+                outRect.bottom = 2 * margin;
+            else
+                outRect.top = 2 * margin;
 
             if (position == 0) {
-                outRect.right = 2 * margin;
-                outRect.left = 2 * margin;
             } else if (position % 2 == 0) {
                 outRect.right = 2 * margin;
                 outRect.left = margin;
