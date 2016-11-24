@@ -5,11 +5,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="AppTheme">
         <item name="titleTextColor">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="styleNumberPicker">
