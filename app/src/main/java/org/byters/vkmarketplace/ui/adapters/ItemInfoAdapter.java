@@ -5,7 +5,6 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
@@ -272,10 +271,19 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
             tvPrice.setText(data.getPrice().getText().toUpperCase().replace(".", ""));
             tvTitle.setText(data.getTitle());
 
-            if (data.getLikes() != null)
-                tvLikes.setText(String.format("%d", data.getLikes().getCount()));
+            setLikes();
 
             llLikes.setClickable(isLikeEnabled);
+        }
+
+        private void setLikes() {
+            if (data == null || data.getLikes() == null) return;
+            tvLikes.setText(String.format("%d", data.getLikes().getCount()));
+        }
+
+        private void addLike() {
+            if (data == null || data.getLikes() == null) return;
+            tvLikes.setText(String.format("%d", data.getLikes().getCount() + 1));
         }
 
         @Override
@@ -289,20 +297,16 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
                     if (data == null)
                         return;
 
+                    addLike();
                     controllerMain.addLike(data.getId(), new Callback() {
                         @Override
                         public void onResponse(Call call, Response response) {
-                            if (rootView != null) {
-                                Snackbar.make(rootView, R.string.action_like_success, Snackbar.LENGTH_SHORT).show();
-                                if (data != null)
-                                    controllerMain.updateDetailedItemInfo(data.getId(), false);
-                            }
+                            if (data == null) return;
                         }
 
                         @Override
                         public void onFailure(Call call, Throwable t) {
-                            if (rootView != null)
-                                Snackbar.make(rootView, R.string.action_like_error, Snackbar.LENGTH_SHORT).show();
+                            setLikes();
                         }
                     });
                     break;
