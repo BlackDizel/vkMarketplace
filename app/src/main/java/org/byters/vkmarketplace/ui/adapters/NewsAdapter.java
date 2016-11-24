@@ -44,7 +44,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private static final int NO_VALUE = -1;
         private TextView textView, tvLikes;
-        private ImageView ivItem;
+        private ImageView ivItem, ivLikes;
         private int newsId;
 
         public ViewHolder(View itemView) {
@@ -52,6 +52,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             textView = (TextView) itemView.findViewById(R.id.tvTitle);
             tvLikes = (TextView) itemView.findViewById(R.id.tvLikes);
             ivItem = (ImageView) itemView.findViewById(R.id.ivItem);
+            ivLikes = (ImageView) itemView.findViewById(R.id.ivLikes);
 
             itemView.setOnClickListener(this);
         }
@@ -70,15 +71,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 else textView.setVisibility(View.VISIBLE);
 
                 textView.setText(item.getText());
-                if (item.getLikes() != null) {
-                    tvLikes.setText(String.format("%d", item.getLikes().getCount()));
-                } else {
-                    tvLikes.setText("");
-                }
+                setLikes(item);
                 String url = item.getPhotoUri();
                 if (!TextUtils.isEmpty(url))
                     Picasso.with(controllerMain).load(url).into(ivItem);
             }
+        }
+
+        private void setLikes(NewsItem item) {
+            int likesCount = item.getLikes() == null ? 0 : item.getLikes().getCount();
+            tvLikes.setVisibility(likesCount == 0 ? View.GONE : View.VISIBLE);
+            ivLikes.setVisibility(likesCount == 0 ? View.GONE : View.VISIBLE);
+            tvLikes.setText(String.format("%d", likesCount));
         }
 
         @Override
@@ -91,7 +95,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                     , controllerMain.getResources().getInteger(R.integer.market)
                     , newsId);
 
-            android.util.Log.v("some", uri);
             intent.setData(Uri.parse(uri));
 
             if (intent.resolveActivity(v.getContext().getPackageManager()) != null) {
