@@ -47,6 +47,7 @@
             android:layout_marginRight="@dimen/fab_margin_end"
             android:layout_marginStart="@dimen/fab_margin_end"
             android:src="@drawable/ic_search_white_24dp"
+            android:tint="@color/white"
             android:visibility="gone"
             app:layout_behavior="org.byters.vkmarketplace.ui.utils.FABScrollBehavior" />
 
@@ -59,41 +60,10 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true">
 
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvMenu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvMenu"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ввести промо-код" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Настройки пушей" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Чатик с магазином" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="телефон магазина" />
-
-        </LinearLayout>
+            android:layout_height="match_parent" />
 
     </android.support.design.widget.NavigationView>
 
