@@ -3,14 +3,6 @@ apply from: 'settings.gradle'
 
 android {
 
-    defaultConfig {
-        generatedDensities = []
-    }
-
-    aaptOptions {
-        additionalParameters "--no-version-vectors"
-    }
-
     compileSdkVersion 25
     buildToolsVersion "25"
 
