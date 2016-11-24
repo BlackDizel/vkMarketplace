@@ -17,11 +17,12 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.byters.vkmarketplace.BuildConfig;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.activities.ActivityItemInfo;
-import org.byters.vkmarketplace.ui.utils.StartSnapHelper;
+import org.byters.vkmarketplace.ui.utils.CenterSnapHelper;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
 
@@ -84,7 +85,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             adapter = new NewsAdapter(controllerMain);
             rvHeader.setAdapter(adapter);
             rvHeader.addItemDecoration(new ItemDecoration());
-            SnapHelper snapHelper = new StartSnapHelper();
+            SnapHelper snapHelper = new CenterSnapHelper();
             snapHelper.attachToRecyclerView(rvHeader);
         }
 
@@ -107,8 +108,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 super.getItemOffsets(outRect, view, parent, state);
 
                 int position = parent.getChildLayoutPosition(view);
-                if (position != 0)
+                if (position == 0)
                     outRect.left = margin;
+                if (position + 1 == adapter.getItemCount())
+                    outRect.right = margin;
             }
         }
         //endregion
@@ -124,6 +127,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvPrice = (TextView) itemView.findViewById(R.id.tvPrice);
+            tvPrice.setVisibility(BuildConfig.isItemPriceOnMainScreen ? View.VISIBLE : View.GONE);
             ivItem = (ImageView) itemView.findViewById(R.id.ivItem);
             ivFav = (ImageView) itemView.findViewById(R.id.ivFav);
             itemView.setOnClickListener(this);
