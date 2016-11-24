@@ -12,6 +12,14 @@
         <item name="colorControlNormal">@color/white</item>
     </style>
 
+    <style name="TranparentAppBar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="ToolbarDark" parent="ThemeOverlay.AppCompat.ActionBar" />
+
+
     <style name="styleNumberPicker">
         <item name="android:textSize">20sp</item>
     </style>
