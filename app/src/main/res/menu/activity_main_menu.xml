@@ -8,9 +8,4 @@
         android:title="@string/cart_title"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/action_favorites_show"
-        android:title="@string/action_favorites"
-        app:showAsAction="never" />
-
 </menu>

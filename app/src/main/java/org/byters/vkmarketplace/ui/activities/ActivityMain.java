@@ -85,9 +85,6 @@ public class ActivityMain extends ActivityBase
             case R.id.action_cart:
                 ActivityCart.display(this);
                 break;
-            case R.id.action_favorites_show:
-                ActivityFavorites.display(this);
-                break;
         }
         return super.onOptionsItemSelected(item);
     }
