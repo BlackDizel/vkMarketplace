@@ -85,31 +85,9 @@ public class ActivityMain extends ActivityBase
             case R.id.action_cart:
                 ActivityCart.display(this);
                 break;
-            case R.id.action_view_market:
-                ((ControllerMain) getApplicationContext()).openUrl(
-                        this
-                        , findViewById(R.id.rootView)
-                        , getString(R.string.action_view_browser_error)
-                        , Uri.parse(getString(R.string.market_address)));
-                break;
             case R.id.action_favorites_show:
                 ActivityFavorites.display(this);
                 break;
-            case R.id.action_feedback:
-                Intent intentSend = ((ControllerMain) getApplicationContext()).getIntentSendEmail(
-                        this
-                        , getString(R.string.feedback_message_title)
-                        , getString(R.string.feedback_message_body)
-                );
-
-                if (intentSend.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intentSend);
-                } else {
-                    Snackbar.make(findViewById(R.id.rootView), R.string.email_app_error_no_found, Snackbar.LENGTH_LONG)
-                            .show();
-                }
-                break;
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -175,6 +153,8 @@ public class ActivityMain extends ActivityBase
         ActivityCompat.invalidateOptionsMenu(this);
         String customTitle = ((ControllerMain) getApplicationContext()).getCustomTitle();
         setTitle(!TextUtils.isEmpty(customTitle) ? customTitle : getString(R.string.app_name));
+
+        //todo set home button depends on all items or category
 
         Fragment f = getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT_TAG);
         if (f instanceof FragmentFeatured)
