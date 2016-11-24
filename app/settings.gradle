@@ -5,11 +5,13 @@ android {
         buildConfigField "int", "paymentTypeAll", TYPE_PAYMENT_TYPE_ALL
         buildConfigField "int", "paymentTypeMessages", TYPE_PAYMENT_MESSAGES_ONLY
         buildConfigField "int", "paymentType", TYPE_PAYMENT_TYPE_ALL
+        buildConfigField "boolean", "isItemPriceOnMainScreen", "false"
 
         resValue "string", "app_name", "Лавка Катринии"
         resValue "string", "market_id", "-94800461"
         resValue "string", "request_buy_email", "example@mail.com"
         resValue "string", "market_address", "http://vk.com/katriniya_group"
-        resValue "string", "vk_auth_url", "https://oauth.vk.com/authorize?client_id=5246723&scope=market,messages,offline&redirect_uri=https://oauth.vk.com/blank.html&display=touch&v=5.44&response_type=token"
+        resValue "string", "vk_auth_url", "https://oauth.vk.com/authorize?client_id=5246723&scope=market,messages,offline,wall&redirect_uri=https://oauth.vk.com/blank.html&display=touch&v=5.44&response_type=token"
+        resValue "integer", "market", "-94800461"
     }
 }
