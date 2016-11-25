@@ -1,6 +1,8 @@
 package org.byters.vkmarketplace.ui.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -8,24 +10,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.byters.vkmarketplace.BuildConfig;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.model.MenuEnum;
 import org.byters.vkmarketplace.model.dataclasses.AccountInfo;
 import org.byters.vkmarketplace.model.dataclasses.AlbumBlob;
+import org.byters.vkmarketplace.ui.activities.ActivityBonus;
+import org.byters.vkmarketplace.ui.activities.ActivityChat;
+import org.byters.vkmarketplace.ui.activities.ActivityFavorites;
 import org.byters.vkmarketplace.ui.activities.ActivityMain;
+import org.byters.vkmarketplace.ui.activities.ActivitySettings;
 import org.byters.vkmarketplace.ui.utils.PluralName;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     private static final int TYPE_HEADER = 0;
-    private static final int TYPE_ITEM = 1;
+    private static final int TYPE_ITEM_CATEGORY = 1;
+    private static final int TYPE_MENU_ITEM = 2;
+
     private ControllerMain controllerMain;
-    private Context context;
 
     public MenuAdapter(Context context) {
-        this.context = context;
         controllerMain = ((ControllerMain) context.getApplicationContext());
     }
 
@@ -35,15 +44,24 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        return position == 0 ? TYPE_HEADER : TYPE_ITEM;
+        if (position == 0) return TYPE_HEADER;
+        if (position < getMenuCategoryItemsCount())
+            return TYPE_ITEM_CATEGORY;
+        return TYPE_MENU_ITEM;
+    }
+
+    private int getMenuCategoryItemsCount() {
+        return 1 + (BuildConfig.isCategoryListOnSideMenu ? controllerMain.getControllerAlbums().getSize() : 0);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_ITEM)
-            return new ViewHolderItem(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_menu_item, parent, false));
-        else
+        if (viewType == TYPE_ITEM_CATEGORY)
+            return new ViewHolderItemCategory(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_menu_item_category, parent, false));
+        else if (viewType == TYPE_HEADER)
             return new ViewHolderHeader(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_menu_header, parent, false));
+        else
+            return new ViewHolderMenuItem(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_menu_item, parent, false));
     }
 
     @Override
@@ -53,17 +71,88 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return controllerMain.getControllerAlbums().getSize() + 1;
+        return getMenuCategoryItemsCount() + MenuEnum.values().length;
     }
 
-    public class ViewHolderItem extends ViewHolder
+    public class ViewHolderMenuItem extends ViewHolder
+            implements View.OnClickListener {
+
+        ImageView ivItem;
+        TextView tvTitle;
+        MenuEnum item;
+
+        public ViewHolderMenuItem(View itemView) {
+            super(itemView);
+            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            ivItem = (ImageView) itemView.findViewById(R.id.ivItem);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void setData(int position) {
+            super.setData(position);
+
+            int itemPos = position - getMenuCategoryItemsCount();
+            item = itemPos < 0 || itemPos >= MenuEnum.values().length ? null : MenuEnum.values()[itemPos];
+            if (item == null) return;
+
+            tvTitle.setText(item.getMenuResTitle());
+            ivItem.setImageResource(item.getMenuResDrawable());
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (item == null) return;
+
+            switch (item) {
+                case FAVORITES:
+                    ActivityFavorites.display(itemView.getContext());
+                    break;
+                case BONUSES:
+                    ActivityBonus.display(itemView.getContext());
+                    break;
+                case SETTINGS:
+                    ActivitySettings.display(itemView.getContext());
+                    break;
+                case CHAT:
+                    ActivityChat.display(itemView.getContext());
+                    break;
+                case FEEDBACK:
+                    Intent intentSend = controllerMain.getIntentSendEmail(itemView.getContext()
+                            , R.string.feedback_message_title
+                            , R.string.feedback_message_body);
+
+                    if (intentSend.resolveActivity(itemView.getContext().getPackageManager()) == null) {
+                        Toast.makeText(itemView.getContext(), R.string.email_app_error_no_found, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    itemView.getContext().startActivity(intentSend);
+                    break;
+                case WEBSITE:
+                    controllerMain.openUrl(itemView.getContext()
+                            , itemView.getContext().getString(R.string.action_view_browser_error)
+                            , Uri.parse(itemView.getContext().getString(R.string.market_address)));
+                    break;
+                case PHONE:
+                    controllerMain.call(itemView.getContext()
+                            , R.string.calling_error
+                            , R.string.market_phone);
+                    break;
+                case RATE:
+                    //todo implement
+                    break;
+            }
+        }
+    }
+
+    public class ViewHolderItemCategory extends ViewHolder
             implements View.OnClickListener {
         private static final int NO_VALUE = -1;
         private TextView tvTitle, tvSubtitle;
         private ImageView ivItem;
         private int album_id;
 
-        public ViewHolderItem(View itemView) {
+        public ViewHolderItemCategory(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
