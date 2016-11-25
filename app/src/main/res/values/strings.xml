@@ -90,4 +90,12 @@
     <string name="payment_method_bank_payment">перевод по реквизитам банковского счета</string>
     <string name="payment_method_private_message">другой способ оплаты</string>
     <string name="activity_payment_title">Оплата</string>
+    <string name="menu_fav">Избранное</string>
+    <string name="menu_promo">Бонусы</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="menu_website">Сайт магазина</string>
+    <string name="menu_chat">Чат с магазином</string>
+    <string name="menu_phone">Позвонить в магазин</string>
+    <string name="menu_feedback">Оставить отзыв</string>
+    <string name="menu_rate">Оценить приложение</string>
 </resources>
