@@ -9,6 +9,7 @@ import android.view.View;
 import com.google.gson.JsonObject;
 
 import org.byters.vkmarketplace.R;
+import org.byters.vkmarketplace.controllers.ControllerBonus;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.Cart;
@@ -118,12 +119,17 @@ public class ControllerCart {
 
     public int getCost(ControllerItems controllerItems) {
         if (cart == null) return 0;
-        return cart.getCost(controllerItems);
+        return cart.isBonusChecked() ? Math.max(getCost(controllerItems) - ControllerBonus.getInstance().getBonusCount(), 0) : cart.getCost(controllerItems);
     }
 
     public void clearCart(Context context) {
         cart = null;
         ControllerStorage.writeObjectToFile(context, cart, ControllerStorage.CART_CACHE);
+    }
+
+    public void setBonusChecked(boolean bonusChecked) {
+        if (cart == null) return;
+        cart.setBonusChecked(bonusChecked);
     }
 
     private class OrderCallback implements Callback<JsonObject> {
