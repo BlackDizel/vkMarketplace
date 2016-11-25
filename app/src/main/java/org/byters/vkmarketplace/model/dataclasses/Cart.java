@@ -15,6 +15,15 @@ public class Cart implements Serializable {
     private ArrayList<CartEntry> items;
     @Nullable
     private String comment;
+    private boolean isBonusChecked;
+
+    public boolean isBonusChecked() {
+        return isBonusChecked;
+    }
+
+    public void setBonusChecked(boolean bonusChecked) {
+        this.isBonusChecked = bonusChecked;
+    }
 
     public void addItem(int itemId) {
         if (items == null)
