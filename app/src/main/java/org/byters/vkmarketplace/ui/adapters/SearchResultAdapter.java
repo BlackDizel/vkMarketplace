@@ -14,16 +14,11 @@ import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerSearchResult;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.activities.ActivityItemInfo;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> {
-
-    private ControllerMain controllerMain;
-
-    public SearchResultAdapter(Context context) {
-        this.controllerMain = (ControllerMain) context.getApplicationContext();
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,7 +33,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     @Override
     public int getItemCount() {
-        return controllerMain.getControllerSearchResult().getSize();
+        return ControllerSearchResult.getInstance().getSize();
     }
 
     public void updateData() {
@@ -65,7 +60,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         }
 
         public void setData(int position) {
-            MarketplaceItem item = controllerMain.getControllerSearchResult().getItem(position);
+            MarketplaceItem item = ControllerSearchResult.getInstance().getItem(position);
             if (item == null) {
                 tvTitle.setText("");
                 tvPrice.setText("");
@@ -77,7 +72,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
                 if (item.getPrice() != null && !TextUtils.isEmpty(item.getPrice().getText()))
                     tvPrice.setText(item.getPrice().getText().toUpperCase().replace(".", ""));
                 else tvPrice.setText("");
-                Picasso.with(controllerMain).load(item.getThumb_photo()).into(ivItem);
+                Picasso.with(itemView.getContext()).load(item.getThumb_photo()).into(ivItem);
                 id = item.getId();
             }
         }

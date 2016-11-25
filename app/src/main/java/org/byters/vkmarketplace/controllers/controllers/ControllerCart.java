@@ -9,6 +9,7 @@ import android.view.View;
 import com.google.gson.JsonObject;
 
 import org.byters.vkmarketplace.R;
+import org.byters.vkmarketplace.api.VkService;
 import org.byters.vkmarketplace.controllers.ControllerBonus;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
@@ -25,12 +26,18 @@ import retrofit2.Response;
 
 public class ControllerCart {
 
+    private static ControllerCart instance;
     DataUpdateListener listener;
     @Nullable
     private Cart cart;
 
-    public ControllerCart(Context context) {
-        cart = (Cart) ControllerStorage.readObjectFromFile(context, ControllerStorage.CART_CACHE);
+    private ControllerCart() {
+        cart = (Cart) ControllerStorage.getInstance().readObjectFromFile(ControllerStorage.CART_CACHE);
+    }
+
+    public static ControllerCart getInstance() {
+        if (instance == null) instance = new ControllerCart();
+        return instance;
     }
 
     public void setListener(DataUpdateListener listener) {
@@ -44,7 +51,7 @@ public class ControllerCart {
     public void addItem(Context context, int itemId) {
         if (cart == null) cart = new Cart();
         cart.addItem(itemId);
-        ControllerStorage.writeObjectToFile(context, cart, ControllerStorage.CART_CACHE);
+        ControllerStorage.getInstance().writeObjectToFile(cart, ControllerStorage.CART_CACHE);
     }
 
     public void trySendBuyRequest(Context context, View view) {
@@ -55,10 +62,14 @@ public class ControllerCart {
         }
 
         ControllerMain controllerMain = ((ControllerMain) context.getApplicationContext());
-        controllerMain.sendOrder(
-                getRequestText(context)
+
+        VkService.getApi().sendMessage(
+                context.getString(R.string.market_id)
+                , getRequestText(context)
                 , getCartRequestAttachmentText(context)
-                , new OrderCallback(controllerMain));
+                , ControllerAuth.getInstance().getToken()
+                , context.getString(R.string.vk_api_ver))
+                .enqueue(new OrderCallback(controllerMain));
     }
 
     private String getCartRequestAttachmentText(Context context) {
@@ -78,20 +89,20 @@ public class ControllerCart {
     @NonNull
     private String getCartItemsText(Context context) {
         if (cart == null || cart.getItemsSize() == 0) return "";
-        String result = cart.getItemsText(context, ((ControllerMain) context.getApplicationContext()).getControllerItems().getModel());
+        String result = cart.getItemsText(context, ControllerItems.getInstance().getModel());
         return result == null ? "" : result;
-    }
-
-    public void setComment(Context context, String comment) {
-        if (cart == null) cart = new Cart();
-        cart.setComment(comment);
-        ControllerStorage.writeObjectToFile(context, cart, ControllerStorage.CART_CACHE);
     }
 
     @Nullable
     public String getComment() {
         if (cart == null) return null;
         return cart.getComment();
+    }
+
+    public void setComment(String comment) {
+        if (cart == null) cart = new Cart();
+        cart.setComment(comment);
+        ControllerStorage.getInstance().writeObjectToFile(cart, ControllerStorage.CART_CACHE);
     }
 
     public int getCartItemsSize() {
@@ -117,14 +128,15 @@ public class ControllerCart {
         cart.removeItem(pos);
     }
 
-    public int getCost(ControllerItems controllerItems) {
+    public int getCost() {
         if (cart == null) return 0;
-        return cart.isBonusChecked() ? Math.max(getCost(controllerItems) - ControllerBonus.getInstance().getBonusCount(), 0) : cart.getCost(controllerItems);
+        int cost = cart.getCost();
+        return cart.isBonusChecked() ? Math.max(cost - ControllerBonus.getInstance().getBonusCount(), 0) : cost;
     }
 
-    public void clearCart(Context context) {
+    public void clearCart() {
         cart = null;
-        ControllerStorage.writeObjectToFile(context, cart, ControllerStorage.CART_CACHE);
+        ControllerStorage.getInstance().writeObjectToFile(cart, ControllerStorage.CART_CACHE);
     }
 
     public void setBonusChecked(boolean bonusChecked) {
@@ -141,13 +153,13 @@ public class ControllerCart {
 
         private void writeHistory() {
             if (cart == null) return;
-            ArrayList<OrderItemHistoryInfo> items = cart.getItemsForHistory(context, ((ControllerMain) context.getApplicationContext()).getControllerItems().getModel());
+            ArrayList<OrderItemHistoryInfo> items = cart.getItemsForHistory(context, ControllerItems.getInstance().getModel());
             if (items == null) return;
             OrderHistoryInfo item = new OrderHistoryInfo();
             item.setItems(items);
             item.setDate();
-            item.setSum(context.getControllerCart().getCost(context.getControllerItems()));
-            context.getControllerOrdersHistory().addItem(context, item);
+            item.setSum(getCost());
+            ControllerOrdersHistory.getInstance().addItem(item);
         }
 
         @Override
@@ -155,7 +167,7 @@ public class ControllerCart {
 
             writeHistory();
 
-            clearCart(context);
+            clearCart();
             if (listener != null)
                 listener.onUpdated(DataUpdateListener.TYPE_CART_ORDER_SENT);
         }

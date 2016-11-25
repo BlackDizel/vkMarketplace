@@ -1,10 +1,10 @@
 package org.byters.vkmarketplace.controllers.controllers;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
-import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
@@ -17,13 +17,17 @@ import retrofit2.Response;
 
 public class ControllerSearchResult implements Callback<MarketplaceBlob> {
 
+    private static ControllerSearchResult instance;
     private ArrayList<MarketplaceItem> data;
-    private ControllerMain controllerMain;
     private Call<MarketplaceBlob> request;
     private DataUpdateListener listener;
 
-    public ControllerSearchResult(ControllerMain controllerMain) {
-        this.controllerMain = controllerMain;
+    private ControllerSearchResult() {
+    }
+
+    public static ControllerSearchResult getInstance() {
+        if (instance == null) instance = new ControllerSearchResult();
+        return instance;
     }
 
     public void setListener(DataUpdateListener listener) {
@@ -36,29 +40,30 @@ public class ControllerSearchResult implements Callback<MarketplaceBlob> {
 
     public int getSize() {
         if (data == null)
-            return controllerMain.getControllerItems().getModel().getSize();
+            return ControllerItems.getInstance().getModel().getSize();
         return data.size();
     }
 
     @Nullable
     public MarketplaceItem getItem(int position) {
         if (data == null)
-            return controllerMain.getControllerItems().getModel().get(position);
+            return ControllerItems.getInstance().getModel().get(position);
         if (position >= 0 && position < getSize())
             return data.get(position);
         return null;
     }
 
-    public void search(String query, String token) {
+    public void search(Context context, String query) {
+        String token = ControllerAuth.getInstance().getToken();
         if (request != null) request.cancel();
 
         if (query.length() >= 2) {
             request = VkService.getApi().searchMarketItems(
-                    controllerMain.getResources().getInteger(R.integer.market)
+                    context.getResources().getInteger(R.integer.market)
                     , query
                     , 1
                     , token
-                    , controllerMain.getString(R.string.vk_api_ver)
+                    , context.getString(R.string.vk_api_ver)
             );
             request.enqueue(this);
         }

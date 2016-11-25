@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.ControllerFavorites;
+import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
 import org.byters.vkmarketplace.model.dataclasses.FavoriteItem;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.activities.ActivityFavorites;
@@ -21,11 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.ViewHolder> {
-    private ControllerMain controllerMain;
-
-    public FavoritesAdapter(ControllerMain context) {
-        controllerMain = context;
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -41,7 +37,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
     @Override
     public int getItemCount() {
-        return controllerMain.getControllerFavorites().getSize();
+        return ControllerFavorites.getInstance().getSize();
     }
 
     public void updateData() {
@@ -67,7 +63,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         }
 
         public void setData(int position) {
-            FavoriteItem favItem = controllerMain.getControllerFavorites().getItem(position);
+            FavoriteItem favItem = ControllerFavorites.getInstance().getItem(position);
             if (favItem == null) {
                 tvTitle.setText(R.string.item_cart_error_value);
                 tvDate.setText(R.string.item_cart_error_value);
@@ -77,7 +73,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
             }
 
             id = favItem.getId();
-            MarketplaceItem item = controllerMain.getControllerItems().getModel().getItemById(id);
+            MarketplaceItem item = ControllerItems.getInstance().getModel().getItemById(id);
 
             if (item == null) {
                 tvTitle.setText(R.string.item_cart_error_value);
@@ -87,17 +83,17 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
             }
 
             tvTitle.setText(item.getTitle());
-            tvDate.setText(new SimpleDateFormat(controllerMain.getString(R.string.fav_date_format)).format(new Date(favItem.getTime_added())));
-            Picasso.with(controllerMain).load(item.getThumb_photo()).into(ivItem);
+            tvDate.setText(new SimpleDateFormat(itemView.getContext().getString(R.string.fav_date_format)).format(new Date(favItem.getTime_added())));
+            Picasso.with(itemView.getContext()).load(item.getThumb_photo()).into(ivItem);
         }
 
         @Override
         public void onClick(View v) {
             if (id == NO_VALUE) return;
             if (v.getId() == R.id.ivRemove) {
-                int pos = controllerMain.getControllerFavorites().getItemPosition(id);
+                int pos = ControllerFavorites.getInstance().getItemPosition(id);
                 if (pos == ControllerFavorites.NO_VALUE) return;
-                controllerMain.getControllerFavorites().removeItem(pos);
+                ControllerFavorites.getInstance().removeItem(pos);
                 notifyItemRemoved(pos);
                 if (itemView.getContext() instanceof ActivityFavorites)
                     ((ActivityFavorites) itemView.getContext()).checkState();

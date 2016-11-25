@@ -1,11 +1,11 @@
 package org.byters.vkmarketplace.controllers.controllers;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
-import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.AlbumBlob;
 
@@ -18,23 +18,25 @@ import retrofit2.Response;
 public class ControllerAlbums
         implements Callback<AlbumBlob> {
 
-    private ControllerMain controllerMain;
+    private static ControllerAlbums instance;
     private DataUpdateListener listener;
-
     @Nullable
     private ArrayList<AlbumBlob.AlbumItem> data;
-
     @Nullable
     private Call<AlbumBlob> request;
 
-    public ControllerAlbums(ControllerMain controllerMain) {
-        this.controllerMain = controllerMain;
-        data = (ArrayList<AlbumBlob.AlbumItem>) ControllerStorage.readObjectFromFile(controllerMain, ControllerStorage.ALBUMS_CACHE);
+    private ControllerAlbums() {
+        data = (ArrayList<AlbumBlob.AlbumItem>) ControllerStorage.getInstance().readObjectFromFile(ControllerStorage.ALBUMS_CACHE);
+    }
+
+    public static ControllerAlbums getInstance() {
+        if (instance == null) instance = new ControllerAlbums();
+        return instance;
     }
 
     private void setData(ArrayList<AlbumBlob.AlbumItem> items) {
         data = items;
-        ControllerStorage.writeObjectToFile(controllerMain, data, ControllerStorage.ALBUMS_CACHE);
+        ControllerStorage.getInstance().writeObjectToFile(data, ControllerStorage.ALBUMS_CACHE);
     }
 
 
@@ -65,12 +67,13 @@ public class ControllerAlbums
         return null;
     }
 
-    public void updateData(String key) {
+    public void updateData(Context context) {
+        String key = ControllerAuth.getInstance().getToken();
         if (!TextUtils.isEmpty(key) && (request == null || request.isExecuted())) {
             request = VkService.getApi().getAlbums(
-                    controllerMain.getResources().getInteger(R.integer.market)
+                    context.getResources().getInteger(R.integer.market)
                     , key
-                    , controllerMain.getString(R.string.vk_api_ver)
+                    , context.getString(R.string.vk_api_ver)
             );
             request.enqueue(this);
         }

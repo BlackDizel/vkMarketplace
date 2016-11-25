@@ -2,6 +2,7 @@ package org.byters.vkmarketplace.controllers.controllers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.FileInputStream;
@@ -18,14 +19,23 @@ public class ControllerStorage {
     public static final String CART_CACHE = "cart_cache";
     public static final String FAVORITES_CACHE = "favorites_cache";
     public static final String NEWS_CACHE = "cache_news";
-    public static final String MARKETS_CACHE = "cache_markets";
     public static final String USERINFO_CACHE = "cache_userinfo";
     public static final String ALBUMS_CACHE = "cache_albums";
     public static final String ORDERS_HISTORY_CACHE = "orders_cache";
     private static final String TAG = "controllerStorage";
+    private static ControllerStorage instance;
+    private Context context;
 
-    public synchronized static void writeObjectToFile(Context context, Object object, String filename) {
+    private ControllerStorage() {
+    }
 
+    public static ControllerStorage getInstance() {
+        if (instance == null) instance = new ControllerStorage();
+        return instance;
+    }
+
+    public synchronized void writeObjectToFile(Object object, String filename) {
+        if (context == null) return;
         ObjectOutputStream objectOut = null;
         if (object == null)
             context.deleteFile(filename);
@@ -50,7 +60,9 @@ public class ControllerStorage {
         }
     }
 
-    public synchronized static Object readObjectFromFile(Context context, String filename) {
+    @Nullable
+    public synchronized Object readObjectFromFile(String filename) {
+        if (context == null) return null;
 
         ObjectInputStream objectIn = null;
         Object object = null;
@@ -76,17 +88,22 @@ public class ControllerStorage {
             }
         }
 
-        if (needRemove) RemoveFile(context, filename);
+        if (needRemove) RemoveFile(filename);
 
         return object;
     }
 
-    public static synchronized void RemoveFile(Context ctx, String filename) {
+    public synchronized void RemoveFile(String filename) {
+        if (context == null) return;
         try {
-            ctx.getApplicationContext().deleteFile(filename);
+            context.getApplicationContext().deleteFile(filename);
         } catch (Exception e) {
             Log.e(TAG, Log.getStackTraceString(e));
         }
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
 

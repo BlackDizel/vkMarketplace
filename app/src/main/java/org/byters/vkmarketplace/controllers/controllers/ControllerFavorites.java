@@ -10,10 +10,16 @@ import java.util.ArrayList;
 public class ControllerFavorites {
 
     public static final int NO_VALUE = -1;
+    private static ControllerFavorites instance;
     private ArrayList<FavoriteItem> data;
 
-    public ControllerFavorites(Context context) {
-        data = (ArrayList<FavoriteItem>) ControllerStorage.readObjectFromFile(context, ControllerStorage.FAVORITES_CACHE);
+    private ControllerFavorites() {
+        data = (ArrayList<FavoriteItem>) ControllerStorage.getInstance().readObjectFromFile(ControllerStorage.FAVORITES_CACHE);
+    }
+
+    public static ControllerFavorites getInstance() {
+        if (instance == null) instance = new ControllerFavorites();
+        return instance;
     }
 
     public void addItem(Context context, int itemId) {
@@ -22,7 +28,7 @@ public class ControllerFavorites {
         item.setId(itemId);
         item.setTime_added(System.currentTimeMillis());
         data.add(item);
-        ControllerStorage.writeObjectToFile(context, data, ControllerStorage.FAVORITES_CACHE);
+        ControllerStorage.getInstance().writeObjectToFile(data, ControllerStorage.FAVORITES_CACHE);
     }
 
     public boolean isFavorite(int id) {
@@ -32,7 +38,7 @@ public class ControllerFavorites {
     public void toggleFavorite(Context context, int id) {
         if (isFavorite(id)) {
             removeItemById(id);
-            ControllerStorage.writeObjectToFile(context, data, ControllerStorage.FAVORITES_CACHE);
+            ControllerStorage.getInstance().writeObjectToFile(data, ControllerStorage.FAVORITES_CACHE);
         } else addItem(context, id);
     }
 

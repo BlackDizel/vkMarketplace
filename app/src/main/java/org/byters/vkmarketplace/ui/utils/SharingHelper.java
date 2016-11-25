@@ -11,7 +11,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 
 import java.io.File;
@@ -35,11 +35,11 @@ public class SharingHelper {
         public Task(Context context, int itemId) {
             this.context = context;
             this.itemId = itemId;
-            MarketplaceItem item = ((ControllerMain) context.getApplicationContext()).getControllerItems().getModel().getItemById(itemId);
-            if (item == null)
+            MarketplaceItem item = ControllerItems.getInstance().getModel().getItemById(itemId);
+            if (item == null || item.getPhotos() == null || item.getPhotos().size() == 0) {
                 this.cancel(true);
-            if (item.getPhotos() == null || item.getPhotos().size() == 0)
-                this.cancel(true);
+                return;
+            }
             imgPath = item.getPhotos().get(0).getSrc_big(context);
             if (TextUtils.isEmpty(imgPath))
                 this.cancel(true);
@@ -87,7 +87,7 @@ public class SharingHelper {
                 if (f.exists())
                     sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(f));
 
-                MarketplaceItem item = ((ControllerMain) context.getApplicationContext()).getControllerItems().getModel().getItemById(itemId);
+                MarketplaceItem item = ControllerItems.getInstance().getModel().getItemById(itemId);
                 if (item == null) return;
 
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, item.getDescription());

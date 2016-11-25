@@ -19,6 +19,11 @@ import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerCart;
+import org.byters.vkmarketplace.controllers.controllers.ControllerComments;
+import org.byters.vkmarketplace.controllers.controllers.ControllerFavorites;
+import org.byters.vkmarketplace.controllers.controllers.ControllerItemInfo;
+import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
 import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.controllers.controllers.utils.OnItemUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.LikesBlob;
@@ -63,7 +68,7 @@ public class ActivityItemInfo extends ActivityBase
 
         RecyclerView rvItems = (RecyclerView) findViewById(R.id.rvPhotos);
         rvItems.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ItemInfoAdapter((ControllerMain) getApplicationContext());
+        adapter = new ItemInfoAdapter();
         rvItems.setAdapter(adapter);
 
         setData();
@@ -75,7 +80,7 @@ public class ActivityItemInfo extends ActivityBase
     private void setData() {
 
         if (id == NO_VALUE) return;
-        MarketplaceItem item = ((ControllerMain) getApplicationContext()).getControllerItems().getModel().getItemById(id);
+        MarketplaceItem item = ControllerItems.getInstance().getModel().getItemById(id);
         if (item == null) return;
 
         if (item.getPhotos() != null
@@ -92,9 +97,9 @@ public class ActivityItemInfo extends ActivityBase
     @Override
     protected void onResume() {
         super.onResume();
-        ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
-        ((ControllerMain) getApplicationContext()).getControllerItemInfo().addItemInfoUpdatedListener(this);
-        ((ControllerMain) getApplicationContext()).getControllerComments().addListener(this);
+        ControllerItems.getInstance().addListener(this);
+        ControllerItemInfo.getInstance().addItemInfoUpdatedListener(this);
+        ControllerComments.getInstance().addListener(this);
 
         reloadData();
         //todo state updating
@@ -103,9 +108,9 @@ public class ActivityItemInfo extends ActivityBase
     @Override
     protected void onPause() {
         super.onPause();
-        ((ControllerMain) getApplicationContext()).getControllerItems().removeListener(this);
-        ((ControllerMain) getApplicationContext()).getControllerItemInfo().removeItemUpdatedListener(this);
-        ((ControllerMain) getApplicationContext()).getControllerComments().removeListener(this);
+        ControllerItems.getInstance().removeListener(this);
+        ControllerItemInfo.getInstance().removeItemUpdatedListener(this);
+        ControllerComments.getInstance().removeListener(this);
     }
     //endregion
 
@@ -120,7 +125,7 @@ public class ActivityItemInfo extends ActivityBase
     }
 
     private boolean checkFav(MenuItem item) {
-        boolean isFav = ((ControllerMain) getApplicationContext()).getControllerFavorites().isFavorite(id);
+        boolean isFav = ControllerFavorites.getInstance().isFavorite(id);
         item.setIcon(getResources().getDrawable(isFav ? R.drawable.ic_star_white_24dp : R.drawable.ic_star_border_white_24dp));
         return isFav;
     }
@@ -129,7 +134,7 @@ public class ActivityItemInfo extends ActivityBase
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_favorite:
-                ((ControllerMain) getApplicationContext()).getControllerFavorites().toggleFavorite(this, id);
+                ControllerFavorites.getInstance().toggleFavorite(this, id);
                 if (checkFav(item))
                     Snackbar.make(findViewById(R.id.rootView), R.string.activity_item_info_fav_add, Snackbar.LENGTH_SHORT)
                             .setAction(R.string.activity_item_info_fav_add_action, new View.OnClickListener() {
@@ -179,8 +184,13 @@ public class ActivityItemInfo extends ActivityBase
     @Override
     protected void reloadData() {
         super.reloadData();
-        ((ControllerMain) getApplicationContext()).updateDetailedItemInfo(id, true);
-        ((ControllerMain) getApplicationContext()).getItemComments(id);
+
+        MarketplaceItem item = ControllerItems.getInstance().getModel().getItemById(id);
+        if (item != null && item.getPhotos() != null)
+            ControllerItemInfo.getInstance().updateListeners(item);
+        ControllerItemInfo.getInstance().getItemInfo(this, id);
+
+        ControllerComments.getInstance().getComments(this, id);
 
         ((ControllerMain) getApplicationContext()).isLiked(id, new Callback<LikesBlob>() {
 
@@ -219,7 +229,7 @@ public class ActivityItemInfo extends ActivityBase
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.fabCart && id != NO_VALUE) {
-            ((ControllerMain) getApplicationContext()).getControllerCart().addItem(ActivityItemInfo.this, id);
+            ControllerCart.getInstance().addItem(ActivityItemInfo.this, id);
             Snackbar.make(findViewById(R.id.rootView), R.string.item_added_to_cart, Snackbar.LENGTH_LONG)
                     .setAction(R.string.action_open_cart, new View.OnClickListener() {
                         @Override

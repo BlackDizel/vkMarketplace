@@ -1,6 +1,5 @@
 package org.byters.vkmarketplace.model.models;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -11,14 +10,13 @@ public class ModelAuth {
 
     private static AuthData data;
 
-    public ModelAuth(Context context) {
+    public ModelAuth() {
         if (data == null)
-            data = (AuthData) ControllerStorage.readObjectFromFile(context, ControllerStorage.TOKEN);
+            data = (AuthData) ControllerStorage.getInstance().readObjectFromFile(ControllerStorage.TOKEN);
     }
 
     public boolean isAuth() {
-        if (data == null) return false;
-        return !TextUtils.isEmpty(data.getToken());
+        return data != null && !TextUtils.isEmpty(data.getToken());
     }
 
     @Nullable
@@ -26,20 +24,20 @@ public class ModelAuth {
         return data;
     }
 
-    public void setData(Context context, AuthData data) {
+    public void setData(AuthData data) {
         ModelAuth.data = data;
-        ControllerStorage.writeObjectToFile(context, data, ControllerStorage.TOKEN);
+        ControllerStorage.getInstance().writeObjectToFile(data, ControllerStorage.TOKEN);
     }
 
-    public void setToken(Context context, String key) {
+    public void setToken(String key) {
         if (ModelAuth.data == null) ModelAuth.data = new AuthData();
         data.setToken(key);
-        ControllerStorage.writeObjectToFile(context, data, ControllerStorage.TOKEN);
+        ControllerStorage.getInstance().writeObjectToFile(data, ControllerStorage.TOKEN);
     }
 
-    public void setUserId(Context context, String id) {
+    public void setUserId(String id) {
         if (ModelAuth.data == null) ModelAuth.data = new AuthData();
         data.setUserId(id);
-        ControllerStorage.writeObjectToFile(context, data, ControllerStorage.TOKEN);
+        ControllerStorage.getInstance().writeObjectToFile(data, ControllerStorage.TOKEN);
     }
 }

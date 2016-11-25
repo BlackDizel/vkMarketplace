@@ -1,16 +1,21 @@
 package org.byters.vkmarketplace.controllers.controllers;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
 
 import org.byters.vkmarketplace.model.models.ModelAuth;
 
 public class ControllerAuth {
 
+    private static ControllerAuth instance;
     private ModelAuth model;
 
-    public ControllerAuth(Context context) {
-        model = new ModelAuth(context);
+    private ControllerAuth() {
+        model = new ModelAuth();
+    }
+
+    public static ControllerAuth getInstance() {
+        if (instance == null) instance = new ControllerAuth();
+        return instance;
     }
 
     @Nullable
@@ -19,21 +24,21 @@ public class ControllerAuth {
         return model.getData().getToken();
     }
 
+    public void setToken(String key) {
+        model.setToken(key);
+    }
+
     public boolean isAuth() {
         return model.isAuth();
-    }
-
-    public void setToken(Context context, String key) {
-        model.setToken(context, key);
-    }
-
-    public void setUserId(Context context, String id) {
-        model.setUserId(context, id);
     }
 
     @Nullable
     public String getUserId() {
         if (model.getData() == null) return null;
         return model.getData().getUserId();
+    }
+
+    public void setUserId(String id) {
+        model.setUserId(id);
     }
 }

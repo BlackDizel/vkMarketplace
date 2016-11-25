@@ -23,6 +23,8 @@ import org.byters.vkmarketplace.BuildConfig;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerBonus;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerCart;
+import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
 import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.ui.adapters.CartAdapter;
 import org.byters.vkmarketplace.ui.dialogs.DialogPayment;
@@ -48,13 +50,13 @@ public class ActivityCart extends ActivityBase
     }
 
     public void checkState() {
-        int size = ((ControllerMain) getApplicationContext()).getControllerCart().getCartItemsSize();
+        int size = ControllerCart.getInstance().getCartItemsSize();
         if (size == 0) {
             findViewById(R.id.tvNoItems).setVisibility(View.VISIBLE);
             contentView.setVisibility(View.GONE);
         } else {
             ControllerMain controllerMain = ((ControllerMain) getApplicationContext());
-            int cost = controllerMain.getControllerCart().getCost(controllerMain.getControllerItems());
+            int cost = ControllerCart.getInstance().getCost();
             tvCost.setText(String.format(getString(R.string.cart_general_cost_format), cost));
             setBonus();
 
@@ -79,15 +81,15 @@ public class ActivityCart extends ActivityBase
     protected void onResume() {
         super.onResume();
         checkState();
-        ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
-        ((ControllerMain) getApplicationContext()).getControllerCart().setListener(this);
+        ControllerItems.getInstance().addListener(this);
+        ControllerCart.getInstance().setListener(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        ((ControllerMain) getApplicationContext()).getControllerItems().removeListener(this);
-        ((ControllerMain) getApplicationContext()).getControllerCart().removeListener();
+        ControllerItems.getInstance().removeListener(this);
+        ControllerCart.getInstance().removeListener();
     }
 
     @Override
@@ -130,11 +132,10 @@ public class ActivityCart extends ActivityBase
 
         RecyclerView rvItems = (RecyclerView) findViewById(R.id.rvItems);
         rvItems.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new CartAdapter((ControllerMain) getApplicationContext());
+        adapter = new CartAdapter();
         rvItems.setAdapter(adapter);
 
-        ControllerMain controllerMain = ((ControllerMain) getApplicationContext());
-        controllerMain.getControllerCart().setBonusChecked(false);
+        ControllerCart.getInstance().setBonusChecked(false);
 
         refreshLayout = ((SwipeRefreshLayout) findViewById(R.id.srlItems));
         refreshLayout.setOnRefreshListener(this);
@@ -160,8 +161,7 @@ public class ActivityCart extends ActivityBase
                         .setPositiveButton(R.string.cart_clear_dialog_positive, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                ((ControllerMain) getApplicationContext()).getControllerCart()
-                                        .clearCart(ActivityCart.this);
+                                ControllerCart.getInstance().clearCart();
                                 checkState();
                             }
                         })
@@ -179,8 +179,9 @@ public class ActivityCart extends ActivityBase
 
     @Override
     public void onRefresh() {
-        ((ControllerMain) getApplicationContext()).getControllerItems().clearAlbum();
-        ((ControllerMain) getApplicationContext()).updateMarketList();
+        ControllerItems.getInstance().clearAlbum();
+        ControllerItems.getInstance().updateData(this);
+
     }
 
     @Override
@@ -189,9 +190,8 @@ public class ActivityCart extends ActivityBase
 
             boolean isBonusChecked = ((CheckBox) findViewById(R.id.cbBonus)).isChecked();
 
-            ControllerMain controllerMain = ((ControllerMain) getApplicationContext());
-            controllerMain.getControllerCart().setBonusChecked(isBonusChecked);
-            int cost = controllerMain.getControllerCart().getCost(controllerMain.getControllerItems());
+            ControllerCart.getInstance().setBonusChecked(isBonusChecked);
+            int cost = ControllerCart.getInstance().getCost();
 
             if (cost == 0) {
                 //todo implement

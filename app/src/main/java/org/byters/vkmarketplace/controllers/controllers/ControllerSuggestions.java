@@ -1,6 +1,5 @@
 package org.byters.vkmarketplace.controllers.controllers;
 
-import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 
 import java.util.ArrayList;
@@ -9,15 +8,18 @@ import java.util.Random;
 
 public class ControllerSuggestions {
     public static final int NO_VALUE = -1;
-
-    private ControllerMain controllerMain;
+    private static ControllerSuggestions instance;
     private int savedId;
     private ArrayList<Integer> data;
     private Random random;
 
-    public ControllerSuggestions(ControllerMain controllerMain) {
-        this.controllerMain = controllerMain;
+    private ControllerSuggestions() {
         this.random = new Random();
+    }
+
+    public static ControllerSuggestions getInstance() {
+        if (instance == null) instance = new ControllerSuggestions();
+        return instance;
     }
 
     public int getSize(int itemId) {
@@ -31,13 +33,13 @@ public class ControllerSuggestions {
 
     private void generateItems() {
         data = new ArrayList<>();
-        int maxSize = controllerMain.getControllerItems().getModel().getSize();
+        int maxSize = ControllerItems.getInstance().getModel().getSize();
         if (maxSize <= 1) return; //if one item in market, no suggestion available
 
         ArrayList<Integer> shuffledIds = new ArrayList<>();
 
         for (int i = 0; i < maxSize; ++i) {
-            MarketplaceItem item = controllerMain.getControllerItems().getModel().get(i);
+            MarketplaceItem item = ControllerItems.getInstance().getModel().get(i);
             if (item == null || item.getId() == savedId)
                 continue;
             shuffledIds.add(item.getId());

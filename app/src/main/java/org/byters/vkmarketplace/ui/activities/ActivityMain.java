@@ -2,10 +2,8 @@ package org.byters.vkmarketplace.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -20,7 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerAlbums;
+import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
+import org.byters.vkmarketplace.controllers.controllers.ControllerNews;
+import org.byters.vkmarketplace.controllers.controllers.ControllerUserData;
 import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.controllers.controllers.utils.UserInfoUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.AccountInfo;
@@ -61,7 +62,7 @@ public class ActivityMain extends ActivityBase
 
         RecyclerView rvMenu = (RecyclerView) findViewById(R.id.rvMenu);
         rvMenu.setLayoutManager(new LinearLayoutManager(this));
-        menuAdapter = new MenuAdapter(this);
+        menuAdapter = new MenuAdapter();
         rvMenu.setAdapter(menuAdapter);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -94,10 +95,10 @@ public class ActivityMain extends ActivityBase
     protected void onResume() {
         super.onResume();
 
-        ((ControllerMain) getApplicationContext()).getControllerItems().addListener(this);
-        ((ControllerMain) getApplicationContext()).getControllerNews().addListener(this);
-        ((ControllerMain) getApplicationContext()).getControllerUserData().setListener(this);
-        ((ControllerMain) getApplicationContext()).getControllerAlbums().setListener(this);
+        ControllerItems.getInstance().addListener(this);
+        ControllerNews.getInstance().addListener(this);
+        ControllerUserData.getInstance().setListener(this);
+        ControllerAlbums.getInstance().setListener(this);
 
         invalidateData();
     }
@@ -105,16 +106,16 @@ public class ActivityMain extends ActivityBase
     @Override
     protected void onPause() {
         super.onPause();
-        ((ControllerMain) getApplicationContext()).getControllerItems().removeListener(this);
-        ((ControllerMain) getApplicationContext()).getControllerNews().removeListener(this);
-        ((ControllerMain) getApplicationContext()).getControllerUserData().removeListener();
-        ((ControllerMain) getApplicationContext()).getControllerAlbums().removeListener();
+        ControllerItems.getInstance().removeListener(this);
+        ControllerNews.getInstance().removeListener(this);
+        ControllerUserData.getInstance().removeListener();
+        ControllerAlbums.getInstance().removeListener();
     }
 
     @Override
     public void onBackPressed() {
-        if (((ControllerMain) getApplicationContext()).getControllerItems().isCustomAlbum()) {
-            ((ControllerMain) getApplicationContext()).getControllerItems().clearAlbum();
+        if (ControllerItems.getInstance().isCustomAlbum()) {
+            ControllerItems.getInstance().clearAlbum();
             invalidateData();
         } else
             super.onBackPressed();
@@ -148,7 +149,9 @@ public class ActivityMain extends ActivityBase
     public void invalidateData() {
         drawerLayout.closeDrawers();
         ActivityCompat.invalidateOptionsMenu(this);
-        String customTitle = ((ControllerMain) getApplicationContext()).getCustomTitle();
+        String customTitle = !ControllerItems.getInstance().isCustomAlbum()
+                ? null
+                : ControllerAlbums.getInstance().getTitle(ControllerItems.getInstance().getAlbumId());
         setTitle(!TextUtils.isEmpty(customTitle) ? customTitle : getString(R.string.app_name));
 
         //todo set home button depends on all items or category

@@ -9,15 +9,10 @@ import android.widget.TextView;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerOrdersHistory;
 import org.byters.vkmarketplace.model.dataclasses.OrderHistoryInfo;
 
 public class OrdersHistoryAdapter extends RecyclerView.Adapter<OrdersHistoryAdapter.ViewHolder> {
-
-    ControllerMain controllerMain;
-
-    public OrdersHistoryAdapter(Context context) {
-        this.controllerMain = (ControllerMain) context.getApplicationContext();
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -32,7 +27,7 @@ public class OrdersHistoryAdapter extends RecyclerView.Adapter<OrdersHistoryAdap
 
     @Override
     public int getItemCount() {
-        return controllerMain.getControllerOrdersHistory().getSize();
+        return ControllerOrdersHistory.getInstance().getSize();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -46,15 +41,15 @@ public class OrdersHistoryAdapter extends RecyclerView.Adapter<OrdersHistoryAdap
         }
 
         public void setData(int position) {
-            OrderHistoryInfo item = controllerMain.getControllerOrdersHistory().getItem(position);
+            OrderHistoryInfo item = ControllerOrdersHistory.getInstance().getItem(position);
             if (item == null) {
                 tvDate.setText("");
                 tvItem.setText("");
                 tvSum.setText("");
             } else {
-                tvDate.setText(String.format(controllerMain.getString(R.string.order_history_date_format), item.getDate()));
-                tvItem.setText(item.getInfo(controllerMain));
-                tvSum.setText(String.format(controllerMain.getString(R.string.order_history_sum_format), String.valueOf(item.getSum())));
+                tvDate.setText(String.format(itemView.getContext().getString(R.string.order_history_date_format), item.getDate()));
+                tvItem.setText(item.getInfo(itemView.getContext()));
+                tvSum.setText(String.format(itemView.getContext().getString(R.string.order_history_sum_format), String.valueOf(item.getSum())));
             }
         }
     }

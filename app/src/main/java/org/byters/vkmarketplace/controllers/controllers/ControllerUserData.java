@@ -1,12 +1,12 @@
 package org.byters.vkmarketplace.controllers.controllers;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkApi;
 import org.byters.vkmarketplace.api.VkService;
-import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.UserInfoUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.AccountInfo;
 import org.byters.vkmarketplace.model.dataclasses.AccountInfoBlob;
@@ -16,22 +16,25 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ControllerUserData implements Callback<AccountInfoBlob> {
+    private static ControllerUserData instance;
     Call<AccountInfoBlob> request;
-    private ControllerMain controllerMain;
     private UserInfoUpdateListener listener;
-
     private AccountInfo data;
 
-    public ControllerUserData(ControllerMain controllerMain) {
-        this.controllerMain = controllerMain;
-        data = (AccountInfo) ControllerStorage.readObjectFromFile(controllerMain, ControllerStorage.USERINFO_CACHE);
-
+    private ControllerUserData() {
+        data = (AccountInfo) ControllerStorage.getInstance().readObjectFromFile(ControllerStorage.USERINFO_CACHE);
     }
 
-    public void updateUserData(@Nullable String userId) {
+    public static ControllerUserData getInstance() {
+        if (instance == null) instance = new ControllerUserData();
+        return instance;
+    }
+
+    public void updateUserData(Context context) {
+        String userId = ControllerAuth.getInstance().getUserId();
         if ((request == null || request.isExecuted())
                 && !TextUtils.isEmpty(userId)) {
-            request = VkService.getApi().getAccountInfo(userId, VkApi.USER_INFO_FIELDS, controllerMain.getString(R.string.vk_api_ver));
+            request = VkService.getApi().getAccountInfo(userId, VkApi.USER_INFO_FIELDS, context.getString(R.string.vk_api_ver));
             request.enqueue(this);
         }
     }
@@ -43,8 +46,7 @@ public class ControllerUserData implements Callback<AccountInfoBlob> {
 
     private void setData(@Nullable AccountInfo info) {
         this.data = info;
-        if (controllerMain != null)
-            ControllerStorage.writeObjectToFile(controllerMain, info, ControllerStorage.USERINFO_CACHE);
+        ControllerStorage.getInstance().writeObjectToFile(info, ControllerStorage.USERINFO_CACHE);
     }
 
     public void setListener(UserInfoUpdateListener listener) {

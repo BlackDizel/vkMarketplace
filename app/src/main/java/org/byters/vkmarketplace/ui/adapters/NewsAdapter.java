@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerNews;
 import org.byters.vkmarketplace.model.dataclasses.NewsItem;
 import org.byters.vkmarketplace.ui.activities.ActivityMain;
 
@@ -38,7 +39,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return controllerMain.getControllerNews().getSize();
+        return ControllerNews.getInstance().getSize();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -58,7 +59,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         }
 
         public void setData(int position) {
-            NewsItem item = controllerMain.getControllerNews().getItem(position);
+            NewsItem item = ControllerNews.getInstance().getItem(position);
             if (item == null) {
                 newsId = NO_VALUE;
                 textView.setVisibility(View.GONE);

@@ -15,6 +15,9 @@ import android.webkit.WebViewClient;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerAuth;
+import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
+import org.byters.vkmarketplace.controllers.controllers.ControllerNews;
 
 public class ActivityLogin extends ActivityBase
         implements View.OnClickListener {
@@ -97,11 +100,14 @@ public class ActivityLogin extends ActivityBase
 
             String key = sanitizer.getValue(getString(R.string.access_token_key));
             if (TextUtils.isEmpty(key)) onResult(false);
-            ((ControllerMain) getApplicationContext()).setToken(key);
+
+            ControllerAuth.getInstance().setToken(key);
+            ControllerItems.getInstance().updateData(ActivityLogin.this);
+            ControllerNews.getInstance().updateData(ActivityLogin.this);
 
             String id = sanitizer.getValue(getString(R.string.user_id_key));
             if (TextUtils.isEmpty(id)) onResult(false);
-            ((ControllerMain) getApplicationContext()).setUserID(id);
+            ((ControllerMain) getApplicationContext()).setUserID(ActivityLogin.this, id);
 
             onResult(true);
         }

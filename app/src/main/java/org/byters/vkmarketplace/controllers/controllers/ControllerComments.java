@@ -8,7 +8,6 @@ import com.google.gson.JsonObject;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
-import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.CommentsBlob;
 
@@ -22,12 +21,18 @@ import retrofit2.Response;
 
 public class ControllerComments {
 
+    private static ControllerComments instance;
     private ArrayList<DataUpdateListener> listeners;
     private Call<CommentsBlob> request;
     private Map<Integer, ArrayList<CommentsBlob.CommentInfo>> data;
 
-    public ControllerComments(ControllerMain controllerMain) {
+    private ControllerComments() {
 
+    }
+
+    public static ControllerComments getInstance() {
+        if (instance == null) instance = new ControllerComments();
+        return instance;
     }
 
     //region listeners
@@ -57,10 +62,11 @@ public class ControllerComments {
         this.data.put(id, data);
     }
 
-    public void getComments(Context context, int id, String token) {
+    public void getComments(Context context, int id) {
         if (request != null)
             request.cancel();
 
+        String token = ControllerAuth.getInstance().getToken();
         request = VkService.getApi().getMarketItemsComments(
                 context.getResources().getInteger(R.integer.market)
                 , id
@@ -90,13 +96,14 @@ public class ControllerComments {
         return items.get(pos);
     }
 
-    public void sendComment(ControllerMain controllerMain, int id, String comment, String token) {
+    public void sendComment(Context context, int id, String comment) {
+        String token = ControllerAuth.getInstance().getToken();
         VkService.getApi().createComment(
-                controllerMain.getResources().getInteger(R.integer.market)
+                context.getResources().getInteger(R.integer.market)
                 , id
                 , comment
                 , token
-                , controllerMain.getString(R.string.vk_api_ver)
+                , context.getString(R.string.vk_api_ver)
         ).enqueue(new AddCommentsCallback());
     }
 

@@ -20,6 +20,8 @@ import com.squareup.picasso.Picasso;
 import org.byters.vkmarketplace.BuildConfig;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerFavorites;
+import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.activities.ActivityItemInfo;
 import org.byters.vkmarketplace.ui.utils.CenterSnapHelper;
@@ -56,7 +58,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return controllerMain.getControllerItems().getModel().getSize() + 1;
+        return ControllerItems.getInstance().getModel().getSize() + 1;
     }
 
     public void updateData() {
@@ -135,7 +137,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
         @Override
         public void setData(int position) {
-            MarketplaceItem item = controllerMain.getControllerItems().getModel().get(position - 1);
+            MarketplaceItem item = ControllerItems.getInstance().getModel().get(position - 1);
             if (item == null) {
                 tvTitle.setText("");
                 tvPrice.setText("");
@@ -149,7 +151,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 else tvPrice.setText("");
                 Picasso.with(controllerMain).load(item.getThumb_photo()).into(ivItem);
                 id = item.getId();
-                if (controllerMain.getControllerFavorites().isFavorite(id))
+                if (ControllerFavorites.getInstance().isFavorite(id))
                     ivFav.setVisibility(View.VISIBLE);
                 else
                     ivFav.setVisibility(View.GONE);

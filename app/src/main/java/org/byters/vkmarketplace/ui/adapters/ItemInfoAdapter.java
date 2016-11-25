@@ -21,6 +21,8 @@ import com.squareup.picasso.Picasso;
 import org.apmem.tools.layouts.FlowLayout;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerComments;
+import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
 import org.byters.vkmarketplace.model.dataclasses.CommentsBlob;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.activities.ActivityBase;
@@ -46,12 +48,6 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
     private View rootView;
     @Nullable
     private MarketplaceItem data;
-
-    private ControllerMain controllerMain;
-
-    public ItemInfoAdapter(ControllerMain controllerMain) {
-        this.controllerMain = controllerMain;
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -119,7 +115,7 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
         int count = 1;//add header
         if (data.getPhotosSize() > 0) ++count;//add photos
         if (data.getAlbumIdsSize() > 0) ++count;//add collections
-        count += controllerMain.getControllerComments().getSize(data.getId()); //add comments
+        count += ControllerComments.getInstance().getSize(data.getId()); //add comments
         ++count; //add suggestions
         return count;
     }
@@ -157,11 +153,11 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
 
             String uri = "";
             if (id < 0)
-                uri = String.format(controllerMain.getString(R.string.address_group_format), Math.abs(id));
+                uri = String.format(itemView.getContext().getString(R.string.address_group_format), Math.abs(id));
             else
-                uri = String.format(controllerMain.getString(R.string.address_user_format), id);
+                uri = String.format(itemView.getContext().getString(R.string.address_user_format), id);
 
-            controllerMain.openUrl(v.getContext(), v.getContext().getString(R.string.action_view_browser_error), Uri.parse(uri));
+            ((ControllerMain)itemView.getContext()).openUrl(v.getContext(), v.getContext().getString(R.string.action_view_browser_error), Uri.parse(uri));
         }
 
         @Override
@@ -176,7 +172,7 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
                 return;
             }
 
-            CommentsBlob.CommentInfo info = controllerMain.getControllerComments().getCommentsItem(data.getId(), getCommentPosition(position));
+            CommentsBlob.CommentInfo info = ControllerComments.getInstance().getCommentsItem(data.getId(), getCommentPosition(position));
             if (info == null) {
                 ivUser.setImageDrawable(null);
                 tvUser.setText(R.string.comment_no_title);
@@ -190,7 +186,7 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
             if (TextUtils.isEmpty(url))
                 ivUser.setImageDrawable(null);
             else
-                Picasso.with(controllerMain).load(url).into(ivUser);
+                Picasso.with(itemView.getContext()).load(url).into(ivUser);
             tvUser.setText(info.getTitle());
             tvText.setText(info.getText());
         }
@@ -209,8 +205,8 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
             super(itemView);
             RecyclerView rvPhotos = (RecyclerView) itemView.findViewById(R.id.rvPhotos);
             rvPhotos.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
-            rvPhotos.addItemDecoration(new ItemPhotosDecoration(controllerMain));
-            adapter = new ItemPhotosAdapter(controllerMain);
+            rvPhotos.addItemDecoration(new ItemPhotosDecoration(itemView.getContext()));
+            adapter = new ItemPhotosAdapter();
             rvPhotos.setAdapter(adapter);
             SnapHelper snapHelper = new StartSnapHelper();
             snapHelper.attachToRecyclerView(rvPhotos);
@@ -294,7 +290,7 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
                         return;
 
                     addLike();
-                    controllerMain.addLike(data.getId(), new Callback() {
+                    ((ControllerMain)itemView.getContext().getApplicationContext()).addLike(data.getId(), new Callback() {
                         @Override
                         public void onResponse(Call call, Response response) {
                             if (data == null) return;
@@ -339,7 +335,7 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
             layout.removeAllViews();
             int size = (int) Math.min(data.getAlbumIdsSize(), COLLECTIONS_MAX_NUM);
             for (int i = 0; i < size; ++i) {
-                String title = data.getCollectionTitle(controllerMain, i);
+                String title = data.getCollectionTitle(i);
                 if (TextUtils.isEmpty(title)) continue;
                 View v = LayoutInflater.from(layout.getContext())
                         .inflate(R.layout.view_item_info_list_collections_item, layout, true);
@@ -360,7 +356,7 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
             if (album_id == MarketplaceItem.NO_VALUE)
                 return;
 
-            controllerMain.getControllerItems().setAlbum(album_id);
+            ControllerItems.getInstance().setAlbum(album_id);
             if (v.getContext() instanceof ActivityBase)
                 ((ActivityBase) v.getContext()).onBackPressed();
         }
@@ -372,7 +368,7 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
 
         public ViewHolderSuggestions(View view) {
             super(view);
-            adapter = new SuggestionsAdapter(controllerMain);
+            adapter = new SuggestionsAdapter();
             rvSuggestions = (RecyclerView) view.findViewById(R.id.rvSuggestions);
             rvSuggestions.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
             rvSuggestions.setAdapter(adapter);

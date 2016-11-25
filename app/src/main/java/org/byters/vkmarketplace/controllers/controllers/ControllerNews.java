@@ -1,5 +1,7 @@
 package org.byters.vkmarketplace.controllers.controllers;
 
+import android.content.Context;
+
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
 import org.byters.vkmarketplace.controllers.ControllerMain;
@@ -15,15 +17,18 @@ import retrofit2.Response;
 
 public class ControllerNews implements Callback<NewsBlob> {
 
+    private static ControllerNews instance;
     private ArrayList<DataUpdateListener> listeners;
 
     private ArrayList<NewsItem> data;
 
-    private ControllerMain controllerMain;
+    private ControllerNews() {
+        data = (ArrayList<NewsItem>) ControllerStorage.getInstance().readObjectFromFile(ControllerStorage.NEWS_CACHE);
+    }
 
-    public ControllerNews(ControllerMain controllerMain) {
-        this.controllerMain = controllerMain;
-        data = (ArrayList<NewsItem>) ControllerStorage.readObjectFromFile(controllerMain, ControllerStorage.NEWS_CACHE);
+    public static ControllerNews getInstance() {
+        if (instance == null) instance = new ControllerNews();
+        return instance;
     }
 
     public int getSize() {
@@ -36,7 +41,7 @@ public class ControllerNews implements Callback<NewsBlob> {
         return data.get(position);
     }
 
-    public void updateData(ControllerMain context) {
+    public void updateData(Context context) {
         VkService.getApi()
                 .getNews(context.getResources().getInteger(R.integer.market), "owner", 10, context.getString(R.string.vk_api_ver))
                 .enqueue(this);
@@ -63,7 +68,7 @@ public class ControllerNews implements Callback<NewsBlob> {
         if (items == null) return;
 
         this.data = items;
-        ControllerStorage.writeObjectToFile(controllerMain, this.data, ControllerStorage.NEWS_CACHE);
+        ControllerStorage.getInstance().writeObjectToFile(this.data, ControllerStorage.NEWS_CACHE);
 
         if (listeners == null) return;
         for (DataUpdateListener listener : listeners)

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerAuth;
 
 public class ActivitySplash extends ActivityBase {
 
@@ -15,7 +15,7 @@ public class ActivitySplash extends ActivityBase {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (!((ControllerMain) getApplicationContext()).isAuth())
+                if (!ControllerAuth.getInstance().isAuth())
                     ActivityLogin.display(ActivitySplash.this);
                 else
                     ActivityMain.display(ActivitySplash.this);

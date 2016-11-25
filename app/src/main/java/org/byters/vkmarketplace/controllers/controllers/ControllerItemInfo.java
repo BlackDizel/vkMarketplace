@@ -18,11 +18,17 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ControllerItemInfo {
+    private static ControllerItemInfo instance;
     private ArrayList<OnItemUpdateListener> listeners;
     private ArrayList<Integer> updatingIds;
 
-    public ControllerItemInfo() {
+    private ControllerItemInfo() {
 
+    }
+
+    public static ControllerItemInfo getInstance() {
+        if (instance == null) instance = new ControllerItemInfo();
+        return instance;
     }
 
     //region listeners
@@ -54,18 +60,18 @@ public class ControllerItemInfo {
     }
     //endregion
 
-    public void getItemInfo(@NonNull Context context, int id, @Nullable String token) {
+    public void getItemInfo(@NonNull Context context, int id) {
         //todo check testcases
         if (updatingIds == null) updatingIds = new ArrayList<>();
         if (updatingIds.contains(id)) return;
 
-        if (TextUtils.isEmpty(token)) {
+        if (TextUtils.isEmpty(ControllerAuth.getInstance().getToken())) {
             return;
         }
 
         VkService.getApi().getMarketItemsById(String.format("%d_%d", context.getResources().getInteger(R.integer.market), id)
                 , 1
-                , token
+                , ControllerAuth.getInstance().getToken()
                 , context.getString(R.string.vk_api_ver)).enqueue(new CallbackItemInfo(id));
 
     }

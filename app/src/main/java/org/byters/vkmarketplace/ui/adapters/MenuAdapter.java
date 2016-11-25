@@ -17,6 +17,9 @@ import com.squareup.picasso.Picasso;
 import org.byters.vkmarketplace.BuildConfig;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerAlbums;
+import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
+import org.byters.vkmarketplace.controllers.controllers.ControllerUserData;
 import org.byters.vkmarketplace.model.MenuEnum;
 import org.byters.vkmarketplace.model.dataclasses.AccountInfo;
 import org.byters.vkmarketplace.model.dataclasses.AlbumBlob;
@@ -33,12 +36,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     private static final int TYPE_ITEM_CATEGORY = 1;
     private static final int TYPE_MENU_ITEM = 2;
 
-    private ControllerMain controllerMain;
-
-    public MenuAdapter(Context context) {
-        controllerMain = ((ControllerMain) context.getApplicationContext());
-    }
-
     public void updateData() {
         notifyDataSetChanged();
     }
@@ -52,7 +49,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     }
 
     private int getMenuCategoryItemsCount() {
-        return 1 + (BuildConfig.isCategoryListOnSideMenu ? controllerMain.getControllerAlbums().getSize() : 0);
+        return 1 + (BuildConfig.isCategoryListOnSideMenu ? ControllerAlbums.getInstance().getSize() : 0);
     }
 
     @Override
@@ -122,7 +119,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     ActivityChat.display(itemView.getContext());
                     break;
                 case FEEDBACK:
-                    Intent intentSend = controllerMain.getIntentSendEmail(itemView.getContext()
+                    Intent intentSend = ((ControllerMain)itemView.getContext().getApplicationContext()).getIntentSendEmail(itemView.getContext()
                             , R.string.feedback_message_title
                             , R.string.feedback_message_body);
 
@@ -133,12 +130,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     itemView.getContext().startActivity(intentSend);
                     break;
                 case WEBSITE:
-                    controllerMain.openUrl(itemView.getContext()
+                    ((ControllerMain)itemView.getContext().getApplicationContext()).openUrl(itemView.getContext()
                             , itemView.getContext().getString(R.string.action_view_browser_error)
                             , Uri.parse(itemView.getContext().getString(R.string.market_address)));
                     break;
                 case PHONE:
-                    controllerMain.call(itemView.getContext()
+                    ((ControllerMain)itemView.getContext().getApplicationContext()).call(itemView.getContext()
                             , R.string.calling_error
                             , R.string.market_phone);
                     break;
@@ -168,7 +165,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         @Override
         public void onClick(View v) {
             if (album_id != NO_VALUE) {
-                controllerMain.getControllerItems().setAlbum(album_id);
+                ControllerItems.getInstance().setAlbum(album_id);
 
                 if (v.getContext() instanceof ActivityMain)
                     ((ActivityMain) v.getContext()).invalidateData();
@@ -177,7 +174,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
         @Override
         public void setData(int position) {
-            AlbumBlob.AlbumItem item = controllerMain.getControllerAlbums().getItem(position - 1);
+            AlbumBlob.AlbumItem item = ControllerAlbums.getInstance().getItem(position - 1);
             if (item == null) {
                 tvTitle.setText(R.string.menu_item_text_error);
                 tvSubtitle.setText("");
@@ -187,9 +184,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                 tvTitle.setText(item.getTitle());
                 tvSubtitle.setText(String.format("%s %s"
                         , String.valueOf(item.getCount())
-                        , PluralName.ITEM.toString(controllerMain, item.getCount())));
+                        , PluralName.ITEM.toString(itemView.getContext(), item.getCount())));
                 if (item.getPhoto() != null && !TextUtils.isEmpty(item.getPhoto().getLittlePhoto()))
-                    Picasso.with(controllerMain).load(item.getPhoto().getLittlePhoto()).into(ivItem);
+                    Picasso.with(itemView.getContext()).load(item.getPhoto().getLittlePhoto()).into(ivItem);
                 album_id = item.getId();
             }
         }
@@ -208,7 +205,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
         @Override
         public void setData(int position) {
-            AccountInfo info = controllerMain.getControllerUserData().getData();
+            AccountInfo info = ControllerUserData.getInstance().getData();
             if (info == null) {
                 imgView.setImageDrawable(null);
                 tvTitle.setText("");

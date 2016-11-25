@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.dialogs.DialogImage;
 
@@ -19,12 +18,6 @@ public class ItemPhotosAdapter extends RecyclerView.Adapter<ItemPhotosAdapter.Vi
 
     @Nullable
     private MarketplaceItem data;
-
-    private ControllerMain controllerMain;
-
-    public ItemPhotosAdapter(ControllerMain controllerMain) {
-        this.controllerMain = controllerMain;
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -67,7 +60,7 @@ public class ItemPhotosAdapter extends RecyclerView.Adapter<ItemPhotosAdapter.Vi
                 imageView.setImageDrawable(null);
                 return;
             }
-            uri = data.getPhotoByPosition(controllerMain, position);
+            uri = data.getPhotoByPosition(itemView.getContext(), position);
             if (TextUtils.isEmpty(uri))
                 imageView.setImageDrawable(null);
             else

@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerComments;
 
 public class DialogComment
         implements DialogInterface.OnClickListener {
@@ -44,6 +45,7 @@ public class DialogComment
             Snackbar.make(rootView, R.string.view_dialog_comment_empty_message_error, Snackbar.LENGTH_SHORT).show();
             return;
         }
-        controllerMain.sendComment(itemId, etComment.getText().toString());
+
+        ControllerComments.getInstance().sendComment(controllerMain, itemId, etComment.getText().toString());
     }
 }

@@ -121,11 +121,11 @@ public class Cart implements Serializable {
         items.remove(position);
     }
 
-    public int getCost(ControllerItems controllerItems) {
+    public int getCost() {
         if (items == null) return 0;
         int sum = 0;
         for (CartEntry item : items) {
-            MarketplaceItem mItem = controllerItems.getModel().getItemById(item.getItemId());
+            MarketplaceItem mItem = ControllerItems.getInstance().getModel().getItemById(item.getItemId());
             if (mItem == null) continue;
             int cost = mItem.getPrice().getAmount() / 100;
             sum += item.getQuantity() * cost;

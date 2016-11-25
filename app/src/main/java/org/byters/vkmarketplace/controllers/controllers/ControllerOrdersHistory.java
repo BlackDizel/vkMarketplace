@@ -1,10 +1,8 @@
 package org.byters.vkmarketplace.controllers.controllers;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.model.dataclasses.OrderHistoryInfo;
 
 import java.util.ArrayList;
@@ -12,10 +10,16 @@ import java.util.Collections;
 
 public class ControllerOrdersHistory {
 
+    private static ControllerOrdersHistory instance;
     private ArrayList<OrderHistoryInfo> data;
 
-    public ControllerOrdersHistory(ControllerMain controllerMain) {
-        data = (ArrayList<OrderHistoryInfo>) ControllerStorage.readObjectFromFile(controllerMain, ControllerStorage.ORDERS_HISTORY_CACHE);
+    private ControllerOrdersHistory() {
+        data = (ArrayList<OrderHistoryInfo>) ControllerStorage.getInstance().readObjectFromFile(ControllerStorage.ORDERS_HISTORY_CACHE);
+    }
+
+    public static ControllerOrdersHistory getInstance() {
+        if (instance == null) instance = new ControllerOrdersHistory();
+        return instance;
     }
 
     public int getSize() {
@@ -30,17 +34,17 @@ public class ControllerOrdersHistory {
         return data.get(position);
     }
 
-    public void addItem(Context context, @NonNull OrderHistoryInfo info) {
+    public void addItem(@NonNull OrderHistoryInfo info) {
         if (data == null) data = new ArrayList<>();
         data.add(info);
         Collections.sort(data);
         Collections.reverse(data);
-        ControllerStorage.writeObjectToFile(context, data, ControllerStorage.ORDERS_HISTORY_CACHE);
+        ControllerStorage.getInstance().writeObjectToFile(data, ControllerStorage.ORDERS_HISTORY_CACHE);
     }
 
-    public void clearData(Context context) {
+    public void clearData() {
         data = null;
-        ControllerStorage.writeObjectToFile(context, data, ControllerStorage.ORDERS_HISTORY_CACHE);
+        ControllerStorage.getInstance().writeObjectToFile(data, ControllerStorage.ORDERS_HISTORY_CACHE);
     }
 
 }

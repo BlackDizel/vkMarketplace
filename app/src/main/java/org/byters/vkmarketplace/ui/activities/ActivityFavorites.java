@@ -12,6 +12,7 @@ import android.view.View;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerFavorites;
 import org.byters.vkmarketplace.ui.adapters.FavoritesAdapter;
 
 public class ActivityFavorites extends ActivityBase {
@@ -24,7 +25,7 @@ public class ActivityFavorites extends ActivityBase {
     }
 
     public void checkState() {
-        int size = ((ControllerMain) getApplicationContext()).getControllerFavorites().getSize();
+        int size = ControllerFavorites.getInstance().getSize();
         if (size == 0) {
             findViewById(R.id.tvNoItems).setVisibility(View.VISIBLE);
             findViewById(R.id.rvItems).setVisibility(View.GONE);
@@ -47,7 +48,7 @@ public class ActivityFavorites extends ActivityBase {
 
         RecyclerView rvItems = (RecyclerView) findViewById(R.id.rvItems);
         rvItems.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new FavoritesAdapter((ControllerMain) getApplicationContext());
+        adapter = new FavoritesAdapter();
         rvItems.setAdapter(adapter);
     }
 

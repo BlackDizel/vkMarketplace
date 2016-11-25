@@ -16,6 +16,7 @@ import android.view.View;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerOrdersHistory;
 import org.byters.vkmarketplace.ui.adapters.OrdersHistoryAdapter;
 
 public class ActivityOrdersHistory extends ActivityBase {
@@ -38,7 +39,7 @@ public class ActivityOrdersHistory extends ActivityBase {
 
         RecyclerView rvOrders = (RecyclerView) findViewById(R.id.rvOrders);
         rvOrders.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new OrdersHistoryAdapter(this);
+        adapter = new OrdersHistoryAdapter();
         rvOrders.setAdapter(adapter);
     }
 
@@ -50,7 +51,7 @@ public class ActivityOrdersHistory extends ActivityBase {
 
     private void setData() {
         adapter.notifyDataSetChanged();
-        int size = ((ControllerMain) getApplicationContext()).getControllerOrdersHistory().getSize();
+        int size = ControllerOrdersHistory.getInstance().getSize();
 
         if (size == 0) {
             findViewById(R.id.tvNoItems).setVisibility(View.VISIBLE);
@@ -83,7 +84,7 @@ public class ActivityOrdersHistory extends ActivityBase {
                         .setPositiveButton(R.string.orders_history_clear_items_message, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                ((ControllerMain) getApplicationContext()).getControllerOrdersHistory().clearData(getApplicationContext());
+                                ControllerOrdersHistory.getInstance().clearData();
                                 setData();
                             }
                         })

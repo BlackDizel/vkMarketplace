@@ -12,6 +12,10 @@ import android.view.ViewGroup;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerAlbums;
+import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
+import org.byters.vkmarketplace.controllers.controllers.ControllerNews;
+import org.byters.vkmarketplace.controllers.controllers.ControllerUserData;
 import org.byters.vkmarketplace.ui.activities.ActivityBase;
 import org.byters.vkmarketplace.ui.adapters.ItemsAdapter;
 
@@ -53,7 +57,7 @@ public class FragmentFeatured extends FragmentBase
     }
 
     public void updateWithError() {
-        if (((ControllerMain) getContext().getApplicationContext()).getControllerItems().getModel().isEmpty())
+        if (ControllerItems.getInstance().getModel().isEmpty())
             ((ActivityBase) getActivity()).setState(ActivityBase.STATE_ERROR);
         else
             ((ActivityBase) getActivity()).setIsOffline((ActivityBase) getActivity(), true);
@@ -68,12 +72,12 @@ public class FragmentFeatured extends FragmentBase
     @Override
     public void onRefresh() {
         if (getActivity() != null) {
-            ((ControllerMain) getContext().getApplicationContext()).updateMarketList();
-            ((ControllerMain) getContext().getApplicationContext()).updateNews();
+            ControllerItems.getInstance().updateData(getContext());
+            ControllerNews.getInstance().updateData(getContext());
 
             //todo add interface and move code to activityMain
-            ((ControllerMain) getContext().getApplicationContext()).updateUserData();
-            ((ControllerMain) getContext().getApplicationContext()).updateAlbums();
+            ControllerUserData.getInstance().updateUserData(getContext());
+            ControllerAlbums.getInstance().updateData(getContext());
         }
     }
 

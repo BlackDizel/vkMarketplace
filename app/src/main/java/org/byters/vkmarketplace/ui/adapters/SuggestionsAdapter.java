@@ -11,17 +11,16 @@ import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
 import org.byters.vkmarketplace.controllers.controllers.ControllerSuggestions;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.activities.ActivityItemInfo;
 
 public class SuggestionsAdapter extends RecyclerView.Adapter<SuggestionsAdapter.ViewHolder> {
     private static final int NO_VALUE = -1;
-    ControllerMain controllerMain;
     private int itemId;
 
-    public SuggestionsAdapter(ControllerMain controllerMain) {
-        this.controllerMain = controllerMain;
+    public SuggestionsAdapter() {
         itemId = NO_VALUE;
     }
 
@@ -38,7 +37,7 @@ public class SuggestionsAdapter extends RecyclerView.Adapter<SuggestionsAdapter.
 
     @Override
     public int getItemCount() {
-        return itemId == NO_VALUE ? 0 : controllerMain.getControllerSuggestions().getSize(itemId);
+        return itemId == NO_VALUE ? 0 : ControllerSuggestions.getInstance().getSize(itemId);
     }
 
     public void updateData(int itemId) {
@@ -62,9 +61,9 @@ public class SuggestionsAdapter extends RecyclerView.Adapter<SuggestionsAdapter.
 
         public void setData(int position) {
             MarketplaceItem item = null;
-            id = controllerMain.getControllerSuggestions().getItem(itemId, position);
+            id = ControllerSuggestions.getInstance().getItem(itemId, position);
             if (id != ControllerSuggestions.NO_VALUE)
-                item = controllerMain.getControllerItems().getModel().getItemById(id);
+                item = ControllerItems.getInstance().getModel().getItemById(id);
 
             if (id == ControllerSuggestions.NO_VALUE || item == null) {
                 ivItem.setImageDrawable(null);
@@ -76,8 +75,8 @@ public class SuggestionsAdapter extends RecyclerView.Adapter<SuggestionsAdapter.
             if (item.getPhotosSize() == 0)
                 ivItem.setImageDrawable(null);
             else
-                Picasso.with(controllerMain)
-                        .load(item.getPhotos().get(0).getSrc_big(controllerMain))
+                Picasso.with(itemView.getContext())
+                        .load(item.getPhotos().get(0).getSrc_big(itemView.getContext()))
                         .into(ivItem);
         }
 

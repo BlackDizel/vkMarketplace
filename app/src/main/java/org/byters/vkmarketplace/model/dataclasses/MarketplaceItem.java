@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 
 import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerAlbums;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -63,10 +64,10 @@ public class MarketplaceItem implements Serializable {
     }
 
     @Nullable
-    public String getCollectionTitle(ControllerMain controllerMain, int position) {
+    public String getCollectionTitle(int position) {
         if (position < 0 || albums_ids == null || position >= albums_ids.length)
             return null;
-        return controllerMain.getControllerAlbums().getTitle(albums_ids[position]);
+        return ControllerAlbums.getInstance().getTitle(albums_ids[position]);
     }
 
     public int getAlbumId(int position) {

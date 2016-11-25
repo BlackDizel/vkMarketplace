@@ -15,7 +15,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerCart;
+import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
 import org.byters.vkmarketplace.model.dataclasses.Cart;
 import org.byters.vkmarketplace.model.dataclasses.CartEntry;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
@@ -24,12 +25,6 @@ import org.byters.vkmarketplace.ui.activities.ActivityItemInfo;
 import org.byters.vkmarketplace.ui.utils.PluralName;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
-
-    private ControllerMain controllerMain;
-
-    public CartAdapter(ControllerMain controllerMain) {
-        this.controllerMain = controllerMain;
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -44,7 +39,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return controllerMain == null ? 0 : controllerMain.getControllerCart().getCartItemsSize();
+        return ControllerCart.getInstance().getCartItemsSize();
     }
 
     public void updateData() {
@@ -74,11 +69,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         }
 
         public void setData(int position) {
-            CartEntry cartItem = controllerMain.getControllerCart().getCartItem(position);
+            CartEntry cartItem = ControllerCart.getInstance().getCartItem(position);
             MarketplaceItem item = null;
             if (cartItem != null) {
                 id = cartItem.getItemId();
-                item = controllerMain.getControllerItems().getModel().getItemById(id);
+                item = ControllerItems.getInstance().getModel().getItemById(id);
             }
 
             if (cartItem == null || item == null) {
@@ -89,20 +84,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 return;
             }
 
-            tvCost.setText(String.format(controllerMain.getString(R.string.cart_cost_format)
+            tvCost.setText(String.format(itemView.getContext().getString(R.string.cart_cost_format)
                     , cartItem.getQuantity()
-                    , PluralName.ITEM.toString(controllerMain, cartItem.getQuantity())
+                    , PluralName.ITEM.toString(itemView.getContext(), cartItem.getQuantity())
                     , item.getPrice().getAmount() * cartItem.getQuantity() / 100));
             tvTitle.setText(item.getTitle());
             tvQuantity.setText(String.valueOf(cartItem.getQuantity()));
-            Picasso.with(controllerMain).load(item.getThumb_photo()).into(ivItem);
+            Picasso.with(itemView.getContext()).load(item.getThumb_photo()).into(ivItem);
         }
 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.tvQuantity:
-                    CartEntry item = controllerMain.getControllerCart().getCartItemById(id);
+                    CartEntry item = ControllerCart.getInstance().getCartItemById(id);
 
                     if (item == null) return;
 
@@ -121,9 +116,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     dialog.show();
                     break;
                 case R.id.ivRemove:
-                    int pos = controllerMain.getControllerCart().getCartItemPosition(id);
+                    int pos = ControllerCart.getInstance().getCartItemPosition(id);
                     if (pos == Cart.NO_VALUE) return;
-                    controllerMain.getControllerCart().removeItem(pos);
+                    ControllerCart.getInstance().removeItem(pos);
                     notifyItemRemoved(pos);
                     if (itemView.getContext() instanceof ActivityCart)
                         ((ActivityCart) itemView.getContext()).checkState();
@@ -137,11 +132,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             if (picker == null) return;
-            CartEntry item = controllerMain.getControllerCart().getCartItemById(id);
+            CartEntry item = ControllerCart.getInstance().getCartItemById(id);
             if (item == null) return;
             item.setQuantity(picker.getValue());
 
-            int pos = controllerMain.getControllerCart().getCartItemPosition(id);
+            int pos = ControllerCart.getInstance().getCartItemPosition(id);
             if (pos == Cart.NO_VALUE) return;
             notifyItemChanged(pos);
 

@@ -2,7 +2,6 @@ package org.byters.vkmarketplace.controllers.controllers;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.byters.vkmarketplace.R;
@@ -20,22 +19,20 @@ import retrofit2.Response;
 
 public class ControllerItems {
     private static final int NO_VALUE = -1;
-    private static ModelItems model;
-    private Context context;
+    private ModelItems model;
+    private static ControllerItems instance;
     private ArrayList<DataUpdateListener> listeners;
     private int album_id;
     private Call<MarketplaceBlob> request;
 
-    public ControllerItems(@NonNull Context context, @Nullable String token) {
-        this.context = context;
+    private ControllerItems() {
         album_id = NO_VALUE;
+        model = new ModelItems();
+    }
 
-        if (model == null) {
-            model = new ModelItems(context);
-            if (model.isNull()) {
-                updateData(context, token);
-            }
-        }
+    public static ControllerItems getInstance() {
+        if (instance == null) instance = new ControllerItems();
+        return instance;
     }
 
     public void clearAlbum() {
@@ -54,8 +51,9 @@ public class ControllerItems {
         return album_id;
     }
 
-    public void updateData(@NonNull Context context, @Nullable String token) {
+    public void updateData(@NonNull Context context) {
         updateListeners();
+        String token = ControllerAuth.getInstance().getToken();
         if (!TextUtils.isEmpty(token)) {
             if (request != null)
                 request.cancel();
@@ -139,7 +137,7 @@ public class ControllerItems {
 
     private void writeData(ArrayList<MarketplaceItem> result, boolean isCacheNeeded) {
         if (result != null) {
-            if (context != null) model.setData(context, result, isCacheNeeded);
+            model.setData(result, isCacheNeeded);
         }
     }
 }

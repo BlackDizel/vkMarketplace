@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.controllers.ControllerSearchResult;
 import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.ui.adapters.SearchResultAdapter;
 
@@ -40,20 +40,20 @@ public class ActivitySearch extends ActivityBase
         RecyclerView rvItems = (RecyclerView) findViewById(R.id.rvItems);
         rvItems.setLayoutManager(new GridLayoutManager(this, 2));
         rvItems.addItemDecoration(new ItemDecoration(this));
-        adapter = new SearchResultAdapter(this);
+        adapter = new SearchResultAdapter();
         rvItems.setAdapter(adapter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        ((ControllerMain) getApplicationContext()).getControllerSearchResult().setListener(this);
+        ControllerSearchResult.getInstance().setListener(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        ((ControllerMain) getApplicationContext()).getControllerSearchResult().removeListener();
+        ControllerSearchResult.getInstance().removeListener();
     }
 
     @Override
@@ -89,7 +89,7 @@ public class ActivitySearch extends ActivityBase
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        ((ControllerMain) getApplicationContext()).searchItems(newText);
+        ControllerSearchResult.getInstance().search(this, newText);
         return false;
     }
 
