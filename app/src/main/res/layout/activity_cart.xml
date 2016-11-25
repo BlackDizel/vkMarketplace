@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="org.byters.vkmarketplace.ui.activities.ActivityCart">
 
     <android.support.design.widget.AppBarLayout
@@ -15,24 +14,22 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways" />
+            android:layout_height="?attr/actionBarSize" />
 
     </android.support.design.widget.AppBarLayout>
 
-
-    <TextView
-        android:id="@+id/tvNoItems"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/cart_no_items"
-        android:visibility="gone" />
-
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/rootView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvNoItems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/cart_no_items"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/contentView"
@@ -40,55 +37,85 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/gray_light"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvCost"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingBottom="@dimen/cart_cost_text_padding_vertical"
-                    android:paddingEnd="@dimen/cart_cost_text_padding_horizontal"
-                    android:paddingLeft="@dimen/cart_cost_text_padding_horizontal"
-                    android:paddingRight="@dimen/cart_cost_text_padding_horizontal"
-                    android:paddingStart="@dimen/cart_cost_text_padding_horizontal"
-                    android:paddingTop="@dimen/cart_cost_text_padding_vertical" />
-
-                <TextView
-                    android:id="@+id/tvClear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:paddingBottom="@dimen/cart_cost_text_padding_vertical"
-                    android:paddingEnd="@dimen/cart_cost_text_padding_horizontal"
-                    android:paddingLeft="@dimen/cart_cost_text_padding_horizontal"
-                    android:paddingRight="@dimen/cart_cost_text_padding_horizontal"
-                    android:paddingStart="@dimen/cart_cost_text_padding_horizontal"
-                    android:paddingTop="@dimen/cart_cost_text_padding_vertical"
-                    android:text="@string/cart_clear" />
-
-            </LinearLayout>
-
             <android.support.v4.widget.SwipeRefreshLayout
                 android:id="@+id/srlItems"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvItems"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
-                    android:paddingTop="@dimen/activity_cart_list_top_padding" />
+                    android:paddingTop="@dimen/activity_cart_list_top_padding"
+                    tools:listitem="@layout/view_item_cart" />
 
             </android.support.v4.widget.SwipeRefreshLayout>
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/payment_price_hint"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+            <TextView
+                android:id="@+id/tvCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <TextView
+                android:id="@+id/tvBonusCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+            <CheckBox
+                android:id="@+id/cbBonus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:text="@string/payment_bonus" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/tvPayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/bottom_accent_button"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="@string/button_cart_payment"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                android:textColor="@color/white" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
 
         </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

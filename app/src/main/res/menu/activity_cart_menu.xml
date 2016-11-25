@@ -3,14 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_send"
-        android:icon="@drawable/ic_payment_white_24dp"
-        android:title="@string/action_buy"
+        android:id="@+id/action_cart_clear"
+        android:icon="@drawable/ic_delete_white_24dp"
+        android:title="@string/cart_clear"
         app:showAsAction="always" />
-
-    <item
-        android:id="@+id/action_history"
-        android:title="@string/action_history"
-        app:showAsAction="never" />
 
 </menu>

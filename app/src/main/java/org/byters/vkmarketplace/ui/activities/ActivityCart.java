@@ -15,11 +15,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import org.byters.vkmarketplace.BuildConfig;
 import org.byters.vkmarketplace.R;
+import org.byters.vkmarketplace.controllers.ControllerBonus;
 import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.ui.adapters.CartAdapter;
@@ -54,10 +56,22 @@ public class ActivityCart extends ActivityBase
             ControllerMain controllerMain = ((ControllerMain) getApplicationContext());
             int cost = controllerMain.getControllerCart().getCost(controllerMain.getControllerItems());
             tvCost.setText(String.format(getString(R.string.cart_general_cost_format), cost));
+            setBonus();
+
             findViewById(R.id.tvNoItems).setVisibility(View.GONE);
             contentView.setVisibility(View.VISIBLE);
         }
         adapter.updateData();
+    }
+
+    private void setBonus() {
+        int bonusCount = ControllerBonus.getInstance().getBonusCount();
+
+        findViewById(R.id.tvBonusCount).setVisibility(bonusCount == 0 ? View.GONE : View.VISIBLE);
+        findViewById(R.id.cbBonus).setVisibility(bonusCount == 0 ? View.GONE : View.VISIBLE);
+
+        ((TextView) findViewById(R.id.tvBonusCount))
+                .setText(String.format(getString(R.string.cart_bonus_format), bonusCount));
     }
 
 
@@ -119,10 +133,13 @@ public class ActivityCart extends ActivityBase
         adapter = new CartAdapter((ControllerMain) getApplicationContext());
         rvItems.setAdapter(adapter);
 
+        ControllerMain controllerMain = ((ControllerMain) getApplicationContext());
+        controllerMain.getControllerCart().setBonusChecked(false);
+
         refreshLayout = ((SwipeRefreshLayout) findViewById(R.id.srlItems));
         refreshLayout.setOnRefreshListener(this);
 
-        findViewById(R.id.tvClear).setOnClickListener(this);
+        findViewById(R.id.tvPayment).setOnClickListener(this);
     }
 
     @Override
@@ -137,14 +154,19 @@ public class ActivityCart extends ActivityBase
             case android.R.id.home:
                 onBackPressed();
                 break;
-            case R.id.action_send:
-                if (BuildConfig.paymentType == BuildConfig.paymentTypeAll)
-                    ActivityPaymentMethod.display(this);
-                else if (BuildConfig.paymentType == BuildConfig.paymentTypeMessages)
-                    new DialogPayment(this, findViewById(R.id.rootView)).show();
-                break;
-            case R.id.action_history:
-                ActivityOrdersHistory.display(this);
+            case R.id.action_cart_clear:
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.cart_clear_dialog_text)
+                        .setPositiveButton(R.string.cart_clear_dialog_positive, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ((ControllerMain) getApplicationContext()).getControllerCart()
+                                        .clearCart(ActivityCart.this);
+                                checkState();
+                            }
+                        })
+                        .setNegativeButton(R.string.cart_clear_dialog_cancel, null)
+                        .create().show();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -163,19 +185,20 @@ public class ActivityCart extends ActivityBase
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.tvClear) {
-            new AlertDialog.Builder(this)
-                    .setMessage(R.string.cart_clear_dialog_text)
-                    .setPositiveButton(R.string.cart_clear_dialog_positive, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ((ControllerMain) getApplicationContext()).getControllerCart()
-                                    .clearCart(ActivityCart.this);
-                            checkState();
-                        }
-                    })
-                    .setNegativeButton(R.string.cart_clear_dialog_cancel, null)
-                    .create().show();
-        }
+        if (BuildConfig.paymentType == BuildConfig.paymentTypeAll) {
+
+            boolean isBonusChecked = ((CheckBox) findViewById(R.id.cbBonus)).isChecked();
+
+            ControllerMain controllerMain = ((ControllerMain) getApplicationContext());
+            controllerMain.getControllerCart().setBonusChecked(isBonusChecked);
+            int cost = controllerMain.getControllerCart().getCost(controllerMain.getControllerItems());
+
+            if (cost == 0) {
+                //todo implement
+            } else
+                ActivityPaymentMethod.display(this);
+
+        } else if (BuildConfig.paymentType == BuildConfig.paymentTypeMessages)
+            new DialogPayment(this, findViewById(R.id.rootView)).show();
     }
 }
