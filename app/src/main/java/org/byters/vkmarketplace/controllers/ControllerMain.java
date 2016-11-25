@@ -213,6 +213,17 @@ public class ControllerMain extends Application
         }
     }
 
+    public void call(Context context, @StringRes int errorRes, @StringRes int phoneRes) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + Uri.encode(context.getString(phoneRes))));
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            context.startActivity(intent);
+        } else {
+            Toast.makeText(context, errorRes, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void sendOrder(String comment, String attachment, Callback<JsonObject> callback) {
         VkService.getApi().sendMessage(
                 getString(R.string.market_id)
