@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -76,7 +75,7 @@ public class ActivityOrdersHistory extends ActivityBase {
                 break;
             case R.id.action_view_online:
                 String uri = String.format(getString(R.string.show_orders_online_format), getString(R.string.market_id));
-                ((ControllerMain) getApplicationContext()).openUrl(this, findViewById(R.id.rootView), getString(R.string.action_view_browser_error), Uri.parse(uri));
+                ((ControllerMain) getApplicationContext()).openUrl(this, getString(R.string.action_view_browser_error), Uri.parse(uri));
                 break;
             case R.id.action_clear_history:
                 new AlertDialog.Builder(this)

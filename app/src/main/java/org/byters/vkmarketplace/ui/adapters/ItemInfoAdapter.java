@@ -161,11 +161,7 @@ public class ItemInfoAdapter extends RecyclerView.Adapter<ItemInfoAdapter.ViewHo
             else
                 uri = String.format(controllerMain.getString(R.string.address_user_format), id);
 
-            controllerMain.openUrl(
-                    v.getContext()
-                    , rootView
-                    , v.getContext().getString(R.string.action_view_browser_error)
-                    , Uri.parse(uri));
+            controllerMain.openUrl(v.getContext(), v.getContext().getString(R.string.action_view_browser_error), Uri.parse(uri));
         }
 
         @Override

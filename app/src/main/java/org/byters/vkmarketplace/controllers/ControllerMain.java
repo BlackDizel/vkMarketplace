@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.view.View;
+import android.support.annotation.StringRes;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 
@@ -183,13 +183,13 @@ public class ControllerMain extends Application
         ).enqueue(callback);
     }
 
-    public Intent getIntentSendEmail(Context context, String title, String body) {
+    public Intent getIntentSendEmail(Context context, @StringRes int titleRes, @StringRes int bodyRes) {
 
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{context.getString(R.string.request_buy_email)});
-        intent.putExtra(Intent.EXTRA_SUBJECT, title);
-        intent.putExtra(Intent.EXTRA_TEXT, body);
-        intent.setType("message/rfc882");
+        intent.putExtra(Intent.EXTRA_SUBJECT, context.getString(titleRes));
+        intent.putExtra(Intent.EXTRA_TEXT, context.getString(bodyRes));
+        // intent.setType("message/rfc882");
 
         return intent;
     }
@@ -202,15 +202,14 @@ public class ControllerMain extends Application
         getControllerComments().sendComment(this, id, comment, controllerAuth.getToken());
     }
 
-    public void openUrl(Context context, @Nullable View rootView, String error_message, Uri uri) {
+    public void openUrl(Context context, String error_message, Uri uri) {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(uri);
         if (intent.resolveActivity(getPackageManager()) != null) {
             context.startActivity(intent);
         } else {
-            if (rootView != null)
-                Snackbar.make(rootView, error_message, Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(context, error_message, Toast.LENGTH_SHORT).show();
         }
     }
 
