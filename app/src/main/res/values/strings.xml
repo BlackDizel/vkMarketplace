@@ -98,4 +98,5 @@
     <string name="menu_phone">Позвонить в магазин</string>
     <string name="menu_feedback">Оставить отзыв</string>
     <string name="menu_rate">Оценить приложение</string>
+    <string name="calling_error">Звонок не удался</string>
 </resources>
