@@ -9,6 +9,7 @@ public enum MenuEnum {
 
     FAVORITES(R.drawable.ic_star_white_24dp, R.string.menu_fav),
     BONUSES(R.drawable.ic_account_balance_wallet_black_24dp, R.string.menu_promo), //ввести промо-код
+    HISTORY(R.drawable.ic_list_black_24dp, R.string.menu_history), //ввести промо-код
     SETTINGS(R.drawable.ic_settings_black_24dp, R.string.menu_settings), //настройки пушей
     CHAT(R.drawable.ic_forum_black_24dp, R.string.menu_chat),
     FEEDBACK(R.drawable.ic_thumb_up_black_24dp, R.string.menu_feedback),

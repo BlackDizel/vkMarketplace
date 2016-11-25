@@ -24,6 +24,7 @@ import org.byters.vkmarketplace.ui.activities.ActivityBonus;
 import org.byters.vkmarketplace.ui.activities.ActivityChat;
 import org.byters.vkmarketplace.ui.activities.ActivityFavorites;
 import org.byters.vkmarketplace.ui.activities.ActivityMain;
+import org.byters.vkmarketplace.ui.activities.ActivityOrdersHistory;
 import org.byters.vkmarketplace.ui.activities.ActivitySettings;
 import org.byters.vkmarketplace.ui.utils.PluralName;
 
@@ -110,6 +111,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     break;
                 case BONUSES:
                     ActivityBonus.display(itemView.getContext());
+                    break;
+                case HISTORY:
+                    ActivityOrdersHistory.display(itemView.getContext());
                     break;
                 case SETTINGS:
                     ActivitySettings.display(itemView.getContext());
