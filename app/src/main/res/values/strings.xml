@@ -99,4 +99,7 @@
     <string name="menu_feedback">Оставить отзыв</string>
     <string name="menu_rate">Оценить приложение</string>
     <string name="calling_error">Звонок не удался</string>
+    <string name="activity_title_bonus">Бонусы</string>
+    <string name="activity_title_chat">Чат</string>
+    <string name="activity_title_settings">Настройки</string>
 </resources>

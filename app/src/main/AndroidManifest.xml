@@ -57,6 +57,30 @@
                 android:value=".ui.activities.ActivityMain" />
         </activity>
 
+        <activity
+            android:name=".ui.activities.ActivityBonus"
+            android:label="@string/activity_title_bonus">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.ActivityMain" />
+        </activity>
+
+        <activity
+            android:name=".ui.activities.ActivityChat"
+            android:label="@string/activity_title_chat">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.ActivityMain" />
+        </activity>
+
+        <activity
+            android:name=".ui.activities.ActivitySettings"
+            android:label="@string/activity_title_settings">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.ActivityMain" />
+        </activity>
+
         <activity android:name=".ui.activities.ActivitySearch">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
