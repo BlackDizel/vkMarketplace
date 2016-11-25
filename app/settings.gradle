@@ -6,6 +6,7 @@ android {
         buildConfigField "int", "paymentTypeMessages", TYPE_PAYMENT_MESSAGES_ONLY
         buildConfigField "int", "paymentType", TYPE_PAYMENT_TYPE_ALL
         buildConfigField "boolean", "isItemPriceOnMainScreen", "false"
+        buildConfigField "boolean", "isCategoryListOnSideMenu", "false"
 
         resValue "string", "app_name", "Лавка Катринии"
         resValue "string", "market_id", "-94800461"
