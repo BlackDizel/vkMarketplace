@@ -3,7 +3,7 @@ package org.byters.vkmarketplace.model.models;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import org.byters.vkmarketplace.controllers.controllers.ControllerStorage;
+import org.byters.vkmarketplace.controllers.ControllerStorage;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 
 import java.util.ArrayList;

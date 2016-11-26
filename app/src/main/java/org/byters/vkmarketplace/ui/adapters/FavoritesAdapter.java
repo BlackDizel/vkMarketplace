@@ -10,9 +10,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.ControllerFavorites;
-import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
+import org.byters.vkmarketplace.controllers.ControllerFavorites;
+import org.byters.vkmarketplace.controllers.ControllerItems;
 import org.byters.vkmarketplace.model.dataclasses.FavoriteItem;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.activities.ActivityFavorites;

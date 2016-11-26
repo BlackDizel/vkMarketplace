@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.ControllerNews;
+import org.byters.vkmarketplace.controllers.ControllerNews;
 import org.byters.vkmarketplace.model.dataclasses.NewsItem;
 import org.byters.vkmarketplace.ui.activities.ActivityMain;
 

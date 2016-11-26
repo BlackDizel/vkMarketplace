@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.controllers.ControllerAuth;
+import org.byters.vkmarketplace.controllers.ControllerAuth;
 
 public class ActivitySplash extends ActivityBase {
 

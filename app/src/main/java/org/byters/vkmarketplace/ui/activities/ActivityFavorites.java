@@ -11,8 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.ControllerFavorites;
+import org.byters.vkmarketplace.controllers.ControllerFavorites;
 import org.byters.vkmarketplace.ui.adapters.FavoritesAdapter;
 
 public class ActivityFavorites extends ActivityBase {

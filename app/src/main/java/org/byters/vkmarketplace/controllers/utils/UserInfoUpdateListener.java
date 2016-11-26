@@ -1,4 +1,4 @@
-package org.byters.vkmarketplace.controllers.controllers.utils;
+package org.byters.vkmarketplace.controllers.utils;
 
 import android.support.annotation.Nullable;
 

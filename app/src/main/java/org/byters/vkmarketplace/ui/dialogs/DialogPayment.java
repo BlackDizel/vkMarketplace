@@ -9,8 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.ControllerCart;
+import org.byters.vkmarketplace.controllers.ControllerCart;
 
 public class DialogPayment
         implements DialogInterface.OnClickListener {

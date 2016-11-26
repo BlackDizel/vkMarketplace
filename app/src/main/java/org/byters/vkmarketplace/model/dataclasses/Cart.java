@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
+import org.byters.vkmarketplace.controllers.ControllerItems;
 import org.byters.vkmarketplace.model.models.ModelItems;
 
 import java.io.Serializable;

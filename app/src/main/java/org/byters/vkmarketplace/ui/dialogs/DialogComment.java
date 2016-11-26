@@ -11,7 +11,7 @@ import android.widget.EditText;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.ControllerComments;
+import org.byters.vkmarketplace.controllers.ControllerComments;
 
 public class DialogComment
         implements DialogInterface.OnClickListener {

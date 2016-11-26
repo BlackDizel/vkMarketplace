@@ -1,4 +1,4 @@
-package org.byters.vkmarketplace.controllers.controllers;
+package org.byters.vkmarketplace.controllers;
 
 import android.app.Activity;
 import android.content.Context;

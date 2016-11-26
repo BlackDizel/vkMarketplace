@@ -1,11 +1,10 @@
-package org.byters.vkmarketplace.controllers.controllers;
+package org.byters.vkmarketplace.controllers;
 
 import android.content.Context;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
-import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
+import org.byters.vkmarketplace.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.NewsBlob;
 import org.byters.vkmarketplace.model.dataclasses.NewsItem;
 

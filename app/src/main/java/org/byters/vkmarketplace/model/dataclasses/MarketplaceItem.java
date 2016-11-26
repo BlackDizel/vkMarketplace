@@ -3,8 +3,7 @@ package org.byters.vkmarketplace.model.dataclasses;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
-import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.ControllerAlbums;
+import org.byters.vkmarketplace.controllers.ControllerAlbums;
 
 import java.io.Serializable;
 import java.util.ArrayList;

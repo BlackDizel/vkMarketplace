@@ -1,4 +1,4 @@
-package org.byters.vkmarketplace.controllers.controllers;
+package org.byters.vkmarketplace.controllers;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,9 +10,7 @@ import com.google.gson.JsonObject;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
-import org.byters.vkmarketplace.controllers.ControllerBonus;
-import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
+import org.byters.vkmarketplace.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.Cart;
 import org.byters.vkmarketplace.model.dataclasses.CartEntry;
 import org.byters.vkmarketplace.model.dataclasses.OrderHistoryInfo;

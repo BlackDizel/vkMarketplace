@@ -16,7 +16,7 @@ import android.view.View;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.ControllerOrdersHistory;
+import org.byters.vkmarketplace.controllers.ControllerOrdersHistory;
 import org.byters.vkmarketplace.ui.adapters.OrdersHistoryAdapter;
 
 public class ActivityOrdersHistory extends ActivityBase {

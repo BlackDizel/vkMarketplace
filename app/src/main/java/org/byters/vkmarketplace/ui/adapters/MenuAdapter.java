@@ -1,6 +1,5 @@
 package org.byters.vkmarketplace.ui.adapters;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -17,9 +16,9 @@ import com.squareup.picasso.Picasso;
 import org.byters.vkmarketplace.BuildConfig;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.ControllerAlbums;
-import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
-import org.byters.vkmarketplace.controllers.controllers.ControllerUserData;
+import org.byters.vkmarketplace.controllers.ControllerAlbums;
+import org.byters.vkmarketplace.controllers.ControllerItems;
+import org.byters.vkmarketplace.controllers.ControllerUserData;
 import org.byters.vkmarketplace.model.MenuEnum;
 import org.byters.vkmarketplace.model.dataclasses.AccountInfo;
 import org.byters.vkmarketplace.model.dataclasses.AlbumBlob;

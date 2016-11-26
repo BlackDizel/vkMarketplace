@@ -1,7 +1,6 @@
-package org.byters.vkmarketplace.controllers.controllers.utils;
+package org.byters.vkmarketplace.controllers.utils;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 

@@ -15,9 +15,9 @@ import android.webkit.WebViewClient;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.ControllerAuth;
-import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
-import org.byters.vkmarketplace.controllers.controllers.ControllerNews;
+import org.byters.vkmarketplace.controllers.ControllerAuth;
+import org.byters.vkmarketplace.controllers.ControllerItems;
+import org.byters.vkmarketplace.controllers.ControllerNews;
 
 public class ActivityLogin extends ActivityBase
         implements View.OnClickListener {

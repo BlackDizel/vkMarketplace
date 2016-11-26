@@ -11,7 +11,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
+import org.byters.vkmarketplace.controllers.ControllerItems;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 
 import java.io.File;

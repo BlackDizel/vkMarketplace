@@ -18,12 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.controllers.ControllerAlbums;
-import org.byters.vkmarketplace.controllers.controllers.ControllerItems;
-import org.byters.vkmarketplace.controllers.controllers.ControllerNews;
-import org.byters.vkmarketplace.controllers.controllers.ControllerUserData;
-import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
-import org.byters.vkmarketplace.controllers.controllers.utils.UserInfoUpdateListener;
+import org.byters.vkmarketplace.controllers.ControllerAlbums;
+import org.byters.vkmarketplace.controllers.ControllerItems;
+import org.byters.vkmarketplace.controllers.ControllerNews;
+import org.byters.vkmarketplace.controllers.ControllerUserData;
+import org.byters.vkmarketplace.controllers.utils.DataUpdateListener;
+import org.byters.vkmarketplace.controllers.utils.UserInfoUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.AccountInfo;
 import org.byters.vkmarketplace.ui.adapters.MenuAdapter;
 import org.byters.vkmarketplace.ui.fragments.FragmentFeatured;

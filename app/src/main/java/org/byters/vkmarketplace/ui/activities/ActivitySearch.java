@@ -14,8 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.controllers.ControllerSearchResult;
-import org.byters.vkmarketplace.controllers.controllers.utils.DataUpdateListener;
+import org.byters.vkmarketplace.controllers.ControllerSearchResult;
+import org.byters.vkmarketplace.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.ui.adapters.SearchResultAdapter;
 
 public class ActivitySearch extends ActivityBase

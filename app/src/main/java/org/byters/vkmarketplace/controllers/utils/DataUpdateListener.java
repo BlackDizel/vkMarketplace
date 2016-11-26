@@ -1,4 +1,4 @@
-package org.byters.vkmarketplace.controllers.controllers.utils;
+package org.byters.vkmarketplace.controllers.utils;
 
 public interface DataUpdateListener {
     int TYPE_ITEMS = 0;

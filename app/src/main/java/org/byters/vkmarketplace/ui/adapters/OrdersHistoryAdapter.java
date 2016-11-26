@@ -1,6 +1,5 @@
 package org.byters.vkmarketplace.ui.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.ControllerMain;
-import org.byters.vkmarketplace.controllers.controllers.ControllerOrdersHistory;
+import org.byters.vkmarketplace.controllers.ControllerOrdersHistory;
 import org.byters.vkmarketplace.model.dataclasses.OrderHistoryInfo;
 
 public class OrdersHistoryAdapter extends RecyclerView.Adapter<OrdersHistoryAdapter.ViewHolder> {
