@@ -9,12 +9,14 @@ import android.support.annotation.StringRes;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
+
+import org.byters.vkmarketplace.BuildConfig;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
 import org.byters.vkmarketplace.controllers.utils.OnItemUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 
+import io.fabric.sdk.android.Fabric;
 import retrofit2.Callback;
 
 public class ControllerMain extends Application
@@ -34,7 +36,8 @@ public class ControllerMain extends Application
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
+        if (!BuildConfig.DEBUG)
+            Fabric.with(this, new Crashlytics());
         ControllerStorage.getInstance().setContext(this);
     }
 
