@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import org.byters.vkmarketplace.R;
 
-public class ActivityBonus extends ActivityBase {
+public class ActivityBonus extends ActivityBase
+        implements View.OnClickListener {
     public static void display(Context context) {
         context.startActivity(new Intent(context, ActivityBonus.class));
     }
@@ -18,6 +20,7 @@ public class ActivityBonus extends ActivityBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bonus);
         setToolbar();
+        findViewById(R.id.ivScan).setOnClickListener(this);
     }
 
     private void setToolbar() {
@@ -31,5 +34,10 @@ public class ActivityBonus extends ActivityBase {
         if (item.getItemId() == android.R.id.home)
             onBackPressed();
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        //todo implement scan QR promo code
     }
 }

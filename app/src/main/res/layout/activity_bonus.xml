@@ -26,13 +26,38 @@
         android:text="@string/activity_bonus_message"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
-    <EditText
-        android:id="@+id/etPromoCode"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/etPromoCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/activity_bonus_input_promo_hint" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/ivScan"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="8dp"
+            android:src="@drawable/ic_photo_camera_black_24dp"
+            android:tint="@color/colorPrimary" />
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
