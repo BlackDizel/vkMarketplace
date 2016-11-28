@@ -15,9 +15,9 @@ import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.BuildConfig;
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.ControllerAlbums;
 import org.byters.vkmarketplace.controllers.ControllerItems;
+import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.ControllerUserData;
 import org.byters.vkmarketplace.model.MenuEnum;
 import org.byters.vkmarketplace.model.dataclasses.AccountInfo;
@@ -115,10 +115,14 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     ActivitySettings.display(itemView.getContext());
                     break;
                 case CHAT:
-                    ActivityChat.display(itemView.getContext());
+                    String uri = String.format(itemView.getContext().getString(R.string.show_orders_online_format)
+                            , itemView.getContext().getString(R.string.market_id));
+                    ControllerMain.openUrl(itemView.getContext(), itemView.getContext().getString(R.string.action_view_browser_error), Uri.parse(uri));
+                    //todo implement app chat activity
+                    //ActivityChat.display(itemView.getContext());
                     break;
                 case FEEDBACK:
-                    Intent intentSend = ((ControllerMain)itemView.getContext().getApplicationContext()).getIntentSendEmail(itemView.getContext()
+                    Intent intentSend = ((ControllerMain) itemView.getContext().getApplicationContext()).getIntentSendEmail(itemView.getContext()
                             , R.string.feedback_message_title
                             , R.string.feedback_message_body);
 
@@ -129,12 +133,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     itemView.getContext().startActivity(intentSend);
                     break;
                 case WEBSITE:
-                    ((ControllerMain)itemView.getContext().getApplicationContext()).openUrl(itemView.getContext()
+                    ((ControllerMain) itemView.getContext().getApplicationContext()).openUrl(itemView.getContext()
                             , itemView.getContext().getString(R.string.action_view_browser_error)
                             , Uri.parse(itemView.getContext().getString(R.string.market_address)));
                     break;
                 case PHONE:
-                    ((ControllerMain)itemView.getContext().getApplicationContext()).call(itemView.getContext()
+                    ((ControllerMain) itemView.getContext().getApplicationContext()).call(itemView.getContext()
                             , R.string.calling_error
                             , R.string.market_phone);
                     break;
