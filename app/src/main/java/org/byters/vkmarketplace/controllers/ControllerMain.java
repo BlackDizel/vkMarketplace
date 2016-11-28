@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
 import org.byters.vkmarketplace.controllers.utils.OnItemUpdateListener;
@@ -32,6 +34,7 @@ public class ControllerMain extends Application
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         ControllerStorage.getInstance().setContext(this);
     }
 
