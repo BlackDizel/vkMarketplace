@@ -18,6 +18,17 @@ import retrofit2.Callback;
 public class ControllerMain extends Application
         implements OnItemUpdateListener {
 
+    public static void openUrl(Context context, String error_message, Uri uri) {
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(uri);
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(intent);
+        } else {
+            Toast.makeText(context, error_message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -71,17 +82,6 @@ public class ControllerMain extends Application
         // intent.setType("message/rfc882");
 
         return intent;
-    }
-
-    public void openUrl(Context context, String error_message, Uri uri) {
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(uri);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            context.startActivity(intent);
-        } else {
-            Toast.makeText(context, error_message, Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void call(Context context, @StringRes int errorRes, @StringRes int phoneRes) {
