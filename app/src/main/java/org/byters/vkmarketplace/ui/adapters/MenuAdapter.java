@@ -23,7 +23,6 @@ import org.byters.vkmarketplace.model.MenuEnum;
 import org.byters.vkmarketplace.model.dataclasses.AccountInfo;
 import org.byters.vkmarketplace.model.dataclasses.AlbumBlob;
 import org.byters.vkmarketplace.ui.activities.ActivityBonus;
-import org.byters.vkmarketplace.ui.activities.ActivityChat;
 import org.byters.vkmarketplace.ui.activities.ActivityFavorites;
 import org.byters.vkmarketplace.ui.activities.ActivityMain;
 import org.byters.vkmarketplace.ui.activities.ActivityOrdersHistory;
@@ -116,7 +115,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     break;
                 case CHAT:
                     String uri = String.format(itemView.getContext().getString(R.string.show_orders_online_format)
-                            , itemView.getContext().getString(R.string.market_id));
+                            , itemView.getContext().getResources().getInteger(R.integer.market));
                     ControllerMain.openUrl(itemView.getContext(), itemView.getContext().getString(R.string.action_view_browser_error), Uri.parse(uri));
                     //todo implement app chat activity
                     //ActivityChat.display(itemView.getContext());

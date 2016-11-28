@@ -75,7 +75,7 @@ public class ActivityOrdersHistory extends ActivityBase {
                 onBackPressed();
                 break;
             case R.id.action_view_online:
-                String uri = String.format(getString(R.string.show_orders_online_format), getString(R.string.market_id));
+                String uri = String.format(getString(R.string.show_orders_online_format), getResources().getInteger(R.integer.market));
                 ((ControllerMain) getApplicationContext()).openUrl(this, getString(R.string.action_view_browser_error), Uri.parse(uri));
                 break;
             case R.id.action_clear_history:

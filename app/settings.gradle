@@ -9,7 +9,6 @@ android {
         buildConfigField "boolean", "isCategoryListOnSideMenu", "false"
 
         resValue "string", "app_name", "Лавка Катринии"
-        resValue "string", "market_id", "-94800461"
         resValue "string", "market_phone", "+7(965)240-88-71"
         resValue "string", "request_buy_email", "example@mail.com"
         resValue "string", "market_address", "http://vk.com/katriniya_group"

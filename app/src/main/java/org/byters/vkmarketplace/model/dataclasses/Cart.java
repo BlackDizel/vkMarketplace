@@ -141,7 +141,7 @@ public class Cart implements Serializable {
 
             result = String.format(context.getString(R.string.attachment_format)
                     , result
-                    , context.getString(R.string.market_id)
+                    , context.getResources().getInteger(R.integer.market)
                     , item.getItemId());
         }
         return result;

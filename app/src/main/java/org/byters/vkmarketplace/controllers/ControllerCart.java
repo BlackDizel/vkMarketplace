@@ -62,7 +62,7 @@ public class ControllerCart {
         ControllerMain controllerMain = ((ControllerMain) context.getApplicationContext());
 
         VkService.getApi().sendMessage(
-                context.getString(R.string.market_id)
+                context.getResources().getInteger(R.integer.market)
                 , getRequestText(context)
                 , getCartRequestAttachmentText(context)
                 , ControllerAuth.getInstance().getToken()

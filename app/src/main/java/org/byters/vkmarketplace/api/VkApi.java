@@ -101,7 +101,7 @@ public interface VkApi {
 
     @GET("messages.send")
     Call<JsonObject> sendMessage(
-            @Query("peer_id") String group_id
+            @Query("peer_id") int group_id
             , @Query("message") String message
             , @Query("attachment") String attach
             , @Query("access_token") String token
