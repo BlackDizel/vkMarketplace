@@ -3,6 +3,7 @@ package org.byters.vkmarketplace.ui.dialogs;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,10 @@ public class DialogPayment
     private AlertDialog dialog;
     private Context context;
     private EditText etComment;
+    @Nullable
     private View rootView;
 
-    public DialogPayment(Context context, View rootView) {
+    public DialogPayment(Context context, @Nullable View rootView) {
 
         this.rootView = rootView;
         this.context = context;
