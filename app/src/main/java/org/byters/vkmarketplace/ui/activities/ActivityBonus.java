@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import org.byters.vkmarketplace.R;
 
@@ -21,6 +22,12 @@ public class ActivityBonus extends ActivityBase
         setContentView(R.layout.activity_bonus);
         setToolbar();
         findViewById(R.id.ivScan).setOnClickListener(this);
+        setData();
+    }
+
+    private void setData() {
+        //todo implement set bonus count
+        ((TextView) findViewById(R.id.tvPromoSum)).setText("0");
     }
 
     private void setToolbar() {
