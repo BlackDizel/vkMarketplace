@@ -50,6 +50,24 @@
         </activity>
 
         <activity
+            android:name=".ui.activities.ActivityBankCard"
+            android:label="@string/activity_payment_title">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.ActivityPaymentMethod" />
+        </activity>
+
+        <activity
+            android:name=".ui.activities.ActivityBankPayment"
+            android:label="@string/activity_payment_title">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.ActivityPaymentMethod" />
+        </activity>
+
+        <activity
             android:name=".ui.activities.ActivityFavorites"
             android:label="@string/activity_fav_title">
             <meta-data

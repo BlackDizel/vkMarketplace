@@ -113,4 +113,16 @@
     <string name="settings_push">Использовать Push-сообщения</string>
     <string name="activity_chat_button_send">Отправить</string>
     <string name="activity_bonus_input_promo_hint">Введите промо-код</string>
+    <string name="card_hint_number">Номер карты</string>
+    <string name="card_hint_date">Срок действия</string>
+    <string name="card_hint_month">MM</string>
+    <string name="card_hint_year">YYYY</string>
+    <string name="card_hint_cvv">CVV</string>
+    <string name="activity_bank_payment_bank_card_hint">Номер банковской карты</string>
+    <string name="activity_bank_payment_recipient_hint">Получатель</string>
+    <string name="activity_bank_payment_bank_name_hint">Банк</string>
+    <string name="activity_bank_payment_bank_correspond_state_hint">Кор. счет</string>
+    <string name="activity_bank_payment_bank_bik">БИК банка</string>
+    <string name="activity_bank_payment_recipient_state_hint">Расчетный счет</string>
+    <string name="activity_bank_payment_message_hint">текст сообщения</string>
 </resources>
