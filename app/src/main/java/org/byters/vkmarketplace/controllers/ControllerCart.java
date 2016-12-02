@@ -10,8 +10,10 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 
 import org.byters.vkmarketplace.R;
+import org.byters.vkmarketplace.api.ServiceMarketplace;
 import org.byters.vkmarketplace.api.VkService;
 import org.byters.vkmarketplace.controllers.utils.DataUpdateListener;
+import org.byters.vkmarketplace.model.ResponsePayment;
 import org.byters.vkmarketplace.model.dataclasses.Cart;
 import org.byters.vkmarketplace.model.dataclasses.CartEntry;
 import org.byters.vkmarketplace.model.dataclasses.OrderHistoryInfo;
@@ -144,6 +146,15 @@ public class ControllerCart {
     public void setBonusChecked(boolean bonusChecked) {
         if (cart == null) return;
         cart.setBonusChecked(bonusChecked);
+    }
+
+    @Nullable
+    public Call<ResponsePayment> getRequestBankPayment(Context context, String stripeToken) {
+        if (cart == null) return null;
+        return ServiceMarketplace.getApi().requestPayment(stripeToken
+                , cart.getCost()
+                , getCartItemsText(context)
+                , cart.getComment());
     }
 
     private class OrderCallback implements Callback<JsonObject> {
