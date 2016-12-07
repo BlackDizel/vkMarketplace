@@ -55,7 +55,6 @@ public class ActivityCart extends ActivityBase
             findViewById(R.id.tvNoItems).setVisibility(View.VISIBLE);
             contentView.setVisibility(View.GONE);
         } else {
-            ControllerMain controllerMain = ((ControllerMain) getApplicationContext());
             int cost = ControllerCart.getInstance().getCost();
             tvCost.setText(String.format(getString(R.string.cart_general_cost_format), cost));
             setBonus();
