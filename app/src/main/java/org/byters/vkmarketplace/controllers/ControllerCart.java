@@ -152,7 +152,7 @@ public class ControllerCart {
     public Call<ResponsePayment> getRequestBankPayment(Context context, String stripeToken) {
         if (cart == null) return null;
         return ServiceMarketplace.getApi().requestPayment(stripeToken
-                , cart.getCost()
+                , cart.getCost() * 100
                 , getCartItemsText(context)
                 , cart.getComment());
     }
