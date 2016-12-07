@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.byters.vkmarketplace.R;
+import org.byters.vkmarketplace.controllers.ControllerBonus;
 
 public class ActivityBonus extends ActivityBase
         implements View.OnClickListener {
@@ -26,8 +27,8 @@ public class ActivityBonus extends ActivityBase
     }
 
     private void setData() {
-        //todo implement set bonus count
-        ((TextView) findViewById(R.id.tvPromoSum)).setText("0");
+        int bonusCount = ControllerBonus.getInstance().getBonusCount();
+        ((TextView) findViewById(R.id.tvPromoSum)).setText(String.valueOf(bonusCount));
     }
 
     private void setToolbar() {
