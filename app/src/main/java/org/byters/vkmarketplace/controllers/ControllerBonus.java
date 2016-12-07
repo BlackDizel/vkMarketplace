@@ -1,14 +1,11 @@
 package org.byters.vkmarketplace.controllers;
 
-import org.byters.vkmarketplace.BuildConfig;
-
 public class ControllerBonus {
     private static ControllerBonus instance;
     private int bonusCount;
 
     private ControllerBonus() {
-        if (BuildConfig.DEBUG)
-            bonusCount = 500;
+        bonusCount = 0;
     }
 
     public static ControllerBonus getInstance() {
