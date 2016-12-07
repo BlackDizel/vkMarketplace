@@ -10,6 +10,9 @@ import android.widget.TextView;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerListPaymentMethod;
 import org.byters.vkmarketplace.model.PaymentMethodEnum;
+import org.byters.vkmarketplace.ui.activities.ActivityBankCard;
+import org.byters.vkmarketplace.ui.activities.ActivityBankPayment;
+import org.byters.vkmarketplace.ui.dialogs.DialogPayment;
 
 public class AdapterPaymentMethod extends RecyclerView.Adapter<AdapterPaymentMethod.ViewHolder> {
     @Override
@@ -50,7 +53,18 @@ public class AdapterPaymentMethod extends RecyclerView.Adapter<AdapterPaymentMet
 
         @Override
         public void onClick(View view) {
-            //todo implement
+            switch (currentPaymentMethod) {
+                case TYPE_BANKCARD:
+                    //todo check saved card list
+                    ActivityBankCard.display(itemView.getContext());
+                    break;
+                case TYPE_BANK_PAYMENT:
+                    ActivityBankPayment.display(itemView.getContext());
+                    break;
+                case TYPE_PRIVATE_MESSAGE:
+                    new DialogPayment(itemView.getContext(), null).show();
+                    break;
+            }
         }
     }
 }
