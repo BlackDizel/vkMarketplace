@@ -125,4 +125,8 @@
     <string name="activity_bank_payment_bank_bik">БИК банка</string>
     <string name="activity_bank_payment_recipient_state_hint">Расчетный счет</string>
     <string name="activity_bank_payment_message_hint">текст сообщения</string>
+    <string name="error_bank_card_date">Проверьте введ енный срок действия банковской карты</string>
+    <string name="error_bank_card">Проверьте введенные данные банковской карты</string>
+    <string name="error_bank_card_payment_provider">Платежный провайдер недоступен</string>
+    <string name="payment_successful">Оплата прошла успешно</string>
 </resources>
