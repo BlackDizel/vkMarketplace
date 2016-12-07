@@ -19,7 +19,7 @@ apply from: 'settings.gradle'
 android {
 
     compileSdkVersion 25
-    buildToolsVersion "25"
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
         applicationId "org.byters.vkmarketplace"
@@ -56,7 +56,14 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
 
     compile 'org.apmem.tools:layouts:1.10@aar'
+
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+        transitive = true;
+    }
+    compile('com.stripe:stripe-android:1.0.4@aar') {
+        transitive = true;
+    }
+    compile('io.fabric.sdk.android:fabric:1.3.10@aar') {
         transitive = true;
     }
 }
