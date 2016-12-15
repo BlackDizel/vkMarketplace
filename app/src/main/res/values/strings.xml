@@ -129,4 +129,5 @@
     <string name="error_bank_card">Проверьте введенные данные банковской карты</string>
     <string name="error_bank_card_payment_provider">Платежный провайдер недоступен</string>
     <string name="payment_successful">Оплата прошла успешно</string>
+    <string name="menu_shop">Витрина</string>
 </resources>

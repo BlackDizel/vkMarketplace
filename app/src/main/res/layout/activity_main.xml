@@ -58,13 +58,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvMenu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </android.support.design.widget.NavigationView>
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/view_menu_header"
+        app:menu="@menu/nav_menu" />
 
 </android.support.v4.widget.DrawerLayout>
