@@ -3,10 +3,9 @@
 
     <group android:id="@+id/group_pages">
 
-        <!--todo add icon-->
         <item
             android:id="@+id/action_nav_shop"
-            android:icon="@drawable/ic_star_white_24dp"
+            android:icon="@drawable/ic_dashboard_black_24dp"
             android:title="@string/menu_shop" />
 
         <item
