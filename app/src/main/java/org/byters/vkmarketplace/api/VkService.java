@@ -11,8 +11,8 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -28,14 +28,12 @@ public class VkService {
 
     private static VkApi initializeApi() {
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .connectTimeout(1, TimeUnit.MINUTES)
-                .readTimeout(1, TimeUnit.MINUTES)
-                .addInterceptor(interceptor)
-                .build();
+                .readTimeout(1, TimeUnit.MINUTES);
+        Interceptor interceptor = InterceptorHelper.getLoggingInterceptor();
+        if (interceptor != null) builder.addInterceptor(interceptor);
+        OkHttpClient client = builder.build();
 
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(double.class, new JsonDeserializer<Double>() {
