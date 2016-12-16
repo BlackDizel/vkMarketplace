@@ -1,3 +1,5 @@
+ext.isYaMetrikaEnabled = false
+
 android {
     defaultConfig {
         def TYPE_PAYMENT_TYPE_ALL = "0"
@@ -6,7 +8,8 @@ android {
         buildConfigField "int", "paymentTypeMessages", TYPE_PAYMENT_MESSAGES_ONLY
         buildConfigField "int", "paymentType", TYPE_PAYMENT_TYPE_ALL
         buildConfigField "boolean", "isItemPriceOnMainScreen", "false"
-        buildConfigField "boolean", "isCategoryListOnSideMenu", "false"
+        buildConfigField "String", "APPMETRIKA_KEY", "key_here"
+        buildConfigField "boolean", "isYaMetrikaEnabled", "$isYaMetrikaEnabled"
 
         resValue "string", "app_name", "Лавка Катринии"
         resValue "string", "market_phone", "+7(900) 000-00-00"
@@ -14,6 +17,7 @@ android {
         resValue "string", "market_address", "http://vk.com/katriniya_group"
         resValue "string", "vk_auth_url", "https://oauth.vk.com/authorize?client_id=5246723&scope=market,messages,offline,wall&redirect_uri=https://oauth.vk.com/blank.html&display=touch&v=5.44&response_type=token"
         resValue "string", "fabric_key", "blablabla"
+        resValue "string", "com.stripe.publishable_key", "key_here"
 
         resValue "integer", "market", "-94800461"
     }

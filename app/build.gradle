@@ -10,6 +10,9 @@ buildscript {
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply from: 'settings.gradle'
+if (isYaMetrikaEnabled){
+    apply from: 'metrika.gradle'
+}
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -45,7 +48,6 @@ ext {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
 
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:design:$support_version"
@@ -61,7 +63,9 @@ dependencies {
 
     compile 'org.apmem.tools:layouts:1.10@aar'
 
-    compile 'com.yandex.android:mobmetricalib:2.60'
+    if (isYaMetrikaEnabled) {
+        compile 'com.yandex.android:mobmetricalib:2.60'
+    }
 
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;

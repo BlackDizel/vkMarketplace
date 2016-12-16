@@ -39,6 +39,14 @@ public class ControllerMain extends Application
         if (!BuildConfig.DEBUG)
             Fabric.with(this, new Crashlytics());
         ControllerStorage.getInstance().setContext(this);
+
+        initAnalytics();
+    }
+
+    private void initAnalytics() {
+        //IFMETRIKA   android.util.Log.v("some","yandex metrika enabled");
+        //IFMETRIKA    com.yandex.metrica.YandexMetrica.activate(getApplicationContext(), BuildConfig.APPMETRIKA_KEY);
+        //IFMETRIKA    com.yandex.metrica.YandexMetrica.enableActivityAutoTracking(this);
     }
 
     public void setUserID(Context context, @NonNull String id) {

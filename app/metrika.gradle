@@ -1,0 +1,16 @@
+def src = "$buildDir/generated-src"
+def metrikaPrefix= "//IFMETRIKA"
+
+android {
+    sourceSets.main.java.srcDirs = [src]
+}
+
+task generateSources(type: Copy) {
+    from 'src/main/java'
+    into src
+
+    filter { String line ->
+        line.replaceAll(metrikaPrefix, "")
+    }
+}
+preBuild.dependsOn generateSources
