@@ -36,31 +36,32 @@ public class FragmentFeatured extends FragmentBase
         refreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.srlItems);
         refreshLayout.setOnRefreshListener(this);
 
-        adapter = new ItemsAdapter((ControllerMain) v.getContext().getApplicationContext());
-
         RecyclerView rv = (RecyclerView) v.findViewById(R.id.rvItems);
+        setList(rv);
+        return v;
+    }
+
+    private void setList(RecyclerView rv) {
+        adapter = new ItemsAdapter();
         int columns = getResources().getInteger(R.integer.items_list_columns);
-        GridLayoutManager manager = new GridLayoutManager(v.getContext(), columns);
+        GridLayoutManager manager = new GridLayoutManager(rv.getContext(), columns);
         manager.setSpanSizeLookup(new SpanSizeLookupWithHeader());
         rv.setLayoutManager(manager);
-        rv.addItemDecoration(new ItemDecoration(v.getContext()));
+        rv.addItemDecoration(new ItemDecoration(rv.getContext()));
         rv.setAdapter(adapter);
-
-        return v;
     }
 
     public void updateData() {
         if (refreshLayout != null) refreshLayout.setRefreshing(false);
         if (adapter != null) adapter.updateData();
-        ((ActivityBase) getActivity()).setIsOffline((ActivityBase) getActivity(), false);
-
+        ActivityBase.setIsOffline((ActivityBase) getActivity(), false);
     }
 
     public void updateWithError() {
         if (ControllerItems.getInstance().getModel().isEmpty())
             ((ActivityBase) getActivity()).setState(ActivityBase.STATE_ERROR);
         else
-            ((ActivityBase) getActivity()).setIsOffline((ActivityBase) getActivity(), true);
+            ActivityBase.setIsOffline((ActivityBase) getActivity(), true);
     }
 
     @Override
@@ -71,14 +72,13 @@ public class FragmentFeatured extends FragmentBase
 
     @Override
     public void onRefresh() {
-        if (getActivity() != null) {
-            ControllerItems.getInstance().updateData(getContext());
-            ControllerNews.getInstance().updateData(getContext());
+        if (getActivity() == null) return;
+        ControllerItems.getInstance().updateData(getContext());
+        ControllerNews.getInstance().updateData(getContext());
 
-            //todo add interface and move code to activityMain
-            ControllerUserData.getInstance().updateUserData(getContext());
-            ControllerAlbums.getInstance().updateData(getContext());
-        }
+        //todo add interface and move code to activityMain
+        ControllerUserData.getInstance().updateUserData(getContext());
+        ControllerAlbums.getInstance().updateData(getContext());
     }
 
     private class SpanSizeLookupWithHeader extends GridLayoutManager.SpanSizeLookup {
@@ -94,7 +94,7 @@ public class FragmentFeatured extends FragmentBase
 
         private int margin;
 
-        public ItemDecoration(Context context) {
+        ItemDecoration(Context context) {
             margin = (int) context.getResources().getDimension(R.dimen.view_item_list_margin);
         }
 

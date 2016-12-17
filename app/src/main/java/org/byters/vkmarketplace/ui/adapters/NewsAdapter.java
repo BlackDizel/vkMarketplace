@@ -14,17 +14,11 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.ControllerNews;
 import org.byters.vkmarketplace.model.dataclasses.NewsItem;
 import org.byters.vkmarketplace.ui.activities.ActivityMain;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
-    private ControllerMain controllerMain;
-
-    public NewsAdapter(ControllerMain context) {
-        controllerMain = context;
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -75,7 +69,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 setLikes(item);
                 String url = item.getPhotoUri();
                 if (!TextUtils.isEmpty(url))
-                    Picasso.with(controllerMain).load(url).into(ivItem);
+                    Picasso.with(itemView.getContext()).load(url).into(ivItem);
             }
         }
 
@@ -92,8 +86,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
             Intent intent = new Intent(Intent.ACTION_VIEW);
             String uri = String.format("%s?w=wall%d_%d"
-                    , controllerMain.getString(R.string.market_address)
-                    , controllerMain.getResources().getInteger(R.integer.market)
+                    , v.getContext().getString(R.string.market_address)
+                    , v.getContext().getResources().getInteger(R.integer.market)
                     , newsId);
 
             intent.setData(Uri.parse(uri));

@@ -20,7 +20,6 @@ import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.BuildConfig;
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.ControllerFavorites;
 import org.byters.vkmarketplace.controllers.ControllerItems;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
@@ -32,12 +31,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
-
-    private ControllerMain controllerMain;
-
-    public ItemsAdapter(@NonNull ControllerMain controllerMain) {
-        this.controllerMain = controllerMain;
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -85,8 +78,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         public ViewHolderHeader(View itemView) {
             super(itemView);
             rvHeader = (RecyclerView) itemView.findViewById(R.id.rvHeader);
-            rvHeader.setLayoutManager(new LinearLayoutManager(controllerMain, LinearLayoutManager.HORIZONTAL, false));
-            adapter = new NewsAdapter(controllerMain);
+            rvHeader.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
+            adapter = new NewsAdapter();
             rvHeader.setAdapter(adapter);
             rvHeader.addItemDecoration(new ItemDecoration());
             SnapHelper snapHelper = new CenterSnapHelper();
@@ -104,7 +97,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             private int margin;
 
             public ItemDecoration() {
-                margin = (int) controllerMain.getResources().getDimension(R.dimen.view_item_news_margin);
+                margin = (int) itemView.getContext().getResources().getDimension(R.dimen.view_item_news_margin);
             }
 
             @Override
@@ -151,7 +144,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 if (item.getPrice() != null && !TextUtils.isEmpty(item.getPrice().getText()))
                     tvPrice.setText(item.getPrice().getText().toUpperCase().replace(".", ""));
                 else tvPrice.setText("");
-                Picasso.with(controllerMain).load(item.getThumb_photo()).into(ivItem);
+                Picasso.with(itemView.getContext()).load(item.getThumb_photo()).into(ivItem);
                 id = item.getId();
                 if (ControllerFavorites.getInstance().isFavorite(id))
                     ivFav.setVisibility(View.VISIBLE);
