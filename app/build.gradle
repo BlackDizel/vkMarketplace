@@ -21,7 +21,7 @@ repositories {
 android {
 
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "org.byters.vkmarketplace"
@@ -42,7 +42,7 @@ android {
 }
 
 ext {
-    support_version = '25.0.1'
+    support_version = '25.1.0'
     retrofit_version = '2.1.0'
 }
 
@@ -54,6 +54,7 @@ dependencies {
     compile "com.android.support:support-v4:$support_version"
     compile "com.android.support:recyclerview-v7:$support_version"
     compile "com.android.support:percent:$support_version"
+    compile "com.android.support:cardview-v7:$support_version"
 
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
