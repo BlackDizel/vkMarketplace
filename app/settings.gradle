@@ -4,11 +4,20 @@ android {
     defaultConfig {
         def TYPE_PAYMENT_TYPE_ALL = "0"
         def TYPE_PAYMENT_MESSAGES_ONLY = "1"
+
+        def TYPE_SHOP_ITEM_OVERLAY = "0"
+        def TYPE_SHOP_ITEM_VERTICAL = "1"
+
         buildConfigField "int", "paymentTypeAll", TYPE_PAYMENT_TYPE_ALL
         buildConfigField "int", "paymentTypeMessages", TYPE_PAYMENT_MESSAGES_ONLY
         buildConfigField "int", "paymentType", TYPE_PAYMENT_TYPE_ALL
-        buildConfigField "boolean", "isItemPriceOnMainScreen", "false"
-        buildConfigField "String", "APPMETRIKA_KEY", "key_here"
+
+        buildConfigField "int", "shopItemType", TYPE_SHOP_ITEM_VERTICAL
+        buildConfigField "int", "shopItemTypeVertical", TYPE_SHOP_ITEM_VERTICAL
+        buildConfigField "int", "shopItemTypeOverlay", TYPE_SHOP_ITEM_OVERLAY
+
+        buildConfigField "boolean", "isItemPriceOnMainScreen", "true"
+        buildConfigField "String", "APPMETRIKA_KEY", "\"key_here\""
         buildConfigField "boolean", "isYaMetrikaEnabled", "$isYaMetrikaEnabled"
 
         resValue "string", "app_name", "Лавка Катринии"
