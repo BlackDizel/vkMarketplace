@@ -15,13 +15,14 @@ import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerSearchResult;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.activities.ActivityItemInfo;
+import org.byters.vkmarketplace.ui.utils.ShopHelper;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.view_list_items, parent, false));
+                .inflate(ShopHelper.getItemLayout(), parent, false));
     }
 
     @Override

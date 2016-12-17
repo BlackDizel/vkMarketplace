@@ -2,6 +2,7 @@ package org.byters.vkmarketplace.ui.adapters;
 
 import android.app.Activity;
 import android.graphics.Rect;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,7 @@ import org.byters.vkmarketplace.controllers.ControllerItems;
 import org.byters.vkmarketplace.model.dataclasses.MarketplaceItem;
 import org.byters.vkmarketplace.ui.activities.ActivityItemInfo;
 import org.byters.vkmarketplace.ui.utils.CenterSnapHelper;
+import org.byters.vkmarketplace.ui.utils.ShopHelper;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
 
@@ -41,7 +43,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM)
             return new ViewHolderItem(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.view_list_items, parent, false));
+                    .inflate(ShopHelper.getItemLayout(), parent, false));
         else return new ViewHolderHeader(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_list_items_header, parent, false));
     }
@@ -157,9 +159,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                     ivFav.setVisibility(View.GONE);
 
                 FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-                if (position % 2 == 0)
-                    params.gravity = Gravity.END;
-                else params.gravity = Gravity.START;
+                params.gravity = position % 2 == 0 ? Gravity.END : Gravity.START;
                 ivFav.setLayoutParams(params);
             }
         }
