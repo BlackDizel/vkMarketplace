@@ -2,8 +2,6 @@ package org.byters.vkmarketplace.ui.adapters;
 
 import android.app.Activity;
 import android.graphics.Rect;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
@@ -54,10 +52,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         return ControllerItems.getInstance().getModel().getSize() + 1;
-    }
-
-    public void updateData() {
-        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -5,25 +5,27 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.byters.vkmarketplace.BuildConfig;
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.ControllerAlbums;
 import org.byters.vkmarketplace.controllers.ControllerItems;
 import org.byters.vkmarketplace.controllers.ControllerNews;
 import org.byters.vkmarketplace.controllers.ControllerUserData;
 import org.byters.vkmarketplace.ui.activities.ActivityBase;
 import org.byters.vkmarketplace.ui.adapters.ItemsAdapter;
+import org.byters.vkmarketplace.ui.adapters.ItemsAdapterCategories;
 
 public class FragmentFeatured extends FragmentBase
         implements SwipeRefreshLayout.OnRefreshListener {
 
     private SwipeRefreshLayout refreshLayout;
-    private ItemsAdapter adapter;
+    private RecyclerView.Adapter adapter;
 
     public static FragmentFeatured newInstance() {
         return new FragmentFeatured();
@@ -42,18 +44,25 @@ public class FragmentFeatured extends FragmentBase
     }
 
     private void setList(RecyclerView rv) {
-        adapter = new ItemsAdapter();
-        int columns = getResources().getInteger(R.integer.items_list_columns);
-        GridLayoutManager manager = new GridLayoutManager(rv.getContext(), columns);
-        manager.setSpanSizeLookup(new SpanSizeLookupWithHeader());
-        rv.setLayoutManager(manager);
-        rv.addItemDecoration(new ItemDecoration(rv.getContext()));
+
+        if (BuildConfig.shopListType == BuildConfig.shopListTypeGrid) {
+            adapter = new ItemsAdapter();
+            int columns = getResources().getInteger(R.integer.items_list_columns);
+            GridLayoutManager manager = new GridLayoutManager(rv.getContext(), columns);
+            manager.setSpanSizeLookup(new SpanSizeLookupWithHeader());
+            rv.setLayoutManager(manager);
+            rv.addItemDecoration(new ItemDecoration(rv.getContext()));
+        } else {
+            adapter = new ItemsAdapterCategories();
+            rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
+
         rv.setAdapter(adapter);
     }
 
     public void updateData() {
         if (refreshLayout != null) refreshLayout.setRefreshing(false);
-        if (adapter != null) adapter.updateData();
+        if (adapter != null) adapter.notifyDataSetChanged();
         ActivityBase.setIsOffline((ActivityBase) getActivity(), false);
     }
 
@@ -67,7 +76,7 @@ public class FragmentFeatured extends FragmentBase
     @Override
     public void onResume() {
         super.onResume();
-        adapter.notifyDataSetChanged();
+        if (adapter != null) adapter.notifyDataSetChanged();
     }
 
     @Override
