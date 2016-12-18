@@ -8,6 +8,9 @@ android {
         def TYPE_SHOP_ITEM_OVERLAY = "0"
         def TYPE_SHOP_ITEM_VERTICAL = "1"
 
+        def TYPE_SHOP_LIST_GRID = "0"
+        def TYPE_SHOP_LIST_CATEGORIES = "1"
+
         buildConfigField "int", "paymentTypeAll", TYPE_PAYMENT_TYPE_ALL
         buildConfigField "int", "paymentTypeMessages", TYPE_PAYMENT_MESSAGES_ONLY
         buildConfigField "int", "paymentType", TYPE_PAYMENT_TYPE_ALL
@@ -15,6 +18,10 @@ android {
         buildConfigField "int", "shopItemType", TYPE_SHOP_ITEM_VERTICAL
         buildConfigField "int", "shopItemTypeVertical", TYPE_SHOP_ITEM_VERTICAL
         buildConfigField "int", "shopItemTypeOverlay", TYPE_SHOP_ITEM_OVERLAY
+
+        buildConfigField "int", "shopListType", TYPE_SHOP_LIST_CATEGORIES
+        buildConfigField "int", "shopListTypeGrid", TYPE_SHOP_LIST_GRID
+        buildConfigField "int", "shopListTypeCategories", TYPE_SHOP_LIST_CATEGORIES
 
         buildConfigField "boolean", "isItemPriceOnMainScreen", "true"
         buildConfigField "String", "APPMETRIKA_KEY", "\"key_here\""
