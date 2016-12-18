@@ -18,6 +18,7 @@ import retrofit2.Response;
 public class ControllerAlbums
         implements Callback<AlbumBlob> {
 
+    public static final int NO_VALUE = -1;
     private static ControllerAlbums instance;
     private DataUpdateListener listener;
     @Nullable
@@ -59,7 +60,7 @@ public class ControllerAlbums
     }
 
     @Nullable
-    private AlbumBlob.AlbumItem getItemById(int id) {
+    public AlbumBlob.AlbumItem getItemById(int id) {
         if (data == null) return null;
         for (AlbumBlob.AlbumItem item : data)
             if (item.getId() == id)
@@ -100,5 +101,11 @@ public class ControllerAlbums
     public void onFailure(Call<AlbumBlob> call, Throwable t) {
         if (listener != null)
             listener.onError(DataUpdateListener.TYPE_ALBUM);
+    }
+
+    public int getItemsSizeById(int id) {
+        AlbumBlob.AlbumItem item = getItemById(id);
+        if (item == null) return 0;
+        return item.getCount();
     }
 }
