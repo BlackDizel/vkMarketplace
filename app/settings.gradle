@@ -36,5 +36,9 @@ android {
         resValue "string", "com.stripe.publishable_key", "key_here"
 
         resValue "integer", "market", "-94800461"
+
+        resValue "color", "colorPrimary", "#587cc9"
+        resValue "color", "colorPrimaryDark", "#3559a7"
+        resValue "color", "colorAccent", "#30a4ac"
     }
 }
