@@ -89,7 +89,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="@color/black"
         tools:text="500" />
 
 </LinearLayout>
