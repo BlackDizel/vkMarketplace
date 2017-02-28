@@ -47,9 +47,7 @@
             android:layout_marginRight="@dimen/fab_margin_end"
             android:layout_marginStart="@dimen/fab_margin_end"
             android:src="@drawable/ic_search_white_24dp"
-            android:tint="@color/white"
-            android:visibility="gone"
-            app:layout_behavior="org.byters.vkmarketplace.ui.utils.FABScrollBehavior" />
+            android:tint="@color/white" />
 
     </android.support.design.widget.CoordinatorLayout>
 
