@@ -11,6 +11,13 @@ android {
         def TYPE_SHOP_LIST_GRID = "0"
         def TYPE_SHOP_LIST_CATEGORIES = "1"
 
+        def THEME_DARK = "0"
+        def THEME_LIGHT = "1"
+
+        buildConfigField "int", "AppTheme", THEME_DARK
+        buildConfigField "int", "ThemeDark", THEME_DARK
+        buildConfigField "int", "ThemeLight", THEME_LIGHT
+
         buildConfigField "int", "paymentTypeAll", TYPE_PAYMENT_TYPE_ALL
         buildConfigField "int", "paymentTypeMessages", TYPE_PAYMENT_MESSAGES_ONLY
         buildConfigField "int", "paymentType", TYPE_PAYMENT_TYPE_ALL

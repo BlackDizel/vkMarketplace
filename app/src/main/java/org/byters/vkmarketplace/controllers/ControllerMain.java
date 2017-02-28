@@ -40,6 +40,10 @@ public class ControllerMain extends Application
             Fabric.with(this, new Crashlytics());
         ControllerStorage.getInstance().setContext(this);
 
+        setTheme(BuildConfig.AppTheme == BuildConfig.ThemeDark
+                ? R.style.AppThemeDark
+                : R.style.AppThemeLight);
+
         initAnalytics();
     }
 
