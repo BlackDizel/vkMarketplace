@@ -20,7 +20,7 @@ android {
 
         buildConfigField "int", "paymentTypeAll", TYPE_PAYMENT_TYPE_ALL
         buildConfigField "int", "paymentTypeMessages", TYPE_PAYMENT_MESSAGES_ONLY
-        buildConfigField "int", "paymentType", TYPE_PAYMENT_TYPE_ALL
+        buildConfigField "int", "paymentType", TYPE_PAYMENT_MESSAGES_ONLY
 
         buildConfigField "int", "shopItemType", TYPE_SHOP_ITEM_VERTICAL
         buildConfigField "int", "shopItemTypeVertical", TYPE_SHOP_ITEM_VERTICAL
