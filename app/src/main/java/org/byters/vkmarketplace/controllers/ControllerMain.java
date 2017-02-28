@@ -89,8 +89,7 @@ public class ControllerMain extends Application
     @NonNull
     public Intent getIntentSendEmail(Context context, @StringRes int titleRes, @StringRes int bodyRes) {
 
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{context.getString(R.string.request_buy_email)});
+        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse(context.getString(R.string.request_buy_email)));
         intent.putExtra(Intent.EXTRA_SUBJECT, context.getString(titleRes));
         intent.putExtra(Intent.EXTRA_TEXT, context.getString(bodyRes));
         // intent.setType("message/rfc882");
