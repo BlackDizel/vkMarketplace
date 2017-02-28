@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.byters.vkmarketplace.BuildConfig;
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerAlbums;
 import org.byters.vkmarketplace.controllers.ControllerItems;
@@ -243,7 +244,9 @@ public class ActivityMain extends ActivityBase
                         , R.string.market_phone);
                 break;
             case R.id.action_nav_rate:
-                //todo implement
+                ((ControllerMain) getApplicationContext()).openUrl(this
+                        , getString(R.string.action_view_browser_error)
+                        , Uri.parse(String.format(getString(R.string.play_market_address_format), BuildConfig.APPLICATION_ID)));
                 break;
         }
         return false;

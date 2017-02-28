@@ -6,6 +6,7 @@
     <string name="address_user_format">https://vk.com/id%d</string>
     <string name="attachment_format" formatted="false">%s,market%s_%s</string>
     <string name="show_orders_online_format">https://vk.com/im?sel=%s</string>
+    <string name="play_market_address_format">https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="item_added_to_cart">Добавлено в корзину</string>
     <string name="action_open_cart">посмотреть</string>
