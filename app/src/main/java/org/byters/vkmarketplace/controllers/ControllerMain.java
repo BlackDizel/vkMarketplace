@@ -44,6 +44,11 @@ public class ControllerMain extends Application
                 ? R.style.AppThemeDark
                 : R.style.AppThemeLight);
 
+        if (ControllerStorage.getInstance().isFirstLaunch()) {
+            ControllerNotifications.getInstance().subscribe();
+            ControllerNotifications.getInstance().initNotificationTypes();
+        }
+
         initAnalytics();
     }
 
