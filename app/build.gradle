@@ -9,8 +9,11 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'
+
 apply from: 'settings.gradle'
-if (isYaMetrikaEnabled){
+
+if (isYaMetrikaEnabled) {
     apply from: 'metrika.gradle'
 }
 
@@ -27,14 +30,16 @@ android {
         applicationId "org.byters.vkmarketplace"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.3"
     }
     buildTypes {
         debug {
             ext.enableCrashlytics = false
         }
         release {
+            ext.enableCrashlytics = false
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -42,7 +47,7 @@ android {
 }
 
 ext {
-    support_version = '25.1.0'
+    support_version = '25.2.0'
     retrofit_version = '2.1.0'
 }
 
@@ -56,6 +61,9 @@ dependencies {
     compile "com.android.support:percent:$support_version"
     compile "com.android.support:cardview-v7:$support_version"
 
+    compile 'com.google.firebase:firebase-core:10.2.0'
+    compile 'com.google.firebase:firebase-messaging:10.2.0'
+
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
     debugCompile "com.squareup.okhttp3:logging-interceptor:3.3.1"
@@ -68,12 +76,14 @@ dependencies {
         compile 'com.yandex.android:mobmetricalib:2.60'
     }
 
+/*    compile('com.stripe:stripe-android:1.0.4@aar') {
+        transitive = true;
+    }*/
+
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
     }
-    compile('com.stripe:stripe-android:1.0.4@aar') {
-        transitive = true;
-    }
+
     compile('io.fabric.sdk.android:fabric:1.3.10@aar') {
         transitive = true;
     }

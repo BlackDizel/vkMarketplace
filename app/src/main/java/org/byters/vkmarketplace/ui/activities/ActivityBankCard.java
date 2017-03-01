@@ -7,12 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.stripe.android.Stripe;
-import com.stripe.android.TokenCallback;
-import com.stripe.android.model.Card;
-import com.stripe.android.model.Token;
-import com.stripe.exception.AuthenticationException;
-
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.controllers.ControllerPaymentBank;
 import org.byters.vkmarketplace.controllers.utils.OnResultBase;
@@ -20,7 +14,7 @@ import org.byters.vkmarketplace.controllers.utils.OnResultBase;
 public class ActivityBankCard extends ActivityBase
         implements View.OnClickListener {
 
-    StripeTokenListener listenerStripe;
+    //StripeTokenListener listenerStripe;
     private BankPaymentListener listenerBankPayment;
 
     public static void display(Context context) {
@@ -32,7 +26,7 @@ public class ActivityBankCard extends ActivityBase
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_card);
 
-        listenerStripe = new StripeTokenListener();
+       // listenerStripe = new StripeTokenListener();
         listenerBankPayment = new BankPaymentListener();
 
         findViewById(R.id.tvPayment).setOnClickListener(this);
@@ -51,7 +45,8 @@ public class ActivityBankCard extends ActivityBase
             return;
         }
 
-        Card card = new Card(cardNumber, month, year, cvv);
+        //todo move to controller
+/*        Card card = new Card(cardNumber, month, year, cvv);
         if (!card.validateCard()) {
             Toast.makeText(this, R.string.error_bank_card, Toast.LENGTH_SHORT).show();
             return;
@@ -64,7 +59,7 @@ public class ActivityBankCard extends ActivityBase
             Toast.makeText(this, R.string.error_bank_card_payment_provider, Toast.LENGTH_SHORT).show();
             return;
         }
-        stripe.createToken(card, listenerStripe);
+        stripe.createToken(card, listenerStripe);*/
     }
 
     @Override
@@ -84,7 +79,8 @@ public class ActivityBankCard extends ActivityBase
         pay();
     }
 
-    private class StripeTokenListener extends TokenCallback {
+    //todo move to controller
+/*    private class StripeTokenListener extends TokenCallback {
         @Override
         public void onError(Exception error) {
             error.printStackTrace();
@@ -95,7 +91,7 @@ public class ActivityBankCard extends ActivityBase
         public void onSuccess(Token token) {
             ControllerPaymentBank.getInstance().requestPayment(ActivityBankCard.this, token.getId());
         }
-    }
+    }*/
 
     private class BankPaymentListener implements OnResultBase {
         @Override
