@@ -131,4 +131,9 @@
     <string name="error_bank_card_payment_provider">Платежный провайдер недоступен</string>
     <string name="payment_successful">Оплата прошла успешно</string>
     <string name="menu_shop">Витрина</string>
+    <string name="notification_type_promo">промо</string>
+    <string name="notification_type_sales">скидки</string>
+    <string name="notification_type_market">выставки и ярмарки</string>
+    <string name="notification_type_contest">конкурсы</string>
+    <string name="notification_type_service">оповещения</string>
 </resources>
