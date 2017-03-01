@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1078608994506",
+    "firebase_url": "https://katriniya-shop.firebaseio.com",
+    "project_id": "katriniya-shop",
+    "storage_bucket": "katriniya-shop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1078608994506:android:9e4d385c5a027e95",
+        "android_client_info": {
+          "package_name": "org.byters.vkmarketplace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1078608994506-qaq6j8ragbahp9ltbadtddqa6g0c49me.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIgRxUjwFOqXOyYuFUx2O4DwfbMK5pEa4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
