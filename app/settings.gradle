@@ -49,3 +49,8 @@ android {
         resValue "color", "colorAccent", "#30a4ac"
     }
 }
+
+
+//curl --header "Authorization: key=<Firebase messaging server key>" --header Content-Type:"application/json" https://fcm.googleapis.com/fcm/send  -d "{\"to\":\"/topics/ALL\",\"data\": {\"title\": \"Click Action Message\",\"text\": \"Sample message\",\"type\": \"promo\"}}"
+//messages types: promo, sales, offline_market, contest, notification
+//
