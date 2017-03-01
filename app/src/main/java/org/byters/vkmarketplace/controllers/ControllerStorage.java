@@ -139,4 +139,8 @@ public class ControllerStorage {
     void setNotificationTypesEnabled(ArrayList<String> list) {
         writeObjectToFile(list, NOTIFICATION_TYPES_CACHE);
     }
+
+    ArrayList<String> getNotificationTypesEnabled() {
+        return getNotificationTypesEnabled(context);
+    }
 }
