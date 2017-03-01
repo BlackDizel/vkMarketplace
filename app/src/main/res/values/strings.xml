@@ -111,7 +111,7 @@
     <string name="activity_bonus_message">Совершайте покупки или введите промо-код, чтобы получить бонусы</string>
     <string name="activity_bonus_button">Активировать промо-код</string>
     <string name="activity_bonus_sum_hint">бонусов на вашем счету</string>
-    <string name="settings_push">Использовать Push-сообщения</string>
+    <string name="settings_push">Получать выбранные Push-сообщения</string>
     <string name="activity_chat_button_send">Отправить</string>
     <string name="activity_bonus_input_promo_hint">Введите промо-код</string>
     <string name="card_hint_number">Номер карты</string>
