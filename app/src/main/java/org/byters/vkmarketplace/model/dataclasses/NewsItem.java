@@ -20,8 +20,11 @@ public class NewsItem implements Serializable {
         return id;
     }
 
+    @Nullable
     public String getText() {
-        return text;
+        return TextUtils.isEmpty(text)
+                ? null
+                : text.replaceAll("\\[(.*?)\\|", "").replace("]", "");
     }
 
     public ArrayList<NewsAttachment> getAttachments() {
