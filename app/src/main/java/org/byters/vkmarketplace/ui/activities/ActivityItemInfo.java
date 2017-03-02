@@ -18,12 +18,13 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import org.byters.vkmarketplace.R;
-import org.byters.vkmarketplace.controllers.ControllerMain;
+import org.byters.vkmarketplace.controllers.ControllerAnalytics;
 import org.byters.vkmarketplace.controllers.ControllerCart;
 import org.byters.vkmarketplace.controllers.ControllerComments;
 import org.byters.vkmarketplace.controllers.ControllerFavorites;
 import org.byters.vkmarketplace.controllers.ControllerItemInfo;
 import org.byters.vkmarketplace.controllers.ControllerItems;
+import org.byters.vkmarketplace.controllers.ControllerMain;
 import org.byters.vkmarketplace.controllers.utils.DataUpdateListener;
 import org.byters.vkmarketplace.controllers.utils.OnItemUpdateListener;
 import org.byters.vkmarketplace.model.dataclasses.LikesBlob;
@@ -82,6 +83,8 @@ public class ActivityItemInfo extends ActivityBase
         if (id == NO_VALUE) return;
         MarketplaceItem item = ControllerItems.getInstance().getModel().getItemById(id);
         if (item == null) return;
+
+        ControllerAnalytics.getInstance().logItemView(id, item.getTitle());
 
         if (item.getPhotos() != null
                 && item.getPhotos().size() > 0 &&
