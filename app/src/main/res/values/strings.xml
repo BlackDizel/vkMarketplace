@@ -107,7 +107,7 @@
     <string name="payment_bonus">Оплата бонусами</string>
     <string name="payment_price_hint">Всего к оплате</string>
     <string name="cart_bonus_format">Доступно бонусов: %d</string>
-    <string name="button_cart_payment">Оплатить заказ</string>
+    <string name="button_cart_payment">заказать</string>
     <string name="activity_bonus_message">Совершайте покупки или введите промо-код, чтобы получить бонусы</string>
     <string name="activity_bonus_button">Активировать промо-код</string>
     <string name="activity_bonus_sum_hint">бонусов на вашем счету</string>
