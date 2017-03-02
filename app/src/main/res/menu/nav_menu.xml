@@ -13,10 +13,10 @@
             android:icon="@drawable/ic_star_white_24dp"
             android:title="@string/menu_fav" />
 
-        <item
+<!--        <item
             android:id="@+id/action_nav_bonus"
             android:icon="@drawable/ic_account_balance_wallet_black_24dp"
-            android:title="@string/menu_promo" />
+            android:title="@string/menu_promo" />-->
 
         <item
             android:id="@+id/action_nav_history"

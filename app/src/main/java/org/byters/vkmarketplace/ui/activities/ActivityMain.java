@@ -215,9 +215,9 @@ public class ActivityMain extends ActivityBase
             case R.id.action_nav_fav:
                 ActivityFavorites.display(this);
                 break;
-            case R.id.action_nav_bonus:
+            /*case R.id.action_nav_bonus:
                 ActivityBonus.display(this);
-                break;
+                break;*/
             case R.id.action_nav_history:
                 ActivityOrdersHistory.display(this);
                 break;
