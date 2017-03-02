@@ -1,6 +1,8 @@
 package org.byters.vkmarketplace.controllers;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import org.byters.vkmarketplace.R;
 import org.byters.vkmarketplace.api.VkService;
@@ -64,14 +66,25 @@ public class ControllerNews implements Callback<NewsBlob> {
         NewsBlob.NewsItemsBlob news = data.getResponse();
         if (news == null) return;
         ArrayList<NewsItem> items = news.getItems();
-        if (items == null) return;
 
-        this.data = items;
+        parseNews(items);
         ControllerStorage.getInstance().writeObjectToFile(this.data, ControllerStorage.NEWS_CACHE);
 
         if (listeners == null) return;
         for (DataUpdateListener listener : listeners)
             listener.onUpdated(DataUpdateListener.TYPE_NEWS);
+    }
+
+    private void parseNews(@Nullable ArrayList<NewsItem> items) {
+        if (items == null) return;
+
+        data = null;
+        for (NewsItem item : items) {
+            if (TextUtils.isEmpty(item.getText()) && TextUtils.isEmpty(item.getPhotoUri()))
+                continue;
+            if (data == null) data = new ArrayList<>();
+            data.add(item);
+        }
     }
 
     @Override
