@@ -70,6 +70,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 String url = item.getPhotoUri();
                 if (!TextUtils.isEmpty(url))
                     Picasso.with(itemView.getContext()).load(url).into(ivItem);
+                else ivItem.setImageResource(R.drawable.logo);
             }
         }
 
